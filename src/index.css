@@ -1,0 +1,12 @@
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+.react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus, .react-calendar__tile--active {
+    background: #c65757;
+}
+.react-calendar__tile--hasActive {
+    background: #c65658;
+    color: #fff;
+}

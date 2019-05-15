@@ -8,5 +8,5 @@ const initialState = Map({
 });
 
 export const UIStateReducer = createReducer({
-    [UIActions.changeFiltersTab]: (state = initialState, payload) => state.set('activeFiltersTab', payload)
+    [UIActions.changeFiltersTab]: (state = initialState, payload) => state.set('activeFiltersTab', payload.tabID)
 }, initialState)

@@ -1,0 +1,64 @@
+import React from 'react';
+import styled from 'styled-components';
+
+
+function Table({ items }) {
+    return (
+        <Wrapper>
+            <StyledTable>
+                <StyledThead>
+                    <tr>
+                        <StyledTh>№ Аудитории</StyledTh>
+                        <StyledTh>Тип</StyledTh>
+                        <StyledTh>Вместимость</StyledTh>
+                    </tr>
+                </StyledThead>
+                <StyledTbody>
+                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
+                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
+                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
+                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
+                </StyledTbody>
+            </StyledTable>
+        </Wrapper>
+    )
+}
+
+export default Table;
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    font-family: Roboto;
+`;
+
+const StyledTable = styled.table`
+    border-collapse: collapse;
+    font-size: 14px;
+`;
+
+const StyledTr = styled.tr`
+    background: #fff;
+    &:nth-child(even) {
+		background: #f4f8fb;
+	}
+`;
+
+const StyledTd = styled.td`
+    padding: 20px;
+    text-align: center;
+    font-weight: 500;
+`;
+
+const StyledTbody = styled.tbody`
+    box-shadow: 0px 8px 21px rgba(0, 0, 0, 0.0464106);
+`;
+
+const StyledThead = styled.thead`
+    
+`;
+
+const StyledTh = styled.th`
+    padding: 15px;
+    font-weight: normal;
+`;
