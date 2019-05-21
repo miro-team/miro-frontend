@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function TextBox({ children, label }) {
+function TextBox({ children, label, ...props }) {
     return (
         <Wrapper>
             <Label>{label}</Label>
-            <StyledInput>{children}</StyledInput>
+            <StyledInput {...props}>{children}</StyledInput>
         </Wrapper>
     )
 }

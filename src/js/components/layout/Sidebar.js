@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import * as UIActions from 'js/actions/UIActions';
-import FilterPager from './FilterPager';
+import FilterPager from 'js/components/filters/FilterPager';
 import RoomFilters from 'js/components/filters/RoomFilters';
 import DatetimeFilters from 'js/components/filters/DatetimeFilters';
+
+import * as UIActions from 'js/actions/UIActions';
 
 
 class Sidebar extends Component {
