@@ -39,9 +39,9 @@ class RoomFilters extends Component {
 const BuildingSelectBox = props => (
     <SelectBox {...props}>
         <option value="">---</option>
-        <option>Первый</option>
-        <option>Третий</option>
-        <option>Четвертый</option>
+        <option value={1}>Первый</option>
+        <option value={3}>Третий</option>
+        <option value={4}>Четвертый</option>
     </SelectBox>
 )
 

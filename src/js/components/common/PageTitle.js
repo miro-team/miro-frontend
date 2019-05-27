@@ -15,5 +15,5 @@ const Title = styled.div`
     font-size: 20px;
     line-height: 23px;
 
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 `;

@@ -54,35 +54,35 @@ const ResTypeSelectBox = props => (
 const WeekTypeSelectBox = props => (
     <SelectBox {...props}>
         <option value="">---</option>
-        <option>1-й числитель</option>
-        <option>1-й знаменатель</option>
-        <option>2-й числитель</option>
-        <option>2-й знаменатель</option>
+        <option value={0}>1-й числитель</option>
+        <option value={1}>1-й знаменатель</option>
+        <option value={2}>2-й числитель</option>
+        <option value={3}>2-й знаменатель</option>
     </SelectBox>
 )
 
 const WeekDaySelectBox = props => (
     <SelectBox {...props}>
         <option value="">---</option>
-        <option>Понедельник</option>
-        <option>Вторник</option>
-        <option>Среда</option>
-        <option>Четверг</option>
-        <option>Пятница</option>
-        <option>Суббота</option>
+        <option value={1}>Понедельник</option>
+        <option value={2}>Вторник</option>
+        <option value={3}>Среда</option>
+        <option value={4}>Четверг</option>
+        <option value={5}>Пятница</option>
+        <option value={6}>Суббота</option>
     </SelectBox>
 )
 
 const PairSelectBox = props => (
     <SelectBox {...props}>
         <option value="">---</option>
-        <option>1 (09:00-10:30)</option>
-        <option>2 (10:40-12:10)</option>
-        <option>3 (12:20-14:20)*</option>
-        <option>4 (14:30-16:00)</option>
-        <option>5 (16:10:00-17:40)</option>
-        <option>6 (18:20:00-19:50)</option>
-        <option>7 (20:00-21:30)</option>
+        <option value={1}>1 (09:00-10:30)</option>
+        <option value={2}>2 (10:40-12:10)</option>
+        <option value={3}>3 (12:20-14:20)*</option>
+        <option value={4}>4 (14:30-16:00)</option>
+        <option value={5}>5 (16:10:00-17:40)</option>
+        <option value={6}>6 (18:20:00-19:50)</option>
+        <option value={7}>7 (20:00-21:30)</option>
     </SelectBox>
 )
 

@@ -2,22 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function Table({ items }) {
+function Table({ items=[{}], dataFields }) {
     return (
         <Wrapper>
             <StyledTable>
                 <StyledThead>
                     <tr>
-                        <StyledTh>№ Аудитории</StyledTh>
-                        <StyledTh>Тип</StyledTh>
-                        <StyledTh>Вместимость</StyledTh>
+                        {Object.keys(dataFields).map((fieldId, i) => <StyledTh key={i}>{dataFields[fieldId]}</StyledTh>)}
                     </tr>
                 </StyledThead>
                 <StyledTbody>
-                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
-                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
-                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
-                    <StyledTr><StyledTd>Test data</StyledTd><StyledTd>Большая лекционная</StyledTd><StyledTd>45</StyledTd></StyledTr>
+                    {items.map((item, i) => (
+                        <StyledTr key={i}>
+                            {Object.keys(dataFields).map((fieldId, i) => <StyledTd key={i}>{item[fieldId]}</StyledTd>)}
+                        </StyledTr>
+                    ))}
                 </StyledTbody>
             </StyledTable>
         </Wrapper>

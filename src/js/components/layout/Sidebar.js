@@ -36,6 +36,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
 
 const Wrapper = styled.div`
     width: 286px;
+    min-width: 286px;
     background: #fff;
     border-right: 1px solid #E2E2E2;
     padding: 30px;

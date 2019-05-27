@@ -11,31 +11,31 @@ import * as UIActions from 'js/actions/UIActions';
 
 
 class FilterPager extends Component {
-  handleTabChange = (e) => {
-    const tabID = +e.target.id;
-    this.props.changeFiltersTab(tabID)
-  }
+    handleTabChange = (e) => {
+        const tabID = +e.target.id;
+        this.props.changeFiltersTab(tabID)
+    }
 
-  render(){
-    const {
-      activeFiltersTab
-    } = this.props;
+    render() {
+        const {
+            activeFiltersTab
+        } = this.props;
 
-    return (
-      <Wrapper>
-          <StyledButton active={activeFiltersTab === 0} onClick={this.handleTabChange} id={0}><Icon src={activeFiltersTab === 0 ? FilterIconWhite : FilterIconBlack} alt="Filter Icon" />Filter</StyledButton>
-          <StyledButton active={activeFiltersTab === 1} onClick={this.handleTabChange} id={1}><Icon src={activeFiltersTab === 1 ? CalendarIconWhite : CalendarIconBlack} alt="Calendar Icon" />Calendar</StyledButton>
-      </Wrapper>
-    )
-  }
+        return (
+            <Wrapper>
+                <StyledButton active={activeFiltersTab === 0} onClick={this.handleTabChange} id={0}><Icon src={activeFiltersTab === 0 ? FilterIconWhite : FilterIconBlack} alt="Filter Icon" />Filter</StyledButton>
+                <StyledButton active={activeFiltersTab === 1} onClick={this.handleTabChange} id={1}><Icon src={activeFiltersTab === 1 ? CalendarIconWhite : CalendarIconBlack} alt="Calendar Icon" />Calendar</StyledButton>
+            </Wrapper>
+        )
+    }
 }
 
 const mapStateToProps = ({ UI }) => ({
-  activeFiltersTab: UI.get('activeFiltersTab')
+    activeFiltersTab: UI.get('activeFiltersTab')
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeFiltersTab: payload => dispatch(UIActions.changeFiltersTab(payload))
+    changeFiltersTab: payload => dispatch(UIActions.changeFiltersTab(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPager);
@@ -49,12 +49,12 @@ const Wrapper = styled.div`
 
 const StyledButton = styled.button`
     appearance: none;
-    cursor: ${({active}) => !active && 'pointer'};
-    flex: ${({active}) => active ? 5 : 4};
+    cursor: ${({ active }) => !active && 'pointer'};
+    flex: ${({ active }) => active ? 5 : 4};
     border-radius: 30px;
     border: 0;
-    background: ${({active}) => active && '#C65757'};
-    opacity: ${({active}) => active ? 1 : 0.6};
+    background: ${({ active }) => active && '#C65757'};
+    opacity: ${({ active }) => active ? 1 : 0.6};
 
     display: flex;
     align-items: center;
@@ -63,10 +63,10 @@ const StyledButton = styled.button`
 
     font-family: Roboto;
     font-style: normal;
-    font-weight: ${({active}) => active && 500};
+    font-weight: ${({ active }) => active && 500};
     font-size: 16px;
     line-height: 19px;
-    color: ${({active}) => active && '#fff'};
+    color: ${({ active }) => active && '#fff'};
 `;
 
 const Icon = styled.img`
