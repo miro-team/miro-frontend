@@ -14,7 +14,7 @@ class DatetimeFilters extends Component {
     handleDateChange = date => this.props.setDateFilter(date);
     handleWeekTypeChange = e => this.props.setWeekTypeFilter(e.target.value);
     handleWeekDayChange = e => this.props.setWeekDayFilter(e.target.value);
-    handlePairChange = e => this.props.setPairFilter(e.target.value);
+    handlePairChange = e => this.props.setPairFilter(+e.target.value);
 
     render() {
         const {

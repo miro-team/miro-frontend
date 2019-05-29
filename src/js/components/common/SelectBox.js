@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import ArrowIcon from 'img/svg/arrow.svg';
 
 
-function Select({ children, label, ...props }) {
+function Select({ children, label, style, ...props }) {
     return (
-        <Wrapper>
+        <Wrapper style={style}>
             <Label>{label}</Label>
             <StyledSelect {...props}>{children}</StyledSelect>
         </Wrapper>

@@ -2,19 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function Table({ items=[{}], dataFields }) {
+function Table({ items=[{}], tableFields=[], style }) {
     return (
-        <Wrapper>
+        <Wrapper style={style}>
             <StyledTable>
                 <StyledThead>
                     <tr>
-                        {Object.keys(dataFields).map((fieldId, i) => <StyledTh key={i}>{dataFields[fieldId]}</StyledTh>)}
+                        {Object.keys(tableFields).map((fieldId, i) => <StyledTh key={i}>{tableFields[fieldId]}</StyledTh>)}
                     </tr>
                 </StyledThead>
                 <StyledTbody>
                     {items.map((item, i) => (
                         <StyledTr key={i}>
-                            {Object.keys(dataFields).map((fieldId, i) => <StyledTd key={i}>{item[fieldId]}</StyledTd>)}
+                            {Object.keys(tableFields).map((fieldId, i) => <StyledTd key={i}>{item[fieldId]}</StyledTd>)}
                         </StyledTr>
                     ))}
                 </StyledTbody>
@@ -60,4 +60,5 @@ const StyledThead = styled.thead`
 const StyledTh = styled.th`
     padding: 15px;
     font-weight: normal;
+    white-space: nowrap;
 `;

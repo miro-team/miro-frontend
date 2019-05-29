@@ -1,4 +1,5 @@
 import { createAction } from 'redux-act';
 
 
-export const setData = createAction('SET_DATA');
+export const setResultData = createAction('SET_RESULT_DATA');
+export const setRoomData = createAction('SET_ROOM_DATA');

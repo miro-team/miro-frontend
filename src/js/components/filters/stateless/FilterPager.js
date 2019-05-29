@@ -7,38 +7,17 @@ import FilterIconWhite from 'img/svg/filterWhite.svg';
 import CalendarIconBlack from 'img/svg/calendarBlack.svg';
 import CalendarIconWhite from 'img/svg/calendarWhite.svg';
 
-import * as UIActions from 'js/actions/UIActions';
 
-
-class FilterPager extends Component {
-    handleTabChange = (e) => {
-        const tabID = +e.target.id;
-        this.props.changeFiltersTab(tabID)
-    }
-
-    render() {
-        const {
-            activeFiltersTab
-        } = this.props;
-
-        return (
-            <Wrapper>
-                <StyledButton active={activeFiltersTab === 0} onClick={this.handleTabChange} id={0}><Icon src={activeFiltersTab === 0 ? FilterIconWhite : FilterIconBlack} alt="Filter Icon" />Filter</StyledButton>
-                <StyledButton active={activeFiltersTab === 1} onClick={this.handleTabChange} id={1}><Icon src={activeFiltersTab === 1 ? CalendarIconWhite : CalendarIconBlack} alt="Calendar Icon" />Calendar</StyledButton>
-            </Wrapper>
-        )
-    }
+function FilterPager({ activeTab, handleTabChange }) {
+    return (
+        <Wrapper>
+            <StyledButton active={activeTab === 0} onClick={handleTabChange} id={0}><Icon src={activeTab === 0 ? FilterIconWhite : FilterIconBlack} alt="Filter Icon" />Аудитория</StyledButton>
+            <StyledButton active={activeTab === 1} onClick={handleTabChange} id={1}><Icon src={activeTab === 1 ? CalendarIconWhite : CalendarIconBlack} alt="Calendar Icon" />Дата</StyledButton>
+        </Wrapper>
+    )
 }
 
-const mapStateToProps = ({ UI }) => ({
-    activeFiltersTab: UI.get('activeFiltersTab')
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    changeFiltersTab: payload => dispatch(UIActions.changeFiltersTab(payload))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterPager);
+export default FilterPager;
 
 const Wrapper = styled.div`
     display: flex;

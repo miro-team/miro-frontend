@@ -4,9 +4,11 @@ import { Map } from 'immutable';
 
 
 const initialState = Map({
-    data: [{}]
+    resultData: {},
+    roomData: {}
 });
 
 export const DataReducer = createReducer({
-    [DataActions.setData]: (state = initialState, payload) => state.set('data', payload)
+    [DataActions.setResultData]: (state = initialState, payload) => state.set('resultData', payload),
+    [DataActions.setRoomData]: (state = initialState, payload) => state.set('roomData', payload)
 }, initialState)

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import FilterPager from 'js/components/filters/FilterPager';
+import FilterPager from 'js/components/filters/stateless/FilterPager';
 import RoomFilters from 'js/components/filters/RoomFilters';
 import DatetimeFilters from 'js/components/filters/DatetimeFilters';
 
@@ -11,13 +11,19 @@ import * as UIActions from 'js/actions/UIActions';
 
 class Sidebar extends Component {
 
+    handleTabChange = (e) => {
+        const tabID = +e.target.id;
+        this.props.setFiltersTab(tabID)
+    }
+
     render() {
         const {
             activeFiltersTab
         } = this.props;
+        
         return (
             <Wrapper>
-                <FilterPager />
+                <FilterPager activeTab={activeFiltersTab} handleTabChange={this.handleTabChange} />
                 {activeFiltersTab === 0 ? <RoomFilters /> : <DatetimeFilters />}
             </Wrapper>
         )
@@ -29,7 +35,7 @@ const mapStateToProps = ({ UI }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    changeFiltersTab: payload => dispatch(UIActions.changeFiltersTab(payload))
+    setFiltersTab: payload => dispatch(UIActions.setFiltersTab(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

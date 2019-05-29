@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function TablePager({ currentPage, pageCount, handlePageChange }) {
+function TablePager({ currentPage, pageCount, handlePageChange, ...props}) {
 
     const canIncrement = currentPage + 1 <= pageCount;
     const canDecrement = currentPage - 1 > 0;
@@ -13,7 +13,7 @@ function TablePager({ currentPage, pageCount, handlePageChange }) {
     const handleLast = () => handlePageChange(pageCount);
 
     return (
-        <Wrapper>
+        <Wrapper {...props}>
             <Button onClick={handleFirst} disabled={!canDecrement}>{'<<'}</Button>
             <Button onClick={handleDecrement} disabled={!canDecrement}>{'<'}</Button>
             <ActivePage><PageWrapper>{currentPage}</PageWrapper></ActivePage>
@@ -34,15 +34,14 @@ const Wrapper = styled.div`
 const Button = styled.button`
     width: 35px;
     height: 35px;
-    /* border: 1px solid #afafaf; */
 `;
 
 const ActivePage = styled.div`
     width: 35px;
     height: 35px;
-    background: #dbdbdb;
+    background: #c65757;
+    color: #fff;
     display: flex;
-    border: 1px solid #afafaf;
 `;
 
 const PageWrapper = styled.span`

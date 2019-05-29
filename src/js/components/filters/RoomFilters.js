@@ -48,18 +48,18 @@ const BuildingSelectBox = props => (
 const FloorSelectBox = props => (
     <SelectBox {...props}>
         <option value="">---</option>
-        <option>Первый</option>
-        <option>Второй</option>
-        <option>Третий</option>
+        <option value={1}>Первый</option>
+        <option value={2}>Второй</option>
+        <option value={3}>Третий</option>
     </SelectBox>
 )
 
 const RoomTypeSelectBox = props => (
     <SelectBox {...props}>
         <option value="">---</option>
-        <option>Большая лекционная</option>
-        <option>Малая лекционная</option>
-        <option>Семинарская</option>
+        <option value={1}>Большая лекционная</option>
+        <option value={2}>Малая лекционная</option>
+        <option value={5}>Семинарская</option>
     </SelectBox>
 )
 
