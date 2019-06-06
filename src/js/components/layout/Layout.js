@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import Header from './stateless/Header';
 import Sidebar from './Sidebar';
-import ResultGrid from 'js/components/pages/ResultGrid';
+import ScheduleGrid from 'js/components/pages/ScheduleGrid';
+import media from 'js/constants/media';
 
 import * as UIActions from 'js/actions/UIActions';
 import * as DataActions from 'js/actions/DataActions';
@@ -24,7 +25,7 @@ class Layout extends Component {
                 <Body>
                     <Sidebar />
                     <Content>
-                        <ResultGrid />
+                        <ScheduleGrid />
                     </Content>
                 </Body>
             </MainWrapper>

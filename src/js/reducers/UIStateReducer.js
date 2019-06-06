@@ -5,11 +5,12 @@ import { Map } from 'immutable';
 
 const initialState = Map({
     activeFiltersTab: 0,
-    resultGridActivePage: 1,
-    resultGridPageSize: 9
+    scheduleGridActivePage: 1,
+    scheduleGridPageSize: 9
 });
 
 export const UIStateReducer = createReducer({
     [UIActions.setFiltersTab]: (state = initialState, payload) => state.set('activeFiltersTab', payload),
-    [UIActions.setResultGridPage]: (state = initialState, payload) => state.set('resultGridActivePage', payload)
+    [UIActions.setScheduleGridPage]: (state = initialState, payload) => state.set('scheduleGridActivePage', payload),
+    [UIActions.resetScheduleGridPage]: (state = initialState, payload) => state.set('scheduleGridActivePage', 1)
 }, initialState)

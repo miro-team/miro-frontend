@@ -3,6 +3,10 @@
     outline: none;
 }
 
+html, body {
+    overflow: hidden;
+}
+
 .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus, .react-calendar__tile--active {
     background: #c65757;
 }
