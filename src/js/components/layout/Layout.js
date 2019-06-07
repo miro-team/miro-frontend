@@ -19,6 +19,9 @@ class Layout extends Component {
 
         } = this.props;
 
+        this.props.getMapRequest();
+        this.props.getScheduleRequest();
+
         return (
             <MainWrapper>
                 <Header />
@@ -33,12 +36,13 @@ class Layout extends Component {
     }
 }
 
-const mapStateToProps = ({ Filters }) => ({
+const mapStateToProps = ({ Data }) => ({
 
 });
 
 const mapDispatchToProps = (dispatch) => ({
-
+    getMapRequest: () => dispatch(DataActions.getMapRequest()),
+    getScheduleRequest: () => dispatch(DataActions.getScheduleRequest())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

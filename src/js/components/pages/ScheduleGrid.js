@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { ApiToTableFields } from 'js/constants/spec';
 
 import * as UIActions from 'js/actions/UIActions';
-import * as DataActions from 'js/actions/DataActions';
 
 import Grid from 'js/components/common/Grid';
 import PageTitle from 'js/components/common/PageTitle';
@@ -17,12 +16,25 @@ class ScheduleGrid extends Component {
             pageNum,
             pageSize,
             scheduleData,
-            resType,
+            mapping,
             setPage,
+            isPreloaderActive
         } = this.props;
 
-        const pageCount = scheduleData.totalAmount ? Math.ceil(scheduleData.totalAmount / pageSize) : 0;
-        const items = scheduleData.filteredEventList ? scheduleData.filteredEventList : null;
+        let items = null;
+        let message = null;
+        let pageCount = 0;
+
+        if (scheduleData.data && scheduleData.data.filteredEventList) {
+            if (scheduleData.data.filteredEventList.length) {
+                items = scheduleData.data.filteredEventList;
+                pageCount = Math.ceil(scheduleData.data.totalAmount / pageSize)
+            } else {
+                message = 'Ничего не найдено'
+            }
+        } else {
+            message = scheduleData.message
+        }
 
         return (
             <Wrapper>
@@ -30,22 +42,25 @@ class ScheduleGrid extends Component {
                 <Grid
                     items={items}
                     tableFields={ApiToTableFields}
-                    noItemsMessage="Ничего не найдено"
+                    message={message}
+                    mapping={mapping}
                     pageNum={pageNum}
                     pageSize={pageSize}
                     pageCount={pageCount}
                     setPage={setPage}
+                    isPreloaderActive={isPreloaderActive}
                 />
             </Wrapper>
         )
     }
 }
 
-const mapStateToProps = ({ UI, Data, Filters }) => ({
+const mapStateToProps = ({ UI, Data }) => ({
     pageNum: UI.get('scheduleGridActivePage'),
     pageSize: UI.get('scheduleGridPageSize'),
     scheduleData: Data.get('scheduleData'),
-    resType: Filters.get('resType')
+    mapping: Data.get('mapping'),
+    isPreloaderActive: UI.get('isScheduleGridPreloaderActive')
 });
 
 const mapDispatchToProps = (dispatch) => ({

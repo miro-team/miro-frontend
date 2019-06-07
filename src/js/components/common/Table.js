@@ -2,23 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function Table({ items, tableFields = {}, tableHeight, rowHeight, noItemsMessage = 'Отсутствуют записи', style }) {
-    items = Array.isArray(items) && items.length ? items : null;
+function Table({ items, tableFields = {}, tableHeight, rowHeight, message, mapping, ...props }) {
+    items = Array.isArray(items) && items.length && !message ? items : null;
     return (
-        <Wrapper style={style}>
+        <Wrapper {...props}>
             <StyledTable tableHeight={tableHeight}>
                 <StyledThead>
                     <tr>
-                        {Object.keys(tableFields).map((fieldId, i) => <StyledTh width={tableFields[fieldId].width} key={i}>{tableFields[fieldId].title}</StyledTh>)}
+                        {Object.keys(tableFields).map((fieldId, i) => <StyledTh thWidth={tableFields[fieldId].width} key={i}>{tableFields[fieldId].title}</StyledTh>)}
                     </tr>
                 </StyledThead>
                 <StyledTbody>
-                    {!items && 
-                        <tr><NoItemsTd colSpan={Object.keys(tableFields).length}>{noItemsMessage}</NoItemsTd ></tr>
+                    {!items &&
+                        <tr><NoItemsTd colSpan={Object.keys(tableFields).length}>{message}</NoItemsTd ></tr>
                     }
                     {items && items.map((item, i) => (
-                        <StyledTr rowHeight={rowHeight} key={i} style={item.emptyRow && {background: '#fff'}}>
-                            {Object.keys(tableFields).map((fieldId, i) => <StyledTd key={i}>{item[fieldId]}</StyledTd>)}
+                        <StyledTr rowHeight={rowHeight} key={i} style={item.emptyRow && { background: '#fff' }}>
+                            {Object.keys(tableFields).map((fieldId, i) => {
+                                let itemValue = item[fieldId];
+                                let itemMappingId = tableFields[fieldId].mapping;
+                                let displayedItem = (mapping && itemMappingId) ? mapping[itemMappingId][itemValue] : itemValue;
+                                return <StyledTd key={i}>{displayedItem}</StyledTd>
+                            })}
                         </StyledTr>
                     ))}
                 </StyledTbody>
@@ -39,12 +44,12 @@ const Wrapper = styled.div`
 const StyledTable = styled.table`
     border-collapse: collapse;
     font-size: 14px;
-    height: ${({tableHeight})=>tableHeight};
+    height: ${({ tableHeight }) => tableHeight};
 `;
 
 const StyledTr = styled.tr`
     background: #fff;
-    height: ${({rowHeight})=>rowHeight};
+    height: ${({ rowHeight }) => rowHeight};
     &:nth-child(even) {
 		background: #f4f8fb;
 	}
@@ -66,9 +71,8 @@ const StyledThead = styled.thead`
 
 const StyledTh = styled.th`
     padding: 15px;
-    width: ${({ width }) => width};
+    width: ${({ thWidth }) => thWidth};
     font-weight: normal;
-    white-space: nowrap;
 `;
 
 const NoItemsTd = styled.td`

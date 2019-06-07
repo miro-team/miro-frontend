@@ -1,35 +1,32 @@
+//{
+//  title: '№ Аудитории',
+//  mapping: 'rooms',
+//  width: '10%'
+//}
 export const ApiToTableFields = {
     roomId: {
         title: '№ Аудитории',
-        width: '10%'
+        mapping: 'rooms'
     },
     pairId: {
-        title: 'Пара',
-        width: '5%'
+        title: 'Пара'
     },
     date: {
-        title: 'Дата',
-        width: '20%'
+        title: 'Дата'
     },
     capacity: {
-        title: 'Вместимость',
-        width: '5%'
-    },
-    roomTypeId: {
-        title: 'Тип аудитории',
-        width: '5%'
+        title: 'Вместимость'
     },
     weekDay: {
         title: 'День недели',
-        width: '5%'
+        mapping: 'weekDays'
     },
     weekType: {
         title: 'Тип недели',
-        width: '5%'
+        mapping: 'weekTypes'
     },
     weekNum: {
-        title: 'Неделя',
-        width: '10%'
+        title: 'Неделя'
     }
 }
 

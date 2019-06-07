@@ -12,3 +12,5 @@ export const setDateFilter = createAction('SET_DATE_FILTER');
 export const setWeekTypeFilter = createAction('SET_WEEKTYPE_FILTER');
 export const setWeekDayFilter = createAction('SET_WEEKDAY_FILTER');
 export const setPairFilter = createAction('SET_PAIR_FILTER');
+
+export const resetFilters = createAction('RESET_FILTERS');

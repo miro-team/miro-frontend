@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ArrowIcon from 'img/svg/arrow.svg';
 
 
-function Select({ children, label, style, ...props }) {
+function Select({ label, children, style, ...props }) {
     return (
         <Wrapper style={style}>
             <Label>{label}</Label>

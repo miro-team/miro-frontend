@@ -1,14 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 
 
-export default function PageTitle({children}) {
-    return (
-        <Title>{children}</Title>
-    )
-}
-
-const Title = styled.div`
+const PageTitle = styled.div`
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
@@ -17,3 +10,5 @@ const Title = styled.div`
 
     margin-bottom: 30px;
 `;
+
+export default PageTitle

@@ -22,9 +22,12 @@ export const FilterReducer = createReducer({
     [FilterActions.setRoomTypeFilter]: (state = initialState, payload) => state.set('roomType', payload),
     [FilterActions.setRoomCapacityFilter]: (state = initialState, payload) => state.set('roomCapacity', payload),
     [FilterActions.setRoomNumberFilter]: (state = initialState, payload) => state.set('roomNumber', payload),
+
     [FilterActions.setResTypeFilter]: (state = initialState, payload) => state.set('resType', payload),
     [FilterActions.setDateFilter]: (state = initialState, payload) => state.set('date', payload),
     [FilterActions.setWeekTypeFilter]: (state = initialState, payload) => state.set('weekType', payload),
     [FilterActions.setWeekDayFilter]: (state = initialState, payload) => state.set('weekDay', payload),
-    [FilterActions.setPairFilter]: (state = initialState, payload) => state.set('pair', payload)
+    [FilterActions.setPairFilter]: (state = initialState, payload) => state.set('pair', payload),
+
+    [FilterActions.resetFilters]: () => initialState
 }, initialState)

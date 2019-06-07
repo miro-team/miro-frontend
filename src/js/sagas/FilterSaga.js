@@ -2,8 +2,8 @@ import axios from 'axios';
 import { takeLatest, call, delay, select, put } from 'redux-saga/effects';
 
 import API from 'Api';
-import makeFilterUrlParams from 'js/utils/makeFilterUrlParams';
-import convertDate from 'js/utils/convertDate';
+import processFilters from 'js/utils/processFilters';
+import { reduxFiltersToApi } from 'js/constants/spec';
 
 import * as DataActions from 'js/actions/DataActions';
 import * as UIActions from 'js/actions/UIActions';
@@ -13,41 +13,48 @@ export class FilterSaga {
 
     static * getFilteredData(action) {
 
-        yield put(DataActions.getScheduleRequest());
+        yield put(UIActions.activateScheduleGridPreloader());
 
-        const filterReducerNames = ['building', 'floor', 'roomType', 'roomCapacity', 'roomNumber', 'resType', 'date', 'weekType', 'weekDay', 'pair'];
-        let filters = {};
+        const filterReducerNames = Object.keys(reduxFiltersToApi);
+        let filterValues = {};
         for (let filter of filterReducerNames) {
-            filters[filter] = yield select(state => state.Filters.get(filter));
+            filterValues[filter] = yield select(state => state.Filters.get(filter));
         }
 
-        if (action.type !== 'SET_SCHEDULEGRID_PAGE') yield put(UIActions.resetScheduleGridPage());
-        
+        if (action.payload && action.payload.issuer !== 'SET_SCHEDULEGRID_PAGE') yield put(UIActions.resetScheduleGridPage());
+
         const pageNum = yield select(state => state.UI.get('scheduleGridActivePage'));
         const pageSize = yield select(state => state.UI.get('scheduleGridPageSize'));
-        
-        filters.resType !== 1 ? delete filters.date : filters.date = convertDate(filters.date); // For Calendar
-        delete filters.resType; // Currently not needed
 
-        const urlParams = makeFilterUrlParams(filters, pageNum, pageSize);
+        const filters = processFilters(filterValues, pageNum, pageSize);
 
-        console.log(urlParams);
+        console.log(filters.urlParams);
+
+        if (!filters.isAnyFilterActive) {
+            yield delay(400);
+            yield put(DataActions.getScheduleFail({ message: 'Не выбрано ни одного фильтра' }));
+            yield put(UIActions.deactivateScheduleGridPreloader());
+            return;
+        }
 
         try {
-
             const filteredData = yield call(axios, {
-                url: API.data() + urlParams
+                url: API.data() + filters.urlParams
             });
 
-            yield put(DataActions.getScheduleSuccess(filteredData.data));
+            yield put(DataActions.getScheduleSuccess({ data: filteredData.data }));
+            yield put(UIActions.deactivateScheduleGridPreloader());
 
-        } catch (msg) {
-            yield put(DataActions.getScheduleFail());
-            console.error(msg)
+        } catch (e) {
+            yield put(DataActions.getScheduleFail({ message: e.message }));
         }
+    }
+    static * makeRequest(action) {
+        yield put(DataActions.getScheduleRequest({issuer: action.type}));
     }
 }
 
 export function* saga() {
-    yield takeLatest(action => action.type.slice(-7) === '_FILTER' || action.type === 'SET_SCHEDULEGRID_PAGE', FilterSaga.getFilteredData);
+    yield takeLatest(action => action.type.slice(-7) === '_FILTER' || action.type === 'SET_SCHEDULEGRID_PAGE' || action.type === 'RESET_FILTERS', FilterSaga.makeRequest);
+    yield takeLatest(DataActions.getScheduleRequest, FilterSaga.getFilteredData);
 }
