@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+import { media } from 'js/constants/media';
+
 import Loader from 'js/components/common/Loader';
 import Table from 'js/components/common/Table';
 import TablePager from 'js/components/common/TablePager';
@@ -27,7 +29,6 @@ function Grid({ items, tableFields, message, mapping, pageNum, pageSize, pageCou
                     mapping={mapping}
                 />
             }
-            {console.log(pageCount)}
             <StyledTablePager currentPage={pageNum} pageCount={pageCount} handlePageChange={setPage} />
         </Wrapper>
     )
@@ -39,14 +40,14 @@ const Wrapper = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
-    position: relative;
-    padding-bottom: 50px;
+    align-items: flex-end;
+    ${media.xs} {
+        align-items: center;
+    }
 `;
 
 const StyledTablePager = styled(TablePager)`
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    
 `;
 
 const LoaderWrapper = styled.div`
@@ -68,4 +69,6 @@ const Appear = keyframes`
 
 const StyledTable = styled(Table)`
     animation: ${Appear} 0.5s ease;
+    width: 100%;
+    margin-bottom: 25px;
 `;

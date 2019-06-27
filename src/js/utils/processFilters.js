@@ -38,7 +38,6 @@ function getUrlParams(filterValues, pageNum, pageSize) {
 }
 
 function isAnyFilterActive(filterValues) {
-    console.log(filterValues);
     for (let filterName in filterValues) {
         if (filterValues[filterName]) return true;
     }

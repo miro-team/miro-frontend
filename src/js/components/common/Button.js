@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { media } from 'js/constants/media';
+
 
 function Button({ children, ...props }) {
     return (
@@ -29,10 +31,16 @@ const StyledButton = styled.button`
 
     transition: all 0.15s ease;
 
+    ${media.xs} {
+        font-size: 15px;
+    }
+
     &:hover {
         cursor: pointer;
-        background-color: #c65757;
-        color: #fff;
-        border: 0;
+        ${media.smPlus} {
+            background-color: #c65757;
+            color: #fff;
+            border: 0;
+        }
     }
 `;

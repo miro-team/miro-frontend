@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { media } from 'js/constants/media';
+
 import ArrowIcon from 'img/svg/arrow.svg';
 
 
@@ -18,7 +20,6 @@ export default Select;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
 `;
 
 const StyledSelect = styled.select`
@@ -35,6 +36,12 @@ const StyledSelect = styled.select`
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
+    min-height: 33px;
+
+    ${media.xs} {
+        font-size: 14px;
+        padding: 6px;
+    }
 `;
 
 const Label = styled.div`
@@ -45,4 +52,8 @@ const Label = styled.div`
     font-weight: normal;
     font-size: 16px;
     line-height: 19px;
+
+    ${media.xs} {
+        font-size: 14px;
+    }
 `;

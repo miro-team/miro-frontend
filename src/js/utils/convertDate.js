@@ -1,7 +1,12 @@
-export default function convertDate(date = new Date()) {
-    return `${date.getDate()}.${getMonthNumber(date.getMonth()+1)}.${date.getFullYear()}`
+export default function convertDate(date) {
+    if (!(date instanceof Date) || isNaN(date.getDate())) {
+        return 'Invalid Date';
+    }
+    return `${date.getDate()}.${getMonthNumber(date.getMonth())}.${date.getFullYear()}`
 }
 
-function getMonthNumber(month){
-    return month < 10 ? `0${month}` : month
+export function getMonthNumber(month) {
+    month++;
+    if (!month || month > 12 || month < 0) return '00';
+    return month < 10 ? `0${month}` : `${month}`
 }

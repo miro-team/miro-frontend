@@ -7,7 +7,7 @@ import * as DataActions from 'js/actions/DataActions';
 import * as UIActions from 'js/actions/UIActions';
 
 
-export class MapSaga {
+export class MappingSaga {
 
     static * getMapData(action) {
 
@@ -26,5 +26,5 @@ export class MapSaga {
 }
 
 export function* saga() {
-    yield takeLatest('GET_MAP_REQUEST', MapSaga.getMapData);
+    yield takeLatest('GET_MAP_REQUEST', MappingSaga.getMapData);
 }

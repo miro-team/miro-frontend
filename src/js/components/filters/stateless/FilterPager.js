@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+
+import { media } from 'js/constants/media';
 
 import FilterIconBlack from 'img/svg/filterBlack.svg';
 import FilterIconWhite from 'img/svg/filterWhite.svg';
@@ -24,6 +25,10 @@ const Wrapper = styled.div`
     border-radius: 30px;
     border: 1px solid #D8D8D8;
     margin-bottom: 25px;
+
+    ${media.xs} {
+        margin-bottom: 15px;
+    }
 `;
 
 const StyledButton = styled.button`
@@ -46,6 +51,11 @@ const StyledButton = styled.button`
     font-size: 16px;
     line-height: 19px;
     color: ${({ active }) => active && '#fff'};
+
+    ${media.xs} {
+        font-size: 14px;
+        padding: 7px;
+    }
 `;
 
 const Icon = styled.img`

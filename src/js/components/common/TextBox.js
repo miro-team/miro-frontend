@@ -1,4 +1,7 @@
 import React from 'react';
+
+import { media } from 'js/constants/media';
+
 import styled from 'styled-components';
 
 
@@ -16,7 +19,6 @@ export default TextBox;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
 `;
 
 const StyledInput = styled.input`
@@ -30,6 +32,12 @@ const StyledInput = styled.input`
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
+    min-height: 33px;
+
+    ${media.xs} {
+        font-size: 14px;
+        padding: 6px;
+    }
 `;
 
 const Label = styled.div`
@@ -40,4 +48,8 @@ const Label = styled.div`
     font-weight: normal;
     font-size: 16px;
     line-height: 19px;
+
+    ${media.xs} {
+        font-size: 14px;
+    }
 `;

@@ -13,7 +13,11 @@ export class FilterSaga {
 
     static * getFilteredData(action) {
 
+        console.log(action)
+
         yield put(UIActions.activateScheduleGridPreloader());
+
+        if (action.payload && action.payload.issuer !== 'SET_SCHEDULEGRID_PAGE') yield put(UIActions.resetScheduleGridPage());
 
         const filterReducerNames = Object.keys(reduxFiltersToApi);
         let filterValues = {};
@@ -21,14 +25,10 @@ export class FilterSaga {
             filterValues[filter] = yield select(state => state.Filters.get(filter));
         }
 
-        if (action.payload && action.payload.issuer !== 'SET_SCHEDULEGRID_PAGE') yield put(UIActions.resetScheduleGridPage());
-
         const pageNum = yield select(state => state.UI.get('scheduleGridActivePage'));
         const pageSize = yield select(state => state.UI.get('scheduleGridPageSize'));
 
         const filters = processFilters(filterValues, pageNum, pageSize);
-
-        console.log(filters.urlParams);
 
         if (!filters.isAnyFilterActive) {
             yield delay(400);
@@ -43,18 +43,20 @@ export class FilterSaga {
             });
 
             yield put(DataActions.getScheduleSuccess({ data: filteredData.data }));
+            
             yield put(UIActions.deactivateScheduleGridPreloader());
 
         } catch (e) {
             yield put(DataActions.getScheduleFail({ message: e.message }));
         }
     }
+
     static * makeRequest(action) {
         yield put(DataActions.getScheduleRequest({issuer: action.type}));
     }
 }
 
 export function* saga() {
-    yield takeLatest(action => action.type.slice(-7) === '_FILTER' || action.type === 'SET_SCHEDULEGRID_PAGE' || action.type === 'RESET_FILTERS', FilterSaga.makeRequest);
+    yield takeLatest(action => (action.type.slice(-7) === '_FILTER' &&  action.type !== 'SET_RESTYPE_FILTER') || action.type === 'SET_SCHEDULEGRID_PAGE' || action.type === 'RESET_FILTERS', FilterSaga.makeRequest);
     yield takeLatest(DataActions.getScheduleRequest, FilterSaga.getFilteredData);
 }

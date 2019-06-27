@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import SelectBox from 'js/components/common/SelectBox';
-import TextBox from 'js/components/common/TextBox';
+import { media } from 'js/constants/media';
 
 import * as FilterActions from 'js/actions/FilterActions';
+
+import SelectBox from 'js/components/common/SelectBox';
+import TextBox from 'js/components/common/TextBox';
 
 
 class RoomFilters extends Component {
@@ -26,11 +28,21 @@ class RoomFilters extends Component {
 
         return (
             <Wrapper>
-                <BuildingSelectBox label="Корпус" value={building} onChange={this.handleBuildingChange} />
-                <FloorSelectBox label="Этаж" value={floor} onChange={this.handleFloorChange} />
-                <RoomTypeSelectBox label="Тип аудитории" value={roomType} onChange={this.handleRoomTypeChange} />
-                <TextBox label="Вместимость от" value={roomCapacity} onChange={this.handleRoomCapacityChange} />
-                <TextBox label="Номер аудитории" value={roomNumber} onChange={this.handleRoomNumberChange} />
+                <FieldWrapper>
+                    <BuildingSelectBox label="Корпус" value={building} onChange={this.handleBuildingChange} />
+                </FieldWrapper>
+                <FieldWrapper>
+                    <FloorSelectBox label="Этаж" value={floor} onChange={this.handleFloorChange} />
+                </FieldWrapper>
+                <FieldWrapper>
+                    <RoomTypeSelectBox label="Тип аудитории" value={roomType} onChange={this.handleRoomTypeChange} />
+                </FieldWrapper>
+                <FieldWrapper>
+                    <TextBox label="Вместимость от" value={roomCapacity} onChange={this.handleRoomCapacityChange} />
+                </FieldWrapper>
+                <FieldWrapper>
+                    <TextBox label="Номер аудитории" value={roomNumber} onChange={this.handleRoomNumberChange} />
+                </FieldWrapper>
             </Wrapper>
         )
     }
@@ -84,4 +96,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(RoomFilters);
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
+    flex: 1;
+`;
+
+const FieldWrapper = styled.div`
+    margin-bottom: 25px;
+    ${media.xs} {
+        margin-bottom: 15px;
+    }
 `;

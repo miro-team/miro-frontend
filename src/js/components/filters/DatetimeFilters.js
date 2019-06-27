@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import Calendar from 'react-calendar';
 import { connect } from 'react-redux';
 
-import SelectBox from 'js/components/common/SelectBox';
-import getMonth from 'js/utils/getMonth';
+import { media } from 'js/constants/media';
 
 import * as FilterActions from 'js/actions/FilterActions';
+
+import SelectBox from 'js/components/common/SelectBox';
+import getMonth from 'js/utils/getMonth';
 
 
 class DatetimeFilters extends Component {
@@ -27,15 +29,29 @@ class DatetimeFilters extends Component {
 
         return (
             <Wrapper>
-                <ResTypeSelectBox label="Время события" value={resType} onChange={this.handleResTypeChange} />
-                {resType === 1 && <StyledCalendar locale='ru' formatMonthYear={(locale, date) => getMonth(date)} value={date} onChange={this.handleDateChange} />}
+                <FieldWrapper>
+                    <ResTypeSelectBox label="Время события" value={resType} onChange={this.handleResTypeChange} />
+                </FieldWrapper>
+                {resType === 1 && 
+                <FieldWrapper>
+                    <Calendar locale='ru' formatMonthYear={(locale, date) => getMonth(date)} value={date} onChange={this.handleDateChange} />
+                </FieldWrapper>
+                }
                 {resType > 1 &&
                     <>
-                        <WeekTypeSelectBox label="Тип недели" value={weekType} onChange={this.handleWeekTypeChange} />
-                        <WeekDaySelectBox label="День недели" value={weekDay} onChange={this.handleWeekDayChange} />
+                        <FieldWrapper>
+                            <WeekTypeSelectBox label="Тип недели" value={weekType} onChange={this.handleWeekTypeChange} />
+                        </FieldWrapper>
+                        <FieldWrapper>
+                            <WeekDaySelectBox label="День недели" value={weekDay} onChange={this.handleWeekDayChange} />
+                        </FieldWrapper>
                     </>
                 }
-                {resType !== 0 && <PairSelectBox label="Пара" value={pair} onChange={this.handlePairChange} />}
+                {resType !== 0 && 
+                <FieldWrapper>
+                    <PairSelectBox label="Пара" value={pair} onChange={this.handlePairChange} />
+                </FieldWrapper>
+                }
             </Wrapper>
         )
     }
@@ -107,9 +123,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(DatetimeFilters);
 const Wrapper = styled.div`
 		display: flex;
 		flex-direction: column;
+        flex: 1;
 		font-size: 12px;
 `;
 
-const StyledCalendar = styled(Calendar)`
-    margin-bottom: 30px;
+const FieldWrapper = styled.div`
+    margin-bottom: 25px;
+    ${media.xs} {
+        margin-bottom: 15px;
+    }
 `;

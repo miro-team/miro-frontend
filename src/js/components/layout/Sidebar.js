@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import FilterPager from 'js/components/filters/stateless/FilterPager';
-import RoomFilters from 'js/components/filters/RoomFilters';
-import DatetimeFilters from 'js/components/filters/DatetimeFilters';
+import { media } from 'js/constants/media';
 
 import * as UIActions from 'js/actions/UIActions';
 import * as FilterActions from 'js/actions/FilterActions';
 
 import Button from 'js/components/common/Button';
+import FilterPager from 'js/components/filters/stateless/FilterPager';
+import RoomFilters from 'js/components/filters/RoomFilters';
+import DatetimeFilters from 'js/components/filters/DatetimeFilters';
 
 
 class Sidebar extends Component {
@@ -70,4 +71,7 @@ const SidebarFooter = styled.div`
 const ButtonWrapper = styled.div`
     display: flex;
     height: 50px;
+    ${media.xs} {
+        height: 35px;
+    }
 `;

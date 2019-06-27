@@ -58,6 +58,8 @@ const StyledTr = styled.tr`
 const StyledTd = styled.td`
     text-align: center;
     font-weight: 500;
+    white-space: nowrap;
+    padding: 5px;
 `;
 
 const StyledTbody = styled.tbody`
