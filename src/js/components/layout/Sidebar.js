@@ -16,15 +16,11 @@ import DatetimeFilters from 'js/components/filters/DatetimeFilters';
 class Sidebar extends Component {
 
     handleTabChange = (e) => {
-        const tabID = +e.target.id;
-        this.props.setFiltersTab(tabID)
+        this.props.setFiltersTab(+e.target.id)
     }
 
     render() {
-        const {
-            activeFiltersTab,
-            resetFilters
-        } = this.props;
+        const { activeFiltersTab, resetFilters } = this.props;
 
         return (
             <Wrapper>
@@ -45,8 +41,12 @@ const mapStateToProps = ({ UI }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setFiltersTab: payload => dispatch(UIActions.setFiltersTab(payload)),
-    resetFilters: () => dispatch(FilterActions.resetFilters())
+    setFiltersTab(payload) {
+        dispatch(UIActions.setFiltersTab(payload))
+    },
+    resetFilters() {
+        dispatch(FilterActions.resetFilters())
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
@@ -59,6 +59,10 @@ const Wrapper = styled.div`
     padding: 30px;
     display: flex;
     flex-direction: column;
+    ${media.sm} {
+        width: 270px;
+        min-width: 270px;
+    }
 `;
 
 const SidebarFooter = styled.div`

@@ -5,9 +5,9 @@ import { media } from 'js/constants/media';
 import styled from 'styled-components';
 
 
-function TextBox({ label, children, style, ...props }) {
+function TextBox({ label, children, style, className, ...props }) {
     return (
-        <Wrapper style={style}>
+        <Wrapper className={className}>
             <Label>{label}</Label>
             <StyledInput {...props}>{children}</StyledInput>
         </Wrapper>

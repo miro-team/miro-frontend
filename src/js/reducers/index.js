@@ -2,13 +2,13 @@ import { combineReducers } from 'redux';
 
 import { UIStateReducer } from './UIStateReducer';
 import { FilterReducer } from './FilterReducer';
-import { DataReducer } from './DataReducer';
+import { AppReducer } from './AppReducer';
 
 
 const reducers = combineReducers({
     UI: UIStateReducer,
     Filters: FilterReducer,
-    Data: DataReducer
+    App: AppReducer
 })
 
 export default reducers

@@ -6,9 +6,9 @@ import { media } from 'js/constants/media';
 import ArrowIcon from 'img/svg/arrow.svg';
 
 
-function Select({ label, children, style, ...props }) {
+function Select({ label, children, style, className, ...props }) {
     return (
-        <Wrapper style={style}>
+        <Wrapper className={className}>
             <Label>{label}</Label>
             <StyledSelect {...props}>{children}</StyledSelect>
         </Wrapper>

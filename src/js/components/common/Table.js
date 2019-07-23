@@ -2,34 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function Table({ items, tableFields = {}, tableHeight, rowHeight, message, mapping, ...props }) {
-    items = Array.isArray(items) && items.length && !message ? items : null;
+function Table({ data = [], columns = [], tableHeight, rowHeight, message, ...props }) {
     return (
         <Wrapper {...props}>
             <StyledTable tableHeight={tableHeight}>
                 <StyledThead>
                     <tr>
-                        {Object.keys(tableFields).map((fieldId, i) => <StyledTh thWidth={tableFields[fieldId].width} key={i}>{tableFields[fieldId].title}</StyledTh>)}
+                        {columns.map((column, i) => <StyledTh thWidth={column.width} key={i}>{column.caption}</StyledTh>)}
                     </tr>
                 </StyledThead>
                 <StyledTbody>
-                    {!items &&
-                        <tr><NoItemsTd colSpan={Object.keys(tableFields).length}>{message}</NoItemsTd ></tr>
+                    {message ?
+                        <tr><Message colSpan={columns.length}>{message}</Message ></tr>
+                        : renderRows(data, columns, rowHeight)
                     }
-                    {items && items.map((item, i) => (
-                        <StyledTr rowHeight={rowHeight} key={i} style={item.emptyRow && { background: '#fff' }}>
-                            {Object.keys(tableFields).map((fieldId, i) => {
-                                let itemValue = item[fieldId];
-                                let itemMappingId = tableFields[fieldId].mapping;
-                                let displayedItem = (mapping && itemMappingId) ? mapping[itemMappingId][itemValue] : itemValue;
-                                return <StyledTd key={i}>{displayedItem}</StyledTd>
-                            })}
-                        </StyledTr>
-                    ))}
                 </StyledTbody>
             </StyledTable>
         </Wrapper>
     )
+}
+
+function renderRows(data, columns, rowHeight) {
+    return data.map((item, i) => (
+        <StyledTr rowHeight={rowHeight} key={i} style={item.emptyRow && { background: '#fff' }}>
+            {columns.map((column, i) => {
+                return <StyledTd key={i}>{item[column.dataField]}</StyledTd>
+            })}
+        </StyledTr>
+    ));
 }
 
 export default Table;
@@ -39,6 +39,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     font-family: Roboto;
     height: 100%;
+    overflow-x: auto;
 `;
 
 const StyledTable = styled.table`
@@ -77,7 +78,7 @@ const StyledTh = styled.th`
     font-weight: normal;
 `;
 
-const NoItemsTd = styled.td`
+const Message = styled.td`
     padding: 30px;
     text-align: center;
 `;

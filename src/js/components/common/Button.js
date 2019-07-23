@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { media } from 'js/constants/media';
 
 
-function Button({ children, ...props }) {
+function Button({ inverted, children, ...props }) {
     return (
-        <StyledButton {...props}>{children}</StyledButton>
+        <StyledButton {...props} inverted={inverted}>{children}</StyledButton>
     )
 }
 
@@ -19,7 +19,8 @@ const StyledButton = styled.button`
     display: flex;
     justify-content: center;
 
-    background-color: #fff;
+    background-color: ${({ inverted }) => inverted ? '#c65757' : '#fff'};
+    color: ${({ inverted }) => inverted ? '#fff' : '#000'};
     border: 1px solid #c65757;
     text-decoration: none;
 
@@ -38,9 +39,10 @@ const StyledButton = styled.button`
     &:hover {
         cursor: pointer;
         ${media.smPlus} {
-            background-color: #c65757;
-            color: #fff;
-            border: 0;
+            background-color: ${({ inverted }) => !inverted && '#c65757'};
+            color: ${({ inverted }) => !inverted && '#fff'};
+            border: ${({ inverted }) => !inverted && 0};
+            opacity: ${({ inverted }) => inverted && 0.7};
         }
     }
 `;

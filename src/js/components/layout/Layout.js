@@ -2,39 +2,49 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import Header from './stateless/Header';
-import Sidebar from './Sidebar';
-import ScheduleGrid from 'js/components/pages/ScheduleGrid';
 import { media } from 'js/constants/media';
 
 import * as UIActions from 'js/actions/UIActions';
-import * as DataActions from 'js/actions/DataActions';
+import * as AppActions from 'js/actions/AppActions';
+
+import Header from 'js/components/layout/stateless/Header';
+import Sidebar from 'js/components/layout/Sidebar';
+import Dropdown from 'js/components/layout/Dropdown';
+import Schedule from 'js/components/schedule/Schedule';
 
 
 class Layout extends Component {
 
     handleToggleMobileSidebar = () => {
-        this.props.isMobileSidebarOpened ? this.props.closeMobileSidebar() : this.props.openMobileSidebar()
+        const { isMobileSidebarOpened, hideMobileSidebar, openMobileSidebar } = this.props;
+        isMobileSidebarOpened ? hideMobileSidebar() : openMobileSidebar()
+    }
+
+    handleToggleDropdown = () => {
+        const { isDropdownOpened, hideDropdown, openDropdown } = this.props;
+        isDropdownOpened ? hideDropdown() : openDropdown()
     }
 
     componentDidMount() {
-        this.props.getMapRequest();
-        this.props.getScheduleRequest();
+        const { getMappingRequest, getScheduleRequest } = this.props;
+        getMappingRequest();
+        getScheduleRequest()
     }
 
     render() {
 
-        const {
-            
-        } = this.props;
+        const { isDropdownOpened } = this.props;
 
         return (
             <MainWrapper>
-                <Header handleToggleMobileSidebar={this.handleToggleMobileSidebar}/>
+                <Header handleToggleMobileSidebar={this.handleToggleMobileSidebar} handleToggleDropdown={this.handleToggleDropdown} />
                 <Body>
                     <Sidebar />
+                    {isDropdownOpened &&
+                        <Dropdown />
+                    }
                     <Content>
-                        <ScheduleGrid />
+                        <Schedule />
                     </Content>
                 </Body>
             </MainWrapper>
@@ -43,14 +53,29 @@ class Layout extends Component {
 }
 
 const mapStateToProps = ({ UI }) => ({
-    isMobileSidebarOpened: UI.get('isMobileSidebarOpened')
+    isMobileSidebarOpened: UI.get('isMobileSidebarOpened'),
+    isDropdownOpened: UI.get('isDropdownOpened')
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getMapRequest: () => dispatch(DataActions.getMapRequest()),
-    getScheduleRequest: () => dispatch(DataActions.getScheduleRequest()),
-    openMobileSidebar: () => dispatch(UIActions.openMobileSidebar()),
-    closeMobileSidebar: () => dispatch(UIActions.closeMobileSidebar())
+    getMappingRequest() {
+        dispatch(AppActions.getMappingRequest())
+    },
+    getScheduleRequest() {
+        dispatch(AppActions.getScheduleRequest())
+    },
+    openMobileSidebar() {
+        dispatch(UIActions.openMobileSidebar())
+    },
+    hideMobileSidebar() {
+        dispatch(UIActions.hideMobileSidebar())
+    },
+    openDropdown() {
+        dispatch(UIActions.openDropdown())
+    },
+    hideDropdown() {
+        dispatch(UIActions.hideDropdown())
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);
@@ -73,7 +98,7 @@ const Content = styled.div`
     flex: 1;
     padding: 40px 40px 25px 40px;
     background: #f4f4f4;
-
+    overflow: hidden;
     ${media.xs} {
         padding: 30px;
     }

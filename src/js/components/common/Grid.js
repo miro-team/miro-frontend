@@ -8,27 +8,29 @@ import Table from 'js/components/common/Table';
 import TablePager from 'js/components/common/TablePager';
 
 
-function Grid({ items, tableFields, message, mapping, pageNum, pageSize, pageCount, setPage, isPreloaderActive = false, ...props }) {
-    if (Array.isArray(items)) {
-        let emptyRowsCount = items.length % pageSize !== 0 ? pageSize - items.length % pageSize : 0;
+function Grid({ data, columns, message, pageNum, pageSize, pageCount, setPage, isPreloaderActive = false, ...props }) {
+    if (Array.isArray(data)) {
+        let emptyRowsCount = data.length % pageSize !== 0 ? pageSize - data.length % pageSize : 0;
         for (let i = 0; i < emptyRowsCount; i++) {
-            items.push({ emptyRow: true })
+            data.push({ emptyRow: true })
         }
     }
     return (
         <Wrapper {...props}>
-            {isPreloaderActive ?
-                <LoaderWrapper><Loader size={250} color="#c65757" isRotating={false} /></LoaderWrapper>
-                :
+            <TableWrapper>
+                {isPreloaderActive && 
+                    <LoaderWrapper>
+                        <Loader size={250} color="#c65757" isRotating={false} />
+                    </LoaderWrapper>
+                }
                 <StyledTable
-                    items={items}
-                    tableFields={tableFields}
+                    data={data}
+                    columns={columns}
                     tableHeight="100%"
                     rowHeight={`${100 / pageSize}%`}
                     message={message}
-                    mapping={mapping}
                 />
-            }
+            </TableWrapper>
             <StyledTablePager currentPage={pageNum} pageCount={pageCount} handlePageChange={setPage} />
         </Wrapper>
     )
@@ -37,10 +39,12 @@ function Grid({ items, tableFields, message, mapping, pageNum, pageSize, pageCou
 export default Grid;
 
 const Wrapper = styled.div`
+    position: relative;
     display: flex;
     flex: 1;
     flex-direction: column;
     align-items: flex-end;
+    overflow-x: auto;
     ${media.xs} {
         align-items: center;
     }
@@ -51,11 +55,22 @@ const StyledTablePager = styled(TablePager)`
 `;
 
 const LoaderWrapper = styled.div`
+    position: absolute;
+    background: #fff;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+const TableWrapper = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
 `;
 
 const Appear = keyframes`
@@ -70,5 +85,4 @@ const Appear = keyframes`
 const StyledTable = styled(Table)`
     animation: ${Appear} 0.5s ease;
     width: 100%;
-    margin-bottom: 25px;
 `;
