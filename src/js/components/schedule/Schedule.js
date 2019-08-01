@@ -3,15 +3,12 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import ScheduleGrid from 'js/components/schedule/ScheduleGrid';
-import EventDetails from 'js/components/schedule/stateless/EventDetails';
-import EventTransfers from 'js/components/schedule/stateless/EventTransfers';
 
 
 class Schedule extends Component {
     render() {
         return (
             <Wrapper>
-                <EventTransfers/>
                 <ScheduleGrid/>
             </Wrapper>
         )

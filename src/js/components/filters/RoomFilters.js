@@ -11,18 +11,23 @@ import TextBox from 'js/components/common/TextBox';
 
 
 class RoomFilters extends Component {
+
     handleBuildingChange = (e) => {
         this.props.setBuildingFilter(e.target.value);
     }
+
     handleFloorChange = (e) => {
         this.props.setFloorFilter(e.target.value);
     }
+
     handleRoomTypeChange = (e) => {
         this.props.setRoomTypeFilter(e.target.value);
     }
+
     handleRoomCapacityChange = (e) => {
         this.props.setRoomCapacityFilter(e.target.value);
     }
+    
     handleRoomNumberChange = (e) => {
         this.props.setRoomNumberFilter(e.target.value);
     }

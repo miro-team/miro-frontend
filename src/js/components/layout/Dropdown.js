@@ -9,6 +9,7 @@ import * as FilterActions from 'js/actions/FilterActions';
 
 import Button from 'js/components/common/Button';
 import TextBox from 'js/components/common/TextBox';
+import Auth from 'js/components/auth/Auth';
 
 
 class Dropdown extends Component {
@@ -20,15 +21,7 @@ class Dropdown extends Component {
 
         return (
             <Wrapper>
-                <InputWrapper>
-                    <StyledTextBox label="Логин" />
-                </InputWrapper>
-                <InputWrapper>
-                    <StyledTextBox label="Пароль" type="password" />
-                </InputWrapper>
-                <ButtonWrapper>
-                    <StyledButton inverted>Войти</StyledButton>
-                </ButtonWrapper>
+                <Auth/>
             </Wrapper>
         )
     }

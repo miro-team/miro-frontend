@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
-import * as UIActions from 'js/actions/UIActions';
+import * as ScheduleActions from 'js/actions/ScheduleActions';
 
 import Grid from 'js/components/common/Grid';
 import PageTitle from 'js/components/common/PageTitle';
@@ -69,17 +69,19 @@ class ScheduleGrid extends Component {
     }
 }
 
-const mapStateToProps = ({ UI, App }) => ({
-    pageNum: UI.get('scheduleGridActivePage'),
-    pageSize: UI.get('scheduleGridPageSize'),
-    scheduleData: App.get('scheduleData'),
-    mapping: App.get('mapping'),
-    isPreloaderActive: UI.get('isScheduleGridPreloaderActive')
+const mapStateToProps = ({ Schedule, Data }) => ({
+    pageNum: Schedule.get('gridActivePage'),
+    pageSize: Schedule.get('gridPageSize'),
+    scheduleData: Data.get('scheduleData'),
+    isPreloaderActive: Schedule.get('isGridPreloaderActive')
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setPage: payload => dispatch(UIActions.setScheduleGridPage(payload))
+    setPage(payload) {
+        dispatch(ScheduleActions.setGridPage(payload))
+    }
 });
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleGrid);
 

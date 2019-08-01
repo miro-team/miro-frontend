@@ -1,4 +1,5 @@
 class Api {
+
     constructor() {
         this.prefix = 'http://62.109.25.2:2200'
     }
@@ -7,11 +8,22 @@ class Api {
         return `${this.prefix}/filter/data`
     }
 
-    mapping() {
-        return `${this.prefix}/mapping`
+    config() {
+        return `${this.prefix}/config`
+    }
+
+    login() {
+        return `${this.prefix}/login`
+    }
+
+    logout() {
+        return `${this.prefix}/logout`
+    }
+
+    user() {
+        return `${this.prefix}/user`
     }
 }
 
-const API = new Api();
 
-export default API;
+export default new Api();

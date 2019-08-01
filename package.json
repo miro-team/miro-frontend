@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "immutable": "^4.0.0-rc.12",
+    "js-cookie": "^2.2.0",
     "normalize.css": "^8.0.1",
     "react": "^16.8.6",
     "react-calendar": "^2.18.1",
@@ -39,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.4.4",
     "styled-components": "^4.2.0"
   }
 }

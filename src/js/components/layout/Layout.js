@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { media } from 'js/constants/media';
 
 import * as UIActions from 'js/actions/UIActions';
-import * as AppActions from 'js/actions/AppActions';
+import * as DataActions from 'js/actions/DataActions';
 
 import Header from 'js/components/layout/stateless/Header';
 import Sidebar from 'js/components/layout/Sidebar';
@@ -23,12 +23,6 @@ class Layout extends Component {
     handleToggleDropdown = () => {
         const { isDropdownOpened, hideDropdown, openDropdown } = this.props;
         isDropdownOpened ? hideDropdown() : openDropdown()
-    }
-
-    componentDidMount() {
-        const { getMappingRequest, getScheduleRequest } = this.props;
-        getMappingRequest();
-        getScheduleRequest()
     }
 
     render() {
@@ -58,12 +52,6 @@ const mapStateToProps = ({ UI }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getMappingRequest() {
-        dispatch(AppActions.getMappingRequest())
-    },
-    getScheduleRequest() {
-        dispatch(AppActions.getScheduleRequest())
-    },
     openMobileSidebar() {
         dispatch(UIActions.openMobileSidebar())
     },

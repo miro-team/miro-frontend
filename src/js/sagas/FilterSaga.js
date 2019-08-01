@@ -4,42 +4,43 @@ import { takeLatest, call, delay, select, put } from 'redux-saga/effects';
 import API from 'Api';
 import processFilters from 'js/utils/processFilters';
 
-import * as AppActions from 'js/actions/AppActions';
-import * as UIActions from 'js/actions/UIActions';
+import * as DataActions from 'js/actions/DataActions';
+import * as ScheduleActions from 'js/actions/ScheduleActions';
 
 
 export class FilterSaga {
 
     static * getFilteredData(action) {
 
-        yield put(UIActions.activateScheduleGridPreloader());
+        yield put(ScheduleActions.activateGridPreloader());
 
-        if (action.payload && action.payload.issuer !== 'SET_SCHEDULEGRID_PAGE') yield put(UIActions.resetScheduleGridPage());
+        if (action.payload && action.payload.issuer !== 'SET_SCHEDULEGRID_PAGE') yield put(ScheduleActions.resetGridPage());
 
         const filterValues = yield select(state => state.Filters.toJS());
-        const pageNum = yield select(state => state.UI.get('scheduleGridActivePage'));
-        const pageSize = yield select(state => state.UI.get('scheduleGridPageSize'));
+        const pageNum = yield select(state => state.Schedule.get('gridActivePage'));
+        const pageSize = yield select(state => state.Schedule.get('gridPageSize'));
         const filters = processFilters(filterValues, pageNum, pageSize);
 
         try {
             const filteredData = yield call(axios, {
+                method: 'GET',
                 url: API.data() + filters.urlParams
             });
-            yield put(AppActions.getScheduleSuccess(filteredData.data));
-            yield put(UIActions.deactivateScheduleGridPreloader());
+            yield put(DataActions.getScheduleSuccess(filteredData.data));
+            yield put(ScheduleActions.deactivateGridPreloader());
         } 
         catch (e) {
-            yield put(AppActions.getScheduleFail());
-            yield put(UIActions.deactivateScheduleGridPreloader());
+            yield put(DataActions.getScheduleFail());
+            yield put(ScheduleActions.deactivateGridPreloader());
         }
     }
 
     static * makeRequest(action) {
-        yield put(AppActions.getScheduleRequest({ issuer: action.type }));
+        yield put(DataActions.getScheduleRequest({ issuer: action.type }));
     }
 }
 
 export function* saga() {
     yield takeLatest(action => action.type.slice(-7) === '_FILTER' || action.type === 'SET_SCHEDULEGRID_PAGE' || action.type === 'RESET_FILTERS', FilterSaga.makeRequest);
-    yield takeLatest(AppActions.getScheduleRequest, FilterSaga.getFilteredData);
+    yield takeLatest(DataActions.getScheduleRequest, FilterSaga.getFilteredData);
 }
