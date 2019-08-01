@@ -13,6 +13,21 @@ import RoomFilters from 'js/components/filters/RoomFilters';
 import DatetimeFilters from 'js/components/filters/DatetimeFilters';
 
 
+const mapStateToProps = ({ UI }) => ({
+    activeFiltersTab: UI.get('activeFiltersTab')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    setFiltersTab(payload) {
+        dispatch(UIActions.setFiltersTab(payload))
+    },
+    resetFilters() {
+        dispatch(FilterActions.resetFilters())
+    }
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Sidebar extends Component {
 
     handleTabChange = (e) => {
@@ -36,20 +51,9 @@ class Sidebar extends Component {
     }
 }
 
-const mapStateToProps = ({ UI }) => ({
-    activeFiltersTab: UI.get('activeFiltersTab')
-});
 
-const mapDispatchToProps = (dispatch) => ({
-    setFiltersTab(payload) {
-        dispatch(UIActions.setFiltersTab(payload))
-    },
-    resetFilters() {
-        dispatch(FilterActions.resetFilters())
-    }
-});
+export default Sidebar;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
 
 const Wrapper = styled.div`
     width: 286px;

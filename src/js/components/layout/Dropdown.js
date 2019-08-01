@@ -12,6 +12,16 @@ import TextBox from 'js/components/common/TextBox';
 import Auth from 'js/components/auth/Auth';
 
 
+const mapStateToProps = ({ UI }) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Dropdown extends Component {
 
     render() {
@@ -27,15 +37,9 @@ class Dropdown extends Component {
     }
 }
 
-const mapStateToProps = ({ UI }) => ({
 
-});
+export default Dropdown;
 
-const mapDispatchToProps = (dispatch) => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
 
 const Appear = keyframes`
     from {

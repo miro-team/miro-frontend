@@ -10,6 +10,18 @@ import Button from 'js/components/common/Button';
 import TextBox from 'js/components/common/TextBox';
 
 
+const mapStateToProps = ({ UI }) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    logout() {
+        dispatch(AuthActions.logoutRequest);
+    }
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class User extends Component {
 
     state = {
@@ -32,17 +44,8 @@ class User extends Component {
     }
 }
 
-const mapStateToProps = ({ UI }) => ({
 
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    logout() {
-        dispatch(AuthActions.logoutRequest);
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(User);
+export default User;
 
 
 const ButtonWrapper = styled.div`

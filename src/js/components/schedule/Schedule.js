@@ -5,6 +5,16 @@ import { connect } from 'react-redux';
 import ScheduleGrid from 'js/components/schedule/ScheduleGrid';
 
 
+const mapStateToProps = ({ UI, App }) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Schedule extends Component {
     render() {
         return (
@@ -15,15 +25,9 @@ class Schedule extends Component {
     }
 }
 
-const mapStateToProps = ({ UI, App }) => ({
 
-});
+export default Schedule;
 
-const mapDispatchToProps = (dispatch) => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Schedule);
 
 const Wrapper = styled.div`
     display: flex;

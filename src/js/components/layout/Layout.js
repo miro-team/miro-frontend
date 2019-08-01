@@ -13,6 +13,28 @@ import Dropdown from 'js/components/layout/Dropdown';
 import Schedule from 'js/components/schedule/Schedule';
 
 
+const mapStateToProps = ({ UI }) => ({
+    isMobileSidebarOpened: UI.get('isMobileSidebarOpened'),
+    isDropdownOpened: UI.get('isDropdownOpened')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    openMobileSidebar() {
+        dispatch(UIActions.openMobileSidebar())
+    },
+    hideMobileSidebar() {
+        dispatch(UIActions.hideMobileSidebar())
+    },
+    openDropdown() {
+        dispatch(UIActions.openDropdown())
+    },
+    hideDropdown() {
+        dispatch(UIActions.hideDropdown())
+    }
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Layout extends Component {
 
     handleToggleMobileSidebar = () => {
@@ -46,27 +68,9 @@ class Layout extends Component {
     }
 }
 
-const mapStateToProps = ({ UI }) => ({
-    isMobileSidebarOpened: UI.get('isMobileSidebarOpened'),
-    isDropdownOpened: UI.get('isDropdownOpened')
-});
 
-const mapDispatchToProps = (dispatch) => ({
-    openMobileSidebar() {
-        dispatch(UIActions.openMobileSidebar())
-    },
-    hideMobileSidebar() {
-        dispatch(UIActions.hideMobileSidebar())
-    },
-    openDropdown() {
-        dispatch(UIActions.openDropdown())
-    },
-    hideDropdown() {
-        dispatch(UIActions.hideDropdown())
-    }
-});
+export default Layout;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
 
 const MainWrapper = styled.div`
     height: 100vh;

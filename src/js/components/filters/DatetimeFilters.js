@@ -11,6 +11,34 @@ import SelectBox from 'js/components/common/SelectBox';
 import getMonth from 'js/utils/getMonth';
 
 
+const mapStateToProps = ({ Filters }) => ({
+    resType: Filters.get('resType'),
+    date: Filters.get('date'),
+    weekType: Filters.get('weekType'),
+    weekDay: Filters.get('weekDay'),
+    pair: Filters.get('pair')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    setResTypeFilter(payload) {
+        dispatch(FilterActions.setResTypeFilter(payload))
+    },
+    setDateFilter(payload) {
+        dispatch(FilterActions.setDateFilter(payload))
+    },
+    setWeekTypeFilter(payload) {
+        dispatch(FilterActions.setWeekTypeFilter(payload))
+    },
+    setWeekDayFilter(payload) {
+        dispatch(FilterActions.setWeekDayFilter(payload))
+    },
+    setPairFilter(payload) {
+        dispatch(FilterActions.setPairFilter(payload))
+    }
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class DatetimeFilters extends Component {
 
     handleResTypeChange = (e) => {
@@ -28,7 +56,7 @@ class DatetimeFilters extends Component {
     handleWeekDayChange = (e) => {
         this.props.setWeekDayFilter(e.target.value);
     }
-    
+
     handlePairChange = (e) => {
         this.props.setPairFilter(+e.target.value);
     }
@@ -65,6 +93,10 @@ class DatetimeFilters extends Component {
         )
     }
 }
+
+
+export default DatetimeFilters;
+
 
 const ResTypeSelectBox = props => (
     <SelectBox {...props}>
@@ -111,33 +143,6 @@ const PairSelectBox = props => (
     </SelectBox>
 );
 
-const mapStateToProps = ({ Filters }) => ({
-    resType: Filters.get('resType'),
-    date: Filters.get('date'),
-    weekType: Filters.get('weekType'),
-    weekDay: Filters.get('weekDay'),
-    pair: Filters.get('pair')
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    setResTypeFilter(payload) {
-        dispatch(FilterActions.setResTypeFilter(payload))
-    },
-    setDateFilter(payload) {
-        dispatch(FilterActions.setDateFilter(payload))
-    },
-    setWeekTypeFilter(payload) {
-        dispatch(FilterActions.setWeekTypeFilter(payload))
-    },
-    setWeekDayFilter(payload) {
-        dispatch(FilterActions.setWeekDayFilter(payload))
-    },
-    setPairFilter(payload) {
-        dispatch(FilterActions.setPairFilter(payload))
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DatetimeFilters);
 
 const Wrapper = styled.div`
 		display: flex;

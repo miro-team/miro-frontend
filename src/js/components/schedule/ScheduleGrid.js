@@ -8,6 +8,21 @@ import Grid from 'js/components/common/Grid';
 import PageTitle from 'js/components/common/PageTitle';
 
 
+const mapStateToProps = ({ Schedule, Data }) => ({
+    pageNum: Schedule.get('gridActivePage'),
+    pageSize: Schedule.get('gridPageSize'),
+    scheduleData: Data.get('scheduleData'),
+    isPreloaderActive: Schedule.get('isGridPreloaderActive')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    setPage(payload) {
+        dispatch(ScheduleActions.setGridPage(payload))
+    }
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class ScheduleGrid extends Component {
 
     getGridData(scheduleData) {
@@ -69,21 +84,9 @@ class ScheduleGrid extends Component {
     }
 }
 
-const mapStateToProps = ({ Schedule, Data }) => ({
-    pageNum: Schedule.get('gridActivePage'),
-    pageSize: Schedule.get('gridPageSize'),
-    scheduleData: Data.get('scheduleData'),
-    isPreloaderActive: Schedule.get('isGridPreloaderActive')
-});
 
-const mapDispatchToProps = (dispatch) => ({
-    setPage(payload) {
-        dispatch(ScheduleActions.setGridPage(payload))
-    }
-});
+export default ScheduleGrid;
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ScheduleGrid);
 
 const Wrapper = styled.div`
     display: flex;

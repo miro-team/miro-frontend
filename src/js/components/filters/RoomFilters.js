@@ -10,6 +10,34 @@ import SelectBox from 'js/components/common/SelectBox';
 import TextBox from 'js/components/common/TextBox';
 
 
+const mapStateToProps = ({ Filters }) => ({
+    building: Filters.get('building'),
+    floor: Filters.get('floor'),
+    roomType: Filters.get('roomType'),
+    roomCapacity: Filters.get('roomCapacity'),
+    roomNumber: Filters.get('roomNumber')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    setBuildingFilter(payload) {
+        dispatch(FilterActions.setBuildingFilter(payload))
+    },
+    setFloorFilter(payload) {
+        dispatch(FilterActions.setFloorFilter(payload))
+    },
+    setRoomTypeFilter(payload) {
+        dispatch(FilterActions.setRoomTypeFilter(payload))
+    },
+    setRoomCapacityFilter(payload) {
+        dispatch(FilterActions.setRoomCapacityFilter(payload))
+    },
+    setRoomNumberFilter(payload) {
+        dispatch(FilterActions.setRoomNumberFilter(payload))
+    }
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class RoomFilters extends Component {
 
     handleBuildingChange = (e) => {
@@ -27,7 +55,7 @@ class RoomFilters extends Component {
     handleRoomCapacityChange = (e) => {
         this.props.setRoomCapacityFilter(e.target.value);
     }
-    
+
     handleRoomNumberChange = (e) => {
         this.props.setRoomNumberFilter(e.target.value);
     }
@@ -57,6 +85,10 @@ class RoomFilters extends Component {
     }
 }
 
+
+export default RoomFilters;
+
+
 const BuildingSelectBox = props => (
     <SelectBox {...props}>
         <option value="">---</option>
@@ -84,33 +116,6 @@ const RoomTypeSelectBox = props => (
     </SelectBox>
 );
 
-const mapStateToProps = ({ Filters }) => ({
-    building: Filters.get('building'),
-    floor: Filters.get('floor'),
-    roomType: Filters.get('roomType'),
-    roomCapacity: Filters.get('roomCapacity'),
-    roomNumber: Filters.get('roomNumber')
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    setBuildingFilter(payload) {
-        dispatch(FilterActions.setBuildingFilter(payload))
-    },
-    setFloorFilter(payload) {
-        dispatch(FilterActions.setFloorFilter(payload))
-    },
-    setRoomTypeFilter(payload) {
-        dispatch(FilterActions.setRoomTypeFilter(payload))
-    },
-    setRoomCapacityFilter(payload) {
-        dispatch(FilterActions.setRoomCapacityFilter(payload))
-    },
-    setRoomNumberFilter(payload) {
-        dispatch(FilterActions.setRoomNumberFilter(payload))
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoomFilters);
 
 const Wrapper = styled.div`
     display: flex;

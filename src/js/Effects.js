@@ -6,26 +6,7 @@ import * as DataActions from 'js/actions/DataActions';
 import * as UserActions from 'js/actions/UserActions';
 
 
-class Effects extends Component {
-
-    componentDidMount() {
-        const { getConfig, getSchedule, getUser } = this.props;
-        
-        getConfig();
-        getSchedule();
-        getUser();
-
-        setInterval(() => { getUser() }, 10000);
-    }
-
-    render() {
-        return (
-            <></>
-        )
-    }
-}
-
-const mapStateToProps = ({ }) => ({
+const mapStateToProps = ({}) => ({
 
 });
 
@@ -42,4 +23,25 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Effects);
+@connect(mapStateToProps, mapDispatchToProps)
+class Effects extends Component {
+
+    componentDidMount() {
+        const { getConfig, getSchedule, getUser } = this.props;
+
+        getConfig();
+        getSchedule();
+        getUser();
+
+        setInterval(() => { getUser() }, 10000);
+    }
+
+    render() {
+        return (
+            <></>
+        )
+    }
+}
+
+
+export default Effects;

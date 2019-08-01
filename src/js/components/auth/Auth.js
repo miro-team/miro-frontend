@@ -8,6 +8,16 @@ import User from 'js/components/auth/User';
 import Login from 'js/components/auth/Login';
 
 
+const mapStateToProps = ({ Auth }) => ({
+    isAuthorized: Auth.get('isAuthorized')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Auth extends Component {
 
     render() {
@@ -21,15 +31,8 @@ class Auth extends Component {
     }
 }
 
-const mapStateToProps = ({ Auth }) => ({
-    isAuthorized: Auth.get('isAuthorized')
-});
 
-const mapDispatchToProps = (dispatch) => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default Auth;
 
 
 const Wrapper = styled.div`
