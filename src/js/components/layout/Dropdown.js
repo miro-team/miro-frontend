@@ -4,9 +4,6 @@ import styled, { keyframes } from 'styled-components';
 
 import { media } from 'js/constants/media';
 
-import * as UIActions from 'js/actions/UIActions';
-import * as FilterActions from 'js/actions/FilterActions';
-
 import Button from 'js/components/common/Button';
 import TextBox from 'js/components/common/TextBox';
 import Auth from 'js/components/auth/Auth';

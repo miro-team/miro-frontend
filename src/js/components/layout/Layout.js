@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { media } from 'js/constants/media';
 
 import * as UIActions from 'js/actions/UIActions';
-import * as DataActions from 'js/actions/DataActions';
 
 import Header from 'js/components/layout/stateless/Header';
 import Sidebar from 'js/components/layout/Sidebar';

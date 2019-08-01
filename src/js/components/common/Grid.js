@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { media } from 'js/constants/media';
@@ -8,13 +8,15 @@ import Table from 'js/components/common/Table';
 import TablePager from 'js/components/common/TablePager';
 
 
-function Grid({ data, columns, message, pageNum, pageSize, pageCount, setPage, isPreloaderActive = false, ...props }) {
+export default function Grid({ data, columns, message, pageNum, pageSize, pageCount, setPage, isPreloaderActive = false, ...props }) {
+    
     if (Array.isArray(data)) {
         let emptyRowsCount = data.length % pageSize !== 0 ? pageSize - data.length % pageSize : 0;
         for (let i = 0; i < emptyRowsCount; i++) {
             data.push({ emptyRow: true })
         }
     }
+
     return (
         <Wrapper {...props}>
             <TableWrapper>
@@ -36,7 +38,6 @@ function Grid({ data, columns, message, pageNum, pageSize, pageCount, setPage, i
     )
 }
 
-export default Grid;
 
 const Wrapper = styled.div`
     position: relative;

@@ -6,7 +6,7 @@ import { media } from 'js/constants/media';
 import ArrowIcon from 'img/svg/arrow.svg';
 
 
-function Select({ label, children, style, className, ...props }) {
+export default function Select({ label, children, style, className, ...props }) {
     return (
         <Wrapper className={className}>
             <Label>{label}</Label>
@@ -15,7 +15,6 @@ function Select({ label, children, style, className, ...props }) {
     )
 }
 
-export default Select;
 
 const Wrapper = styled.div`
     display: flex;

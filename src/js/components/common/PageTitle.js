@@ -18,4 +18,5 @@ const PageTitle = styled.div`
     }
 `;
 
-export default PageTitle
+
+export default PageTitle;

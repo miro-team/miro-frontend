@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { media } from 'js/constants/media';
@@ -9,7 +9,7 @@ import CalendarIconBlack from 'img/svg/calendarBlack.svg';
 import CalendarIconWhite from 'img/svg/calendarWhite.svg';
 
 
-function FilterPager({ activeTab, handleTabChange }) {
+export default function FilterPager({ activeTab, handleTabChange }) {
     return (
         <Wrapper>
             <StyledButton active={activeTab === 0} onClick={handleTabChange} id={0}><Icon src={activeTab === 0 ? FilterIconWhite : FilterIconBlack} alt="Filter Icon" />Аудитория</StyledButton>
@@ -18,7 +18,6 @@ function FilterPager({ activeTab, handleTabChange }) {
     )
 }
 
-export default FilterPager;
 
 const Wrapper = styled.div`
     display: flex;

@@ -2,23 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-const defaultSize = 50;
-
-const delays = [
-    500, 250, 500,
-    250, 0, 250,
-    500, 250, 500
-]
-
-const Loader = ({ size = defaultSize, color = '#8fb0ff', isRotating = true, ...props }) => {
-    return (
-        <Wrapper size={size > 0 ? size : defaultSize} {...props}>
-            <LoaderBody isRotating={isRotating}>
-                {delays.map((delay, i) => <RoundedSquare animationDelay={delay} bgColor={color} key={i} />)}
-            </LoaderBody>
-        </Wrapper>
-    )
-}
 
 Loader.propTypes = {
     size: PropTypes.oneOfType([
@@ -28,7 +11,26 @@ Loader.propTypes = {
     color: PropTypes.string
 }
 
-export default Loader;
+
+export default function Loader({ size = defaultSize, color = '#8fb0ff', isRotating = true, ...props }) {
+    return (
+        <Wrapper size={size > 0 ? size : defaultSize} {...props}>
+            <LoaderBody isRotating={isRotating}>
+                {delays.map((delay, i) => <RoundedSquare animationDelay={delay} bgColor={color} key={i} />)}
+            </LoaderBody>
+        </Wrapper>
+    )
+}
+
+
+const defaultSize = 50;
+
+const delays = [
+    500, 250, 500,
+    250, 0, 250,
+    500, 250, 500
+];
+
 
 const Breathing = keyframes`
     0% {
@@ -78,6 +80,6 @@ const LoaderBody = styled.div`
     width: 100%;
     height: 100%;
     transform: rotate3d(0, 0, 1, 45deg);
-    animation: ${({isRotating}) => isRotating && Rotating}  1.5s infinite 700ms;
+    animation: ${({ isRotating }) => isRotating && Rotating}  1.5s infinite 700ms;
     float: left;
 `;

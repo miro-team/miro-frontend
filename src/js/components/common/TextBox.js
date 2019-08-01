@@ -1,11 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { media } from 'js/constants/media';
 
-import styled from 'styled-components';
 
-
-function TextBox({ label, children, style, className, ...props }) {
+export default function TextBox({ label, children, style, className, ...props }) {
     return (
         <Wrapper className={className}>
             <Label>{label}</Label>
@@ -14,7 +13,6 @@ function TextBox({ label, children, style, className, ...props }) {
     )
 }
 
-export default TextBox;
 
 const Wrapper = styled.div`
     display: flex;

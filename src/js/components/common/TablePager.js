@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function TablePager({ currentPage, pageCount, handlePageChange, ...props}) {
+export default function TablePager({ currentPage, pageCount, handlePageChange, ...props}) {
 
     const canIncrement = currentPage + 1 <= pageCount;
     const canDecrement = currentPage - 1 > 0;
@@ -23,7 +23,6 @@ function TablePager({ currentPage, pageCount, handlePageChange, ...props}) {
     )
 }
 
-export default TablePager;
 
 const Wrapper = styled.div`
     display: flex;
@@ -48,4 +47,3 @@ const PageWrapper = styled.span`
     margin: auto;
     font-family: Roboto;
 `;
-

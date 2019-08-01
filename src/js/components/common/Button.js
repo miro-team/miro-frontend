@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import { media } from 'js/constants/media';
 
 
-function Button({ inverted, children, ...props }) {
+export default function Button({ inverted, children, ...props }) {
     return (
         <StyledButton {...props} inverted={inverted}>{children}</StyledButton>
     )
 }
 
-export default Button;
 
 const StyledButton = styled.button`
     width: 100%;

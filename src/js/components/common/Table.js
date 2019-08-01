@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function Table({ data = [], columns = [], tableHeight, rowHeight, message, ...props }) {
+export default function Table({ data = [], columns = [], tableHeight, rowHeight, message, ...props }) {
     return (
         <Wrapper {...props}>
             <StyledTable tableHeight={tableHeight}>
@@ -32,7 +32,6 @@ function renderRows(data, columns, rowHeight) {
     ));
 }
 
-export default Table;
 
 const Wrapper = styled.div`
     display: flex;

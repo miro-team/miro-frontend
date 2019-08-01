@@ -7,7 +7,7 @@ import MenuSvg from 'img/svg/menu.svg';
 import UserSvg from 'img/svg/user.svg'
 
 
-function Header({handleToggleMobileSidebar, handleToggleDropdown}) {
+export default function Header({handleToggleMobileSidebar, handleToggleDropdown}) {
     return (
         <Wrapper>
             <HeaderLeft>
@@ -21,7 +21,6 @@ function Header({handleToggleMobileSidebar, handleToggleDropdown}) {
     )
 }
 
-export default Header;
 
 const Wrapper = styled.div`
     height: 53px;
