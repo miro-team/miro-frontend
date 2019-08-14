@@ -4,19 +4,20 @@ import { Map } from 'immutable';
 
 
 const initialState = Map({
-    building: '',
-    floor: '',
-    roomType: '',
-    roomCapacity: '',
-    roomNumber: '',
-    resType: 0,
-    date: new Date(),
-    weekType: '',
-    weekDay: '',
-    pair: ''
+  building: 0,
+  floor: 0,
+  roomType: 0,
+  roomCapacity: 0,
+  roomNumber: '',
+  resType: 0,
+  date: new Date(),
+  weekType: 0,
+  weekDay: 0,
+  pair: 0,
 });
 
-export const FilterReducer = createReducer({
+const FilterReducer = createReducer(
+  {
     [actions.setBuildingFilter]: (state = initialState, payload) => state.set('building', payload),
     [actions.setFloorFilter]: (state = initialState, payload) => state.set('floor', payload),
     [actions.setRoomTypeFilter]: (state = initialState, payload) => state.set('roomType', payload),
@@ -29,5 +30,9 @@ export const FilterReducer = createReducer({
     [actions.setWeekDayFilter]: (state = initialState, payload) => state.set('weekDay', payload),
     [actions.setPairFilter]: (state = initialState, payload) => state.set('pair', payload),
 
-    [actions.resetFilters]: () => initialState
-}, initialState);
+    [actions.resetFilters]: () => initialState,
+  },
+  initialState,
+);
+
+export default FilterReducer;

@@ -4,12 +4,13 @@ import { Map } from 'immutable';
 
 
 const initialState = Map({
-    activeFiltersTab: 0,
-    isMobileSidebarOpened: false,
-    isDropdownOpened: false
+  activeFiltersTab: 0,
+  isMobileSidebarOpened: false,
+  isDropdownOpened: false,
 });
 
-export const UIStateReducer = createReducer({
+const UIStateReducer = createReducer(
+  {
     [actions.setFiltersTab]: (state = initialState, payload) => state.set('activeFiltersTab', payload),
 
     [actions.openMobileSidebar]: (state = initialState) => state.set('isMobileSidebarOpened', true),
@@ -17,4 +18,8 @@ export const UIStateReducer = createReducer({
 
     [actions.openDropdown]: (state = initialState) => state.set('isDropdownOpened', true),
     [actions.hideDropdown]: (state = initialState) => state.set('isDropdownOpened', false),
-}, initialState);
+  },
+  initialState,
+);
+
+export default UIStateReducer;

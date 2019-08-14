@@ -5,13 +5,12 @@ import Effects from 'js/Effects';
 
 
 function App() {
-    return (
-        <>
-            <Layout />
-            <Effects />
-        </>
-    );
+  return (
+    <>
+      <Layout />
+      <Effects />
+    </>
+  );
 }
-
 
 export default App;

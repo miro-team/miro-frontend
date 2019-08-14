@@ -4,9 +4,14 @@ import { Map } from 'immutable';
 
 
 const initialState = Map({
-    config: null
+  config: null,
 });
 
-export const AppReducer = createReducer({
-    [actions.getConfigSuccess]: (state = initialState, payload) => state.set('config', payload)
-}, initialState);
+const AppReducer = createReducer(
+  {
+    [actions.getConfigSuccess]: (state = initialState, payload) => state.set('config', payload),
+  },
+  initialState,
+);
+
+export default AppReducer;

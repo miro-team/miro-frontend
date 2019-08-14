@@ -4,10 +4,14 @@ import { Map } from 'immutable';
 
 
 const initialState = Map({
-    scheduleData: {}
+  scheduleData: {},
 });
 
-export const DataReducer = createReducer({
+const DataReducer = createReducer(
+  {
     [actions.getScheduleSuccess]: (state = initialState, payload) => state.set('scheduleData', payload),
-    [actions.getScheduleFail]: (state = initialState, payload) => state.set('scheduleData', payload)
-}, initialState);
+  },
+  initialState,
+);
+
+export default DataReducer;
