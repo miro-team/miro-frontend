@@ -5,6 +5,7 @@ import UIStateReducer from './UIStateReducer';
 import FilterReducer from './FilterReducer';
 import DataReducer from './DataReducer';
 import AuthReducer from './AuthReducer';
+import UserReducer from './UserReducer';
 import ScheduleReducer from './ScheduleReducer';
 
 
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   Filters: FilterReducer,
   Data: DataReducer,
   Auth: AuthReducer,
+  User: UserReducer,
   Schedule: ScheduleReducer,
 });
 

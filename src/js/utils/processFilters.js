@@ -1,26 +1,38 @@
 import convertDate from 'js/utils/convertDate';
-import reduxFiltersToApi from 'js/constants/spec';
 // Temporary default export
 
-function getFilterValues(reduxFilterValues) {
-  const filterValues = { ...reduxFilterValues };
+function getPreparedValues(reduxFilterValues) {
+  const baseFilters = {
+    building: reduxFilterValues.building,
+    floor: reduxFilterValues.floor,
+    roomTypeId: reduxFilterValues.roomType,
+    capacity: reduxFilterValues.roomCapacity,
+    roomId: reduxFilterValues.roomNumber,
+    pairId: reduxFilterValues.pair,
+  };
 
-  if (filterValues.resType === 1) {
-    filterValues.date = convertDate(filterValues.date);
-    delete filterValues.weekType;
-    delete filterValues.weekDay;
-  } else {
-    delete filterValues.date;
+  if (reduxFilterValues.eventType === 'single') {
+    return {
+      ...baseFilters,
+      date: convertDate(reduxFilterValues.date),
+    };
   }
-  if (filterValues.resType) delete filterValues.resType;
 
-  return filterValues;
+  if (reduxFilterValues.eventType === 'cycle') {
+    return {
+      ...baseFilters,
+      weekType: reduxFilterValues.weekType,
+      weekDay: reduxFilterValues.weekDay,
+    };
+  }
+
+  return {};
 }
 
-function getUrlParams(filterValues, pageNum, pageSize) {
-  const urlParams = Object.entries(filterValues).reduce((result, [filterName, filterValue]) => {
+function getUrlParams(preparedValues, pageNum, pageSize) {
+  const urlParams = Object.entries(preparedValues).reduce((result, [filterName, filterValue]) => {
     if (filterValue) {
-      return `${result}&${reduxFiltersToApi[filterName]}=${filterValue}`;
+      return `${result}&${filterName}=${filterValue}`;
     }
     return result;
   }, '');
@@ -28,9 +40,14 @@ function getUrlParams(filterValues, pageNum, pageSize) {
   return `?${pageUrlParams}${urlParams}`;
 }
 
+function getType(reduxFilterValues) {
+  return reduxFilterValues.eventType;
+}
+
 export default function processFilters(reduxFilterValues, pageNum, pageSize) {
-  const filterValues = getFilterValues(reduxFilterValues);
+  const preparedValues = getPreparedValues(reduxFilterValues);
   return {
-    urlParams: getUrlParams(filterValues, pageNum, pageSize),
+    urlParams: getUrlParams(preparedValues, pageNum, pageSize),
+    type: getType(reduxFilterValues),
   };
 }

@@ -1,6 +1,6 @@
 export default function convertDate(date) {
   if (!(date instanceof Date) || Number.isNaN(date.getDate())) {
-    return 'Invalid Date';
+    return date;
   }
   const dayNum = date.getDate();
   const day = dayNum < 10 ? `0${dayNum}` : dayNum;

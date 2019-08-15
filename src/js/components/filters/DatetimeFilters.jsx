@@ -13,7 +13,7 @@ import getMonth from 'js/utils/getMonth';
 
 
 const mapStateToProps = ({ Filters }) => ({
-  resType: Filters.get('resType'),
+  eventType: Filters.get('eventType'),
   date: Filters.get('date'),
   weekType: Filters.get('weekType'),
   weekDay: Filters.get('weekDay'),
@@ -21,8 +21,8 @@ const mapStateToProps = ({ Filters }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setResTypeFilter(payload) {
-    dispatch(FilterActions.setResTypeFilter(payload));
+  setEventTypeFilter(payload) {
+    dispatch(FilterActions.setEventTypeFilter(payload));
   },
   setDateFilter(payload) {
     dispatch(FilterActions.setDateFilter(payload));
@@ -44,22 +44,22 @@ const mapDispatchToProps = dispatch => ({
 )
 class DatetimeFilters extends Component {
   static propTypes = {
-    resType: PropTypes.number.isRequired,
+    eventType: PropTypes.string.isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
     weekType: PropTypes.number.isRequired,
     weekDay: PropTypes.number.isRequired,
     pair: PropTypes.number.isRequired,
 
-    setResTypeFilter: PropTypes.func.isRequired,
+    setEventTypeFilter: PropTypes.func.isRequired,
     setDateFilter: PropTypes.func.isRequired,
     setWeekTypeFilter: PropTypes.func.isRequired,
     setWeekDayFilter: PropTypes.func.isRequired,
     setPairFilter: PropTypes.func.isRequired,
   };
 
-  handleResTypeChange = (e) => {
-    const { setResTypeFilter } = this.props;
-    setResTypeFilter(+e.target.value);
+  handleEventTypeChange = (e) => {
+    const { setEventTypeFilter } = this.props;
+    setEventTypeFilter(e.target.value);
   };
 
   handleDateChange = (date) => {
@@ -83,18 +83,18 @@ class DatetimeFilters extends Component {
   };
 
   render() {
-    const { resType, date, weekType, weekDay, pair } = this.props;
+    const { eventType, date, weekType, weekDay, pair } = this.props;
 
     return (
       <Wrapper>
         <FieldWrapper>
-          <ResTypeSelectBox
-            label="Время события"
-            value={resType}
-            onChange={this.handleResTypeChange}
+          <EventTypeSelectBox
+            label="Тип события"
+            value={eventType}
+            onChange={this.handleEventTypeChange}
           />
         </FieldWrapper>
-        {resType === 1 && (
+        {eventType === 'single' && (
           <FieldWrapper>
             <Calendar
               locale="ru"
@@ -104,7 +104,7 @@ class DatetimeFilters extends Component {
             />
           </FieldWrapper>
         )}
-        {resType > 1 && (
+        {eventType === 'cycle' && (
           <>
             <FieldWrapper>
               <WeekTypeSelectBox
@@ -122,11 +122,9 @@ class DatetimeFilters extends Component {
             </FieldWrapper>
           </>
         )}
-        {resType !== 0 && (
-          <FieldWrapper>
-            <PairSelectBox label="Пара" value={pair} onChange={this.handlePairChange} />
-          </FieldWrapper>
-        )}
+        <FieldWrapper>
+          <PairSelectBox label="Пара" value={pair} onChange={this.handlePairChange} />
+        </FieldWrapper>
       </Wrapper>
     );
   }
@@ -134,23 +132,22 @@ class DatetimeFilters extends Component {
 
 export default DatetimeFilters;
 
-const ResTypeSelectBox = props => (
+const EventTypeSelectBox = props => (
   <SelectBox {...props}>
-    <option value={0}>---</option>
-    <option value={1}>Конкретная дата</option>
-    <option value={2}>Каждую неделю</option>
-    <option value={3}>Каждые 2 недели</option>
-    <option value={4}>Каждый месяц</option>
+    <option value="single">Конкретная дата</option>
+    <option value="cycle">Цикличное</option>
   </SelectBox>
 );
 
 const WeekTypeSelectBox = props => (
   <SelectBox {...props}>
-    <option value={0}>---</option>
     <option value={1}>1-й числитель</option>
     <option value={2}>1-й знаменатель</option>
     <option value={3}>2-й числитель</option>
     <option value={4}>2-й знаменатель</option>
+    <option value={5}>Числитель</option>
+    <option value={6}>Знаменатель</option>
+    <option value={7}>Каждую неделю</option>
   </SelectBox>
 );
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 // import { media } from 'js/constants/media';
@@ -27,13 +26,8 @@ class Auth extends Component {
   render() {
     const { isAuthorized } = this.props;
 
-    return <Wrapper>{isAuthorized ? <User /> : <Login />}</Wrapper>;
+    return <>{isAuthorized ? <User /> : <Login />}</>;
   }
 }
 
 export default Auth;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;

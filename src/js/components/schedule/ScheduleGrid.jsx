@@ -30,7 +30,7 @@ class ScheduleGrid extends Component {
   static propTypes = {
     pageNum: PropTypes.number.isRequired,
     pageSize: PropTypes.number.isRequired,
-    scheduleData: PropTypes.shape({}).isRequired,
+    scheduleData: PropTypes.shape({ totalAmount: PropTypes.number }).isRequired,
     isPreloaderActive: PropTypes.bool.isRequired,
 
     setPage: PropTypes.func.isRequired,

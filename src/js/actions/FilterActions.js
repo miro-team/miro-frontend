@@ -7,7 +7,7 @@ export const setRoomTypeFilter = createAction('SET_ROOMTYPE_FILTER');
 export const setRoomCapacityFilter = createAction('SET_ROOMCAPACITY_FILTER');
 export const setRoomNumberFilter = createAction('SET_ROOMNUMBER_FILTER');
 
-export const setResTypeFilter = createAction('SET_RESTYPE_FILTER');
+export const setEventTypeFilter = createAction('SET_EVENTTYPE_FILTER');
 export const setDateFilter = createAction('SET_DATE_FILTER');
 export const setWeekTypeFilter = createAction('SET_WEEKTYPE_FILTER');
 export const setWeekDayFilter = createAction('SET_WEEKDAY_FILTER');

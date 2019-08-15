@@ -3,8 +3,12 @@ class Api {
     this.prefix = 'http://62.109.25.2:2200/api';
   }
 
-  data() {
-    return `${this.prefix}/filter/data`;
+  filterSingle() {
+    return `${this.prefix}/filter/single`;
+  }
+
+  filterCycle() {
+    return `${this.prefix}/filter/cycle`;
   }
 
   config() {

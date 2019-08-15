@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { media } from 'js/constants/media';
 
 
-export default function Button({ inverted, children, ...props }) {
+export default function Button({ inverted, disabled, children, ...props }) {
   return (
-    <StyledButton {...props} inverted={inverted}>
+    <StyledButton {...props} inverted={inverted} disabled={disabled}>
       {children}
     </StyledButton>
   );
@@ -15,11 +15,13 @@ export default function Button({ inverted, children, ...props }) {
 
 Button.propTypes = {
   inverted: PropTypes.bool,
+  disabled: PropTypes.bool,
   children: PropTypes.node,
 };
 
 Button.defaultProps = {
   inverted: false,
+  disabled: false,
   children: null,
 };
 
@@ -34,6 +36,7 @@ const StyledButton = styled.button`
   color: ${({ inverted }) => (inverted ? '#fff' : '#000')};
   border: 1px solid #c65757;
   text-decoration: none;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 'unset')};
 
   font-family: Roboto;
   font-style: normal;
@@ -48,12 +51,12 @@ const StyledButton = styled.button`
   }
 
   &:hover {
-    cursor: pointer;
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
     ${media.smPlus} {
       background-color: ${({ inverted }) => !inverted && '#c65757'};
       color: ${({ inverted }) => !inverted && '#fff'};
       border: ${({ inverted }) => !inverted && 0};
-      opacity: ${({ inverted }) => inverted && 0.7};
+      opacity: ${({ inverted, disabled }) => inverted && !disabled && 0.7};
     }
   }
 `;

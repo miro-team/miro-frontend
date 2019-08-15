@@ -1,4 +1,7 @@
-export default function getMonth(date = new Date()) {
+export default function getMonth(date) {
+  if (!(date instanceof Date) || Number.isNaN(date.getDate())) {
+    return date;
+  }
   const shortMonths = [
     'Янв',
     'Фев',
@@ -13,5 +16,5 @@ export default function getMonth(date = new Date()) {
     'Ноя',
     'Дек',
   ];
-  return `${shortMonths[date.getMonth()]}\n${date.getFullYear()}`;
+  return `${shortMonths[date.getMonth()]} ${date.getFullYear()}`;
 }

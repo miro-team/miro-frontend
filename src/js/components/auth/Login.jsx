@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Formik, Form } from 'formik';
 
 // import { media } from 'js/constants/media';
+import getValidationSchema from 'js/utils/getValidationSchema';
+import createFormikField from 'js/components/common/hoc/createFormikField';
 
 import * as AuthActions from 'js/actions/AuthActions';
 
 import Button from 'js/components/common/Button';
 import TextBox from 'js/components/common/TextBox';
 
+
+const FormikField = createFormikField(TextBox);
 
 const mapStateToProps = () => ({});
 
@@ -28,53 +33,50 @@ class Login extends Component {
     loginRequest: PropTypes.func.isRequired,
   };
 
-  state = {
-    username: null,
-    password: null,
-  };
-
-  handleUsernameChange = (e) => {
-    this.setState({ username: e.target.value });
-  };
-
-  handlePasswordChange = (e) => {
-    this.setState({ password: e.target.value });
-  };
-
-  handleLogin = (e) => {
-    e.preventDefault();
-
+  handleLogin = ({ username, password }, { setSubmitting }) => {
     const { loginRequest } = this.props;
-    const { username, password } = this.state;
 
     loginRequest({
       username,
       password,
     });
+
+    setTimeout(() => {
+      setSubmitting(false);
+    }, 1000);
   };
 
   render() {
+    const initialValues = {
+      username: '',
+      password: '',
+    };
+
     return (
-      <form>
-        <InputSet>
-          <InputWrapper>
-            <StyledTextBox label="Логин" onChange={this.handleUsernameChange} required />
-          </InputWrapper>
-          <InputWrapper>
-            <StyledTextBox
-              label="Пароль"
-              type="password"
-              onChange={this.handlePasswordChange}
-              required
-            />
-          </InputWrapper>
-        </InputSet>
-        <ButtonWrapper>
-          <StyledButton type="submit" inverted onClick={this.handleLogin}>
-            Войти
-          </StyledButton>
-        </ButtonWrapper>
-      </form>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={getValidationSchema('login')}
+        onSubmit={this.handleLogin}
+        validateOnChange={false}
+        enableReinitialize
+        render={({ isSubmitting }) => (
+          <Form>
+            <InputSet>
+              <InputWrapper>
+                <StyledFormikField label="Логин" type="text" name="username" />
+              </InputWrapper>
+              <InputWrapper>
+                <StyledFormikField label="Пароль" type="password" name="password" />
+              </InputWrapper>
+            </InputSet>
+            <ButtonWrapper>
+              <StyledButton type="submit" disabled={isSubmitting} inverted>
+                Войти
+              </StyledButton>
+            </ButtonWrapper>
+          </Form>
+        )}
+      />
     );
   }
 }
@@ -93,7 +95,7 @@ const ButtonWrapper = styled.div`
   height: 40px;
 `;
 
-const StyledTextBox = styled(TextBox)`
+const StyledFormikField = styled(FormikField)`
   div {
     font-size: 14px;
   }

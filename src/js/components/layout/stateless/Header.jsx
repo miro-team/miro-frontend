@@ -8,7 +8,7 @@ import MenuSvg from 'img/svg/menu.svg';
 import UserSvg from 'img/svg/user.svg';
 
 
-export default function Header({ handleToggleMobileSidebar, handleToggleDropdown }) {
+export default function Header({ handleToggleMobileSidebar, handleToggleDropdown, isAuthorized }) {
   return (
     <Wrapper>
       <HeaderLeft>
@@ -19,7 +19,7 @@ export default function Header({ handleToggleMobileSidebar, handleToggleDropdown
       </HeaderLeft>
       <HeaderRight>
         <UserProfile onClick={handleToggleDropdown}>
-          Ваш профиль
+          {isAuthorized ? 'Учетная запись' : 'Авторизация'}
           <StyledUserIcon src={UserSvg} />
         </UserProfile>
       </HeaderRight>
@@ -30,6 +30,7 @@ export default function Header({ handleToggleMobileSidebar, handleToggleDropdown
 Header.propTypes = {
   handleToggleMobileSidebar: PropTypes.func.isRequired,
   handleToggleDropdown: PropTypes.func.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
 };
 
 const Wrapper = styled.div`

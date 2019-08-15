@@ -14,7 +14,7 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
   logoutRequest() {
-    dispatch(AuthActions.logoutRequest);
+    dispatch(AuthActions.logoutRequest());
   },
 });
 
@@ -35,16 +35,40 @@ class User extends Component {
 
   render() {
     return (
-      <ButtonWrapper>
-        <Button onClick={this.handleLogout}>Logout</Button>
-      </ButtonWrapper>
+      <Wrapper>
+        <UserInfo>
+          <InfoBlock>Вы вошли в систему как: Фамилия Имя Отчество</InfoBlock>
+        </UserInfo>
+        <ButtonWrapper>
+          <StyledButton onClick={this.handleLogout} inverted>
+            Выйти
+          </StyledButton>
+        </ButtonWrapper>
+      </Wrapper>
     );
   }
 }
 
 export default User;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const InfoBlock = styled.div``;
+
 const ButtonWrapper = styled.div`
   margin-top: 15px;
+  height: 40px;
+`;
+
+const StyledButton = styled(Button)`
+  font-size: 16px;
   height: 40px;
 `;

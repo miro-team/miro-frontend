@@ -22,3 +22,8 @@ body {
   height: 35px;
   margin-bottom: 2px;
 }
+
+.react-calendar__navigation button {
+  min-width: 33px;
+  background: none;
+}

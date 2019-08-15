@@ -44,6 +44,8 @@ const Wrapper = styled.div`
   background: #fff;
   width: 250px;
   right: 0;
+  font-family: Roboto;
+  font-size: 14px;
   position: absolute;
   padding: 25px 25px 30px;
   box-shadow: 0 10px 21px 0 rgba(173, 182, 217, 0.3);

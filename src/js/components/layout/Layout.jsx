@@ -13,9 +13,10 @@ import Dropdown from 'js/components/layout/Dropdown';
 import Schedule from 'js/components/schedule/Schedule';
 
 
-const mapStateToProps = ({ UI }) => ({
+const mapStateToProps = ({ UI, Auth }) => ({
   isMobileSidebarOpened: UI.get('isMobileSidebarOpened'),
   isDropdownOpened: UI.get('isDropdownOpened'),
+  isAuthorized: Auth.get('isAuthorized'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -41,6 +42,7 @@ class Layout extends Component {
   static propTypes = {
     isMobileSidebarOpened: PropTypes.bool.isRequired,
     isDropdownOpened: PropTypes.bool.isRequired,
+    isAuthorized: PropTypes.bool.isRequired,
 
     openMobileSidebar: PropTypes.func.isRequired,
     hideMobileSidebar: PropTypes.func.isRequired,
@@ -67,13 +69,14 @@ class Layout extends Component {
   };
 
   render() {
-    const { isDropdownOpened } = this.props;
+    const { isDropdownOpened, isAuthorized } = this.props;
 
     return (
       <MainWrapper>
         <Header
           handleToggleMobileSidebar={this.handleToggleMobileSidebar}
           handleToggleDropdown={this.handleToggleDropdown}
+          isAuthorized={isAuthorized}
         />
         <Body>
           <Sidebar />

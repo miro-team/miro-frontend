@@ -9,9 +9,9 @@ const initialState = Map({
   roomType: 0,
   roomCapacity: 0,
   roomNumber: '',
-  resType: 0,
+  eventType: 'single',
   date: new Date(),
-  weekType: 0,
+  weekType: 1,
   weekDay: 0,
   pair: 0,
 });
@@ -24,7 +24,7 @@ const FilterReducer = createReducer(
     [actions.setRoomCapacityFilter]: (state = initialState, payload) => state.set('roomCapacity', payload),
     [actions.setRoomNumberFilter]: (state = initialState, payload) => state.set('roomNumber', payload),
 
-    [actions.setResTypeFilter]: (state = initialState, payload) => state.set('resType', payload),
+    [actions.setEventTypeFilter]: (state = initialState, payload) => state.set('eventType', payload),
     [actions.setDateFilter]: (state = initialState, payload) => state.set('date', payload),
     [actions.setWeekTypeFilter]: (state = initialState, payload) => state.set('weekType', payload),
     [actions.setWeekDayFilter]: (state = initialState, payload) => state.set('weekDay', payload),

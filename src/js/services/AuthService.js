@@ -10,7 +10,7 @@ class AuthService {
 
   subscribeRequestsWithJWT = (token) => {
     if (token) {
-      axios.defaults.headers.common.Authorization = `JWT ${token}`;
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
   };
 

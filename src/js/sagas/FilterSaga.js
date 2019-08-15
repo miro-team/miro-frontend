@@ -20,11 +20,11 @@ export class FilterSaga {
       const filterValues = yield select(state => state.Filters.toJS());
       const pageNum = yield select(state => state.Schedule.get('gridActivePage'));
       const pageSize = yield select(state => state.Schedule.get('gridPageSize'));
-      const filters = processFilters(filterValues, pageNum, pageSize);
+      const { urlParams, type } = processFilters(filterValues, pageNum, pageSize);
 
       const filteredData = yield call(axios, {
         method: 'GET',
-        url: API.data() + filters.urlParams,
+        url: `${type === 'single' ? API.filterSingle() : API.filterCycle()}${urlParams}`,
       });
       yield put(DataActions.getScheduleSuccess(filteredData.data));
       yield put(ScheduleActions.deactivateGridPreloader());
