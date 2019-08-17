@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import uuidv4 from 'uuid/v4';
 
 import { media } from 'js/constants/media';
 
@@ -11,7 +12,8 @@ import SelectBox from 'js/components/common/SelectBox';
 import TextBox from 'js/components/common/TextBox';
 
 
-const mapStateToProps = ({ Filters }) => ({
+const mapStateToProps = ({ App, Filters }) => ({
+  filters: App.get('filters'),
   building: Filters.get('building'),
   floor: Filters.get('floor'),
   roomType: Filters.get('roomType'),
@@ -43,6 +45,7 @@ const mapDispatchToProps = dispatch => ({
 )
 class RoomFilters extends Component {
   static propTypes = {
+    filters: PropTypes.object.isRequired,
     building: PropTypes.number.isRequired,
     floor: PropTypes.number.isRequired,
     roomType: PropTypes.number.isRequired,
@@ -81,23 +84,36 @@ class RoomFilters extends Component {
     setRoomNumberFilter(e.target.value);
   };
 
+  renderOptions = (options) => {
+    if (Array.isArray(options)) {
+      return options.map(({ id, name }) => (
+        <option key={uuidv4()} value={id}>
+          {name}
+        </option>
+      ));
+    }
+    return null;
+  };
+
   render() {
-    const { building, floor, roomType, roomCapacity, roomNumber } = this.props;
+    const { filters, building, floor, roomType, roomCapacity, roomNumber } = this.props;
 
     return (
       <Wrapper>
         <FieldWrapper>
-          <BuildingSelectBox label="Корпус" value={building} onChange={this.handleBuildingChange} />
+          <SelectBox label="Корпус" value={building} onChange={this.handleBuildingChange}>
+            {this.renderOptions(filters.buildings)}
+          </SelectBox>
         </FieldWrapper>
         <FieldWrapper>
-          <FloorSelectBox label="Этаж" value={floor} onChange={this.handleFloorChange} />
+          <SelectBox label="Этаж" value={floor} onChange={this.handleFloorChange}>
+            {this.renderOptions(filters.floors)}
+          </SelectBox>
         </FieldWrapper>
         <FieldWrapper>
-          <RoomTypeSelectBox
-            label="Тип аудитории"
-            value={roomType}
-            onChange={this.handleRoomTypeChange}
-          />
+          <SelectBox label="Тип аудитории" value={roomType} onChange={this.handleRoomTypeChange}>
+            {this.renderOptions(filters.roomTypes)}
+          </SelectBox>
         </FieldWrapper>
         <FieldWrapper>
           <TextBox
@@ -119,33 +135,6 @@ class RoomFilters extends Component {
 }
 
 export default RoomFilters;
-
-const BuildingSelectBox = props => (
-  <SelectBox {...props}>
-    <option value={0}>---</option>
-    <option value={1}>Первый</option>
-    <option value={3}>Третий</option>
-    <option value={4}>Четвертый</option>
-  </SelectBox>
-);
-
-const FloorSelectBox = props => (
-  <SelectBox {...props}>
-    <option value={0}>---</option>
-    <option value={1}>Первый</option>
-    <option value={2}>Второй</option>
-    <option value={3}>Третий</option>
-  </SelectBox>
-);
-
-const RoomTypeSelectBox = props => (
-  <SelectBox {...props}>
-    <option value={0}>---</option>
-    <option value={1}>Большая лекционная</option>
-    <option value={2}>Малая лекционная</option>
-    <option value={5}>Семинарская</option>
-  </SelectBox>
-);
 
 const Wrapper = styled.div`
   display: flex;

@@ -4,12 +4,12 @@ import { Map } from 'immutable';
 
 
 const initialState = Map({
-  config: null,
+  filters: {},
 });
 
 const AppReducer = createReducer(
   {
-    [actions.getConfigSuccess]: (state = initialState, payload) => state.set('config', payload),
+    [actions.getConfigSuccess]: (state = initialState, payload) => state.set('filters', payload.filters),
   },
   initialState,
 );

@@ -35,9 +35,9 @@ class Effects extends Component {
   componentDidMount() {
     const { getConfig, getSchedule, getUser } = this.props;
 
+    getUser();
     getConfig();
     getSchedule();
-    getUser();
 
     setInterval(() => {
       getUser();

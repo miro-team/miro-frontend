@@ -31,6 +31,7 @@ const StyledButton = styled.button`
   flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   background-color: ${({ inverted }) => (inverted ? '#c65757' : '#fff')};
   color: ${({ inverted }) => (inverted ? '#fff' : '#000')};

@@ -1,5 +1,5 @@
 import convertDate from 'js/utils/convertDate';
-// Temporary default export
+
 
 function getPreparedValues(reduxFilterValues) {
   const baseFilters = {

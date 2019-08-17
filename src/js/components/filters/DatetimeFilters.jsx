@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Calendar from 'react-calendar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import uuidv4 from 'uuid/v4';
 
 import { media } from 'js/constants/media';
 
@@ -12,7 +13,8 @@ import SelectBox from 'js/components/common/SelectBox';
 import getMonth from 'js/utils/getMonth';
 
 
-const mapStateToProps = ({ Filters }) => ({
+const mapStateToProps = ({ App, Filters }) => ({
+  filters: App.get('filters'),
   eventType: Filters.get('eventType'),
   date: Filters.get('date'),
   weekType: Filters.get('weekType'),
@@ -44,6 +46,7 @@ const mapDispatchToProps = dispatch => ({
 )
 class DatetimeFilters extends Component {
   static propTypes = {
+    filters: PropTypes.object.isRequired,
     eventType: PropTypes.string.isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
     weekType: PropTypes.number.isRequired,
@@ -82,17 +85,27 @@ class DatetimeFilters extends Component {
     setPairFilter(+e.target.value);
   };
 
+  renderOptions = (options) => {
+    if (Array.isArray(options)) {
+      return options.map(({ id, name }) => (
+        <option key={uuidv4()} value={id}>
+          {name}
+        </option>
+      ));
+    }
+    return null;
+  };
+
   render() {
-    const { eventType, date, weekType, weekDay, pair } = this.props;
+    const { filters, eventType, date, weekType, weekDay, pair } = this.props;
 
     return (
       <Wrapper>
         <FieldWrapper>
-          <EventTypeSelectBox
-            label="Тип события"
-            value={eventType}
-            onChange={this.handleEventTypeChange}
-          />
+          <SelectBox label="Тип события" value={eventType} onChange={this.handleEventTypeChange}>
+            <option value="single">Конкретная дата</option>
+            <option value="cycle">Цикличное</option>
+          </SelectBox>
         </FieldWrapper>
         {eventType === 'single' && (
           <FieldWrapper>
@@ -107,23 +120,21 @@ class DatetimeFilters extends Component {
         {eventType === 'cycle' && (
           <>
             <FieldWrapper>
-              <WeekTypeSelectBox
-                label="Тип недели"
-                value={weekType}
-                onChange={this.handleWeekTypeChange}
-              />
+              <SelectBox label="Тип недели" value={weekType} onChange={this.handleWeekTypeChange}>
+                {this.renderOptions(filters.weekTypes)}
+              </SelectBox>
             </FieldWrapper>
             <FieldWrapper>
-              <WeekDaySelectBox
-                label="День недели"
-                value={weekDay}
-                onChange={this.handleWeekDayChange}
-              />
+              <SelectBox label="День недели" value={weekDay} onChange={this.handleWeekDayChange}>
+                {this.renderOptions(filters.weekDays)}
+              </SelectBox>
             </FieldWrapper>
           </>
         )}
         <FieldWrapper>
-          <PairSelectBox label="Пара" value={pair} onChange={this.handlePairChange} />
+          <SelectBox label="Пара" value={pair} onChange={this.handlePairChange}>
+            {this.renderOptions(filters.pairs)}
+          </SelectBox>
         </FieldWrapper>
       </Wrapper>
     );
@@ -131,50 +142,6 @@ class DatetimeFilters extends Component {
 }
 
 export default DatetimeFilters;
-
-const EventTypeSelectBox = props => (
-  <SelectBox {...props}>
-    <option value="single">Конкретная дата</option>
-    <option value="cycle">Цикличное</option>
-  </SelectBox>
-);
-
-const WeekTypeSelectBox = props => (
-  <SelectBox {...props}>
-    <option value={1}>1-й числитель</option>
-    <option value={2}>1-й знаменатель</option>
-    <option value={3}>2-й числитель</option>
-    <option value={4}>2-й знаменатель</option>
-    <option value={5}>Числитель</option>
-    <option value={6}>Знаменатель</option>
-    <option value={7}>Каждую неделю</option>
-  </SelectBox>
-);
-
-const WeekDaySelectBox = props => (
-  <SelectBox {...props}>
-    <option value={0}>---</option>
-    <option value={1}>Понедельник</option>
-    <option value={2}>Вторник</option>
-    <option value={3}>Среда</option>
-    <option value={4}>Четверг</option>
-    <option value={5}>Пятница</option>
-    <option value={6}>Суббота</option>
-  </SelectBox>
-);
-
-const PairSelectBox = props => (
-  <SelectBox {...props}>
-    <option value={0}>---</option>
-    <option value={1}>1 (09:00-10:30)</option>
-    <option value={2}>2 (10:40-12:10)</option>
-    <option value={3}>3 (12:20-14:20)*</option>
-    <option value={4}>4 (14:30-16:00)</option>
-    <option value={5}>5 (16:10:00-17:40)</option>
-    <option value={6}>6 (18:20:00-19:50)</option>
-    <option value={7}>7 (20:00-21:30)</option>
-  </SelectBox>
-);
 
 const Wrapper = styled.div`
   display: flex;

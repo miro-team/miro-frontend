@@ -11,7 +11,10 @@ export default function Select({ label, children, className, ...props }) {
   return (
     <Wrapper className={className}>
       <Label>{label}</Label>
-      <StyledSelect {...props}>{children}</StyledSelect>
+      <InputWrapper>
+        <StyledArrowIcon />
+        <StyledSelect {...props}>{children}</StyledSelect>
+      </InputWrapper>
     </Wrapper>
   );
 }
@@ -34,10 +37,9 @@ const Wrapper = styled.div`
 `;
 
 const StyledSelect = styled.select`
+  flex: 1;
   appearance: none;
-  position: relative;
-  background: url(${ArrowIcon}) no-repeat;
-  background-position: right 12px center;
+  background: #fff;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
   padding: 10px;
@@ -67,4 +69,16 @@ const Label = styled.div`
   ${media.xs} {
     font-size: 14px;
   }
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const StyledArrowIcon = styled(ArrowIcon)`
+  position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
 `;

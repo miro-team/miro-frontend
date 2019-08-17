@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import { media } from 'js/constants/media';
 
-import MenuSvg from 'img/svg/menu.svg';
-import UserSvg from 'img/svg/user.svg';
+import MenuIcon from 'img/svg/menu.svg';
+import UserIcon from 'img/svg/user.svg';
 
 
 export default function Header({ handleToggleMobileSidebar, handleToggleDropdown, isAuthorized }) {
@@ -13,14 +13,14 @@ export default function Header({ handleToggleMobileSidebar, handleToggleDropdown
     <Wrapper>
       <HeaderLeft>
         <MobileSidebarButton onClick={handleToggleMobileSidebar}>
-          <StyledMenuIcon src={MenuSvg} />
+          <StyledMenuIcon />
         </MobileSidebarButton>
         <Logo>MIRO</Logo>
       </HeaderLeft>
       <HeaderRight>
         <UserProfile onClick={handleToggleDropdown}>
           {isAuthorized ? 'Учетная запись' : 'Авторизация'}
-          <StyledUserIcon src={UserSvg} />
+          <StyledUserIcon />
         </UserProfile>
       </HeaderRight>
     </Wrapper>
@@ -45,12 +45,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledMenuIcon = styled.img`
+const StyledMenuIcon = styled(MenuIcon)`
   width: 22px;
   height: 22px;
 `;
 
-const StyledUserIcon = styled.img`
+const StyledUserIcon = styled(UserIcon)`
   width: 30px;
   height: 30px;
   margin-left: 10px;

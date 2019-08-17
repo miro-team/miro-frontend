@@ -52,6 +52,9 @@ const Wrapper = styled.div`
 const Button = styled.button`
   width: 35px;
   height: 35px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 `;
 
 const ActivePage = styled.div`

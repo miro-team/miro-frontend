@@ -4,21 +4,29 @@ import PropTypes from 'prop-types';
 
 import { media } from 'js/constants/media';
 
-import FilterIconBlack from 'img/svg/filterBlack.svg';
-import FilterIconWhite from 'img/svg/filterWhite.svg';
-import CalendarIconBlack from 'img/svg/calendarBlack.svg';
-import CalendarIconWhite from 'img/svg/calendarWhite.svg';
+import FilterBlackIcon from 'img/svg/filterBlack.svg';
+import FilterWhiteIcon from 'img/svg/filterWhite.svg';
+import CalendarBlackIcon from 'img/svg/calendarBlack.svg';
+import CalendarWhiteIcon from 'img/svg/calendarWhite.svg';
 
 
 export default function FilterPager({ activeTab, handleTabChange }) {
   return (
     <Wrapper>
       <StyledButton active={activeTab === 0} onClick={handleTabChange} id={0}>
-        <Icon src={activeTab === 0 ? FilterIconWhite : FilterIconBlack} alt="Filter Icon" />
+        {activeTab === 0 ? (
+          <FilterWhiteIcon className="icon" />
+        ) : (
+          <FilterBlackIcon className="icon" />
+        )}
         Аудитория
       </StyledButton>
       <StyledButton active={activeTab === 1} onClick={handleTabChange} id={1}>
-        <Icon src={activeTab === 1 ? CalendarIconWhite : CalendarIconBlack} alt="Calendar Icon" />
+        {activeTab === 1 ? (
+          <CalendarWhiteIcon className="icon" />
+        ) : (
+          <CalendarBlackIcon className="icon" />
+        )}
         Дата
       </StyledButton>
     </Wrapper>
@@ -39,6 +47,10 @@ const Wrapper = styled.div`
   ${media.xs} {
     margin-bottom: 15px;
   }
+
+  .icon {
+    margin-right: 8px;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -47,7 +59,7 @@ const StyledButton = styled.button`
   flex: ${({ active }) => (active ? 5 : 4)};
   border-radius: 30px;
   border: 0;
-  background: ${({ active }) => active && '#C65757'};
+  background: ${({ active }) => (active ? '#C65757' : '#fff')};
   opacity: ${({ active }) => (active ? 1 : 0.6)};
 
   display: flex;
@@ -66,8 +78,4 @@ const StyledButton = styled.button`
     font-size: 14px;
     padding: 7px;
   }
-`;
-
-const Icon = styled.img`
-  margin-right: 8px;
 `;

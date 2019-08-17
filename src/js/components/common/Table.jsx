@@ -66,9 +66,11 @@ const Wrapper = styled.div`
 `;
 
 const StyledTable = styled.table`
+  flex: 1;
   border-collapse: collapse;
   font-size: 14px;
   height: ${({ tableHeight }) => tableHeight};
+  width: 100%;
 `;
 
 const StyledTr = styled.tr`
@@ -99,6 +101,7 @@ const StyledTh = styled.th`
   padding: 15px;
   width: ${({ thWidth }) => thWidth};
   font-weight: normal;
+  height: 45px;
 `;
 
 const Message = styled.td`
