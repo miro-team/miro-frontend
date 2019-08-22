@@ -65,7 +65,7 @@ class ScheduleGrid extends Component {
         caption: 'День недели',
       },
       {
-        dataField: 'weekType',
+        dataField: 'periodicity',
         caption: 'Тип недели',
       },
     ];

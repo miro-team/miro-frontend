@@ -2,28 +2,28 @@ import processFilters from 'js/utils/processFilters';
 
 
 const reduxStateSingle = {
-  building: 0,
-  floor: 0,
-  roomType: 0,
-  roomCapacity: 0,
+  building: -1,
+  floor: -1,
+  roomType: -1,
+  roomCapacity: -1,
   roomNumber: '',
   eventType: 'single',
   date: new Date('2018-05-13'),
-  weekType: 1, // Should not pass
+  periodicity: -1, // Should not pass
   weekDay: 3, // Should not pass
-  pair: 0,
+  pair: -1,
 };
 
 const reduxStateCycle = {
-  building: 0,
-  floor: 0,
-  roomType: 0,
-  roomCapacity: 0,
+  building: -1,
+  floor: -1,
+  roomType: -1,
+  roomCapacity: -1,
   roomNumber: '5102',
   eventType: 'cycle',
   date: new Date('2019-01-03'), // Should not pass
-  weekType: 0,
-  weekDay: 0,
+  periodicity: -1,
+  weekDay: -1,
   pair: 2,
 };
 
@@ -53,8 +53,8 @@ it('processFilters works properly', () => {
     type: 'cycle',
   });
 
-  expect(processFilters({ ...reduxStateCycle, weekType: 2 }, 4, 12)).toEqual({
-    urlParams: '?pageNum=4&pageSize=12&roomId=5102&pairId=2&weekType=2',
+  expect(processFilters({ ...reduxStateCycle, periodicity: 2 }, 4, 12)).toEqual({
+    urlParams: '?pageNum=4&pageSize=12&roomId=5102&pairId=2&periodicity=2',
     type: 'cycle',
   });
 

@@ -49,7 +49,7 @@ class RoomFilters extends Component {
     building: PropTypes.number.isRequired,
     floor: PropTypes.number.isRequired,
     roomType: PropTypes.number.isRequired,
-    roomCapacity: PropTypes.number.isRequired,
+    roomCapacity: PropTypes.string.isRequired,
     roomNumber: PropTypes.string.isRequired,
 
     setBuildingFilter: PropTypes.func.isRequired,
@@ -76,7 +76,7 @@ class RoomFilters extends Component {
 
   handleRoomCapacityChange = (e) => {
     const { setRoomCapacityFilter } = this.props;
-    setRoomCapacityFilter(+e.target.value);
+    setRoomCapacityFilter(e.target.value);
   };
 
   handleRoomNumberChange = (e) => {
@@ -84,8 +84,9 @@ class RoomFilters extends Component {
     setRoomNumberFilter(e.target.value);
   };
 
-  renderOptions = (options) => {
-    if (Array.isArray(options)) {
+  renderOptions = (_options, isRequired) => {
+    if (Array.isArray(_options)) {
+      const options = isRequired ? [..._options] : [{ id: -1, name: '---' }, ..._options];
       return options.map(({ id, name }) => (
         <option key={uuidv4()} value={id}>
           {name}

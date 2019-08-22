@@ -9,7 +9,7 @@ export const setRoomNumberFilter = createAction('SET_ROOMNUMBER_FILTER');
 
 export const setEventTypeFilter = createAction('SET_EVENTTYPE_FILTER');
 export const setDateFilter = createAction('SET_DATE_FILTER');
-export const setWeekTypeFilter = createAction('SET_WEEKTYPE_FILTER');
+export const setPeriodicityFilter = createAction('SET_PERIODICITY_FILTER');
 export const setWeekDayFilter = createAction('SET_WEEKDAY_FILTER');
 export const setPairFilter = createAction('SET_PAIR_FILTER');
 

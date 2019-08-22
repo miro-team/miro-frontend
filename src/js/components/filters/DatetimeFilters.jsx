@@ -17,7 +17,7 @@ const mapStateToProps = ({ App, Filters }) => ({
   filters: App.get('filters'),
   eventType: Filters.get('eventType'),
   date: Filters.get('date'),
-  weekType: Filters.get('weekType'),
+  periodicity: Filters.get('periodicity'),
   weekDay: Filters.get('weekDay'),
   pair: Filters.get('pair'),
 });
@@ -29,8 +29,8 @@ const mapDispatchToProps = dispatch => ({
   setDateFilter(payload) {
     dispatch(FilterActions.setDateFilter(payload));
   },
-  setWeekTypeFilter(payload) {
-    dispatch(FilterActions.setWeekTypeFilter(payload));
+  setPeriodicityFilter(payload) {
+    dispatch(FilterActions.setPeriodicityFilter(payload));
   },
   setWeekDayFilter(payload) {
     dispatch(FilterActions.setWeekDayFilter(payload));
@@ -49,13 +49,13 @@ class DatetimeFilters extends Component {
     filters: PropTypes.object.isRequired,
     eventType: PropTypes.string.isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
-    weekType: PropTypes.number.isRequired,
+    periodicity: PropTypes.number.isRequired,
     weekDay: PropTypes.number.isRequired,
     pair: PropTypes.number.isRequired,
 
     setEventTypeFilter: PropTypes.func.isRequired,
     setDateFilter: PropTypes.func.isRequired,
-    setWeekTypeFilter: PropTypes.func.isRequired,
+    setPeriodicityFilter: PropTypes.func.isRequired,
     setWeekDayFilter: PropTypes.func.isRequired,
     setPairFilter: PropTypes.func.isRequired,
   };
@@ -70,9 +70,9 @@ class DatetimeFilters extends Component {
     setDateFilter(date);
   };
 
-  handleWeekTypeChange = (e) => {
-    const { setWeekTypeFilter } = this.props;
-    setWeekTypeFilter(+e.target.value);
+  handlePeriodicityChange = (e) => {
+    const { setPeriodicityFilter } = this.props;
+    setPeriodicityFilter(+e.target.value);
   };
 
   handleWeekDayChange = (e) => {
@@ -85,8 +85,9 @@ class DatetimeFilters extends Component {
     setPairFilter(+e.target.value);
   };
 
-  renderOptions = (options) => {
-    if (Array.isArray(options)) {
+  renderOptions = (_options, isRequired) => {
+    if (Array.isArray(_options)) {
+      const options = isRequired ? [..._options] : [{ id: -1, name: '---' }, ..._options];
       return options.map(({ id, name }) => (
         <option key={uuidv4()} value={id}>
           {name}
@@ -97,7 +98,7 @@ class DatetimeFilters extends Component {
   };
 
   render() {
-    const { filters, eventType, date, weekType, weekDay, pair } = this.props;
+    const { filters, eventType, date, periodicity, weekDay, pair } = this.props;
 
     return (
       <Wrapper>
@@ -120,8 +121,8 @@ class DatetimeFilters extends Component {
         {eventType === 'cycle' && (
           <>
             <FieldWrapper>
-              <SelectBox label="Тип недели" value={weekType} onChange={this.handleWeekTypeChange}>
-                {this.renderOptions(filters.weekTypes)}
+              <SelectBox label="Периодичность" value={periodicity} onChange={this.handlePeriodicityChange}>
+                {this.renderOptions(filters.periodicities, true)}
               </SelectBox>
             </FieldWrapper>
             <FieldWrapper>

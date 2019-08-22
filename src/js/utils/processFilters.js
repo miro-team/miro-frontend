@@ -21,7 +21,7 @@ function getPreparedValues(reduxFilterValues) {
   if (reduxFilterValues.eventType === 'cycle') {
     return {
       ...baseFilters,
-      weekType: reduxFilterValues.weekType,
+      periodicity: reduxFilterValues.periodicity,
       weekDay: reduxFilterValues.weekDay,
     };
   }
@@ -31,7 +31,7 @@ function getPreparedValues(reduxFilterValues) {
 
 function getUrlParams(preparedValues, pageNum, pageSize) {
   const urlParams = Object.entries(preparedValues).reduce((result, [filterName, filterValue]) => {
-    if (filterValue) {
+    if (filterValue !== -1 && filterValue !== '') {
       return `${result}&${filterName}=${filterValue}`;
     }
     return result;

@@ -26,6 +26,7 @@ export class FilterSaga {
         method: 'GET',
         url: `${type === 'single' ? API.filterSingle() : API.filterCycle()}${urlParams}`,
       });
+
       yield put(DataActions.getScheduleSuccess(filteredData.data));
       yield put(ScheduleActions.deactivateGridPreloader());
     } catch (e) {

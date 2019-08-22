@@ -3,6 +3,8 @@ import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import API from 'Api';
 
+import AuthService from 'js/services/AuthService';
+
 import * as AuthActions from 'js/actions/AuthActions';
 import * as UserActions from 'js/actions/UserActions';
 
@@ -26,6 +28,9 @@ export class UserSaga {
       yield put(UserActions.getUserFail());
       if (isAuthorized) {
         yield put(AuthActions.unsetAuthStatus());
+      }
+      if (AuthService.getJWT()) {
+        AuthService.unsetJWT();
       }
     }
   }

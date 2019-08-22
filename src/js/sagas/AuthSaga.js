@@ -42,8 +42,6 @@ export class AuthSaga {
       });
       AuthService.unsetJWT();
 
-      yield delay(400);
-
       yield all([put(AuthActions.unsetAuthStatus()), put(AuthActions.logoutSuccess())]);
     } catch (e) {
       yield put(AuthActions.logoutFail());
