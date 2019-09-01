@@ -39,7 +39,6 @@ const StyledButton = styled.button`
   text-decoration: none;
   opacity: ${({ disabled }) => (disabled ? 0.4 : 'unset')};
 
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;

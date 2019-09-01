@@ -67,5 +67,4 @@ const ActivePage = styled.div`
 
 const PageWrapper = styled.span`
   margin: auto;
-  font-family: Roboto;
 `;

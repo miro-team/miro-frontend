@@ -4,7 +4,6 @@ import { media } from 'js/constants/media';
 
 
 const PageTitle = styled.div`
-  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;

@@ -29,7 +29,7 @@ export class UserSaga {
       if (isAuthorized) {
         yield put(AuthActions.unsetAuthStatus());
       }
-      if (AuthService.getJWT()) {
+      if (AuthService.getJWT()) { // TODO: Remove this
         AuthService.unsetJWT();
       }
     }

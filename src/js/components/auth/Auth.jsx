@@ -26,7 +26,7 @@ class Auth extends Component {
   render() {
     const { isAuthorized } = this.props;
 
-    return <>{isAuthorized ? <User /> : <Login />}</>;
+    return <>{!isAuthorized ? <User /> : <Login />}</>;
   }
 }
 

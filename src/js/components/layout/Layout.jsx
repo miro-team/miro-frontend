@@ -10,6 +10,7 @@ import * as UIActions from 'js/actions/UIActions';
 import Header from 'js/components/layout/stateless/Header';
 import Sidebar from 'js/components/layout/Sidebar';
 import Dropdown from 'js/components/layout/Dropdown';
+import Modal from 'js/components/modals/Modal';
 import Schedule from 'js/components/schedule/Schedule';
 
 
@@ -17,6 +18,7 @@ const mapStateToProps = ({ UI, Auth }) => ({
   isMobileSidebarOpened: UI.get('isMobileSidebarOpened'),
   isDropdownOpened: UI.get('isDropdownOpened'),
   isAuthorized: Auth.get('isAuthorized'),
+  isModalOpened: UI.get('isModalOpened'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -43,6 +45,7 @@ class Layout extends Component {
     isMobileSidebarOpened: PropTypes.bool.isRequired,
     isDropdownOpened: PropTypes.bool.isRequired,
     isAuthorized: PropTypes.bool.isRequired,
+    isModalOpened: PropTypes.bool.isRequired,
 
     openMobileSidebar: PropTypes.func.isRequired,
     hideMobileSidebar: PropTypes.func.isRequired,
@@ -69,7 +72,7 @@ class Layout extends Component {
   };
 
   render() {
-    const { isDropdownOpened, isAuthorized } = this.props;
+    const { isDropdownOpened, isAuthorized, isModalOpened } = this.props;
 
     return (
       <MainWrapper>
@@ -85,6 +88,7 @@ class Layout extends Component {
             <Schedule />
           </Content>
         </Body>
+        {isModalOpened && <Modal />}
       </MainWrapper>
     );
   }

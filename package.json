@@ -45,6 +45,7 @@
     "react-dev-utils": "^9.0.0",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
+    "react-router-dom": "^5.0.1",
     "redux": "^4.0.1",
     "redux-act": "^1.7.4",
     "redux-logger": "^3.0.6",

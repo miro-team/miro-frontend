@@ -11,9 +11,10 @@ class Api {
     return `${this.prefix}/filter/cycle`;
   }
 
-  config() {
-    return `${this.prefix}/config`;
-  }
+  config = () => 'http://127.0.0.1:8005/api/config'
+  // config() {
+  //   return `${this.prefix}/config`;
+  // }
 
   login() {
     return `${this.prefix}/login`;

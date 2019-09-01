@@ -8,3 +8,6 @@ export const hideMobileSidebar = createAction('HIDE_MOBILE_SIDEBAR');
 
 export const openDropdown = createAction('OPEN_DROPDOWN');
 export const hideDropdown = createAction('HIDE_DROPDOWN');
+
+export const showModal = createAction('SHOW_MODAL');
+export const hideModal = createAction('HIDE_MODAL');

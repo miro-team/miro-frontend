@@ -59,7 +59,6 @@ const StyledUserIcon = styled(UserIcon)`
 const Logo = styled.span`
   margin-left: 20px;
   color: #fff;
-  font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -82,7 +81,6 @@ const MobileSidebarButton = styled.div`
 `;
 
 const UserProfile = styled.div`
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

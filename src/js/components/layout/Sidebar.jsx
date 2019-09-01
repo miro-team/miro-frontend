@@ -41,7 +41,7 @@ class Sidebar extends Component {
 
   handleTabChange = (e) => {
     const { setFiltersTab } = this.props;
-    setFiltersTab(+e.target.id);
+    setFiltersTab(+e.currentTarget.id);
   };
 
   render() {

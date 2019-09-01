@@ -60,7 +60,6 @@ Table.defaultProps = {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  font-family: Roboto;
   height: 100%;
   overflow-x: auto;
 `;

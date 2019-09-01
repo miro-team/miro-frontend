@@ -44,7 +44,6 @@ const StyledSelect = styled.select`
   border-radius: 2px;
   padding: 10px;
 
-  font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -60,7 +59,6 @@ const StyledSelect = styled.select`
 const Label = styled.div`
   margin-bottom: 6px;
 
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;

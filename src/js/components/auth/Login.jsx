@@ -53,35 +53,41 @@ class Login extends Component {
     };
 
     return (
-      <Formik
-        initialValues={initialValues}
-        validationSchema={getValidationSchema('login')}
-        onSubmit={this.handleLogin}
-        validateOnChange={false}
-        enableReinitialize
-        render={({ isSubmitting }) => (
-          <Form>
-            <InputSet>
-              <InputWrapper>
-                <StyledFormikField label="Логин" type="text" name="username" />
-              </InputWrapper>
-              <InputWrapper>
-                <StyledFormikField label="Пароль" type="password" name="password" />
-              </InputWrapper>
-            </InputSet>
-            <ButtonWrapper>
-              <StyledButton type="submit" disabled={isSubmitting} inverted>
-                Войти
-              </StyledButton>
-            </ButtonWrapper>
-          </Form>
-        )}
-      />
+      <Wrapper>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={getValidationSchema('login')}
+          onSubmit={this.handleLogin}
+          validateOnChange={false}
+          enableReinitialize
+          render={({ isSubmitting }) => (
+            <Form>
+              <InputSet>
+                <InputWrapper>
+                  <StyledFormikField label="Логин" type="text" name="username" />
+                </InputWrapper>
+                <InputWrapper>
+                  <StyledFormikField label="Пароль" type="password" name="password" />
+                </InputWrapper>
+              </InputSet>
+              <ButtonWrapper>
+                <StyledButton type="submit" disabled={isSubmitting} inverted>
+                  Войти
+                </StyledButton>
+              </ButtonWrapper>
+            </Form>
+          )}
+        />
+      </Wrapper>
     );
   }
 }
 
 export default Login;
+
+const Wrapper = styled.div`
+  padding: 25px 25px 30px;
+`;
 
 const InputWrapper = styled.div`
   margin-bottom: 15px;

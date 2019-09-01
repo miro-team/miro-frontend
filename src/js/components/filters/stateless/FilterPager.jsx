@@ -67,7 +67,6 @@ const StyledButton = styled.button`
   justify-content: center;
   padding: 10px;
 
-  font-family: Roboto;
   font-style: normal;
   font-weight: ${({ active }) => active && 500};
   font-size: 16px;

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as ScheduleActions from 'js/actions/ScheduleActions';
+import * as UIActions from 'js/actions/UIActions';
 
 import Grid from 'js/components/common/Grid';
 import PageTitle from 'js/components/common/PageTitle';
@@ -19,6 +20,12 @@ const mapStateToProps = ({ Schedule, Data }) => ({
 const mapDispatchToProps = dispatch => ({
   setPage(payload) {
     dispatch(ScheduleActions.setGridPage(payload));
+  },
+  showModal(payload) {
+    dispatch(UIActions.showModal(payload));
+  },
+  hideModal(payload) {
+    dispatch(UIActions.hideModal(payload));
   },
 });
 
