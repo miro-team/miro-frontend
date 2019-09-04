@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 
 import { media } from 'js/constants/media';
 
@@ -8,30 +10,43 @@ import MenuIcon from 'img/svg/menu.svg';
 import UserIcon from 'img/svg/user.svg';
 
 
-export default function Header({ handleToggleMobileSidebar, handleToggleDropdown, isAuthorized }) {
-  return (
-    <Wrapper>
-      <HeaderLeft>
-        <MobileSidebarButton onClick={handleToggleMobileSidebar}>
-          <StyledMenuIcon />
-        </MobileSidebarButton>
-        <Logo>MIRO</Logo>
-      </HeaderLeft>
-      <HeaderRight>
-        <UserProfile onClick={handleToggleDropdown}>
-          {isAuthorized ? 'Учетная запись' : 'Авторизация'}
-          <StyledUserIcon />
-        </UserProfile>
-      </HeaderRight>
-    </Wrapper>
-  );
+const mapStateToProps = ({ Auth }) => ({
+  isAuthorized: Auth.get('isAuthorized'),
+});
+
+@withRouter
+@connect(mapStateToProps)
+class Header extends Component {
+  static propTypes = {
+    isAuthorized: PropTypes.bool.isRequired,
+
+    handleToggleMobileSidebar: PropTypes.func.isRequired,
+    handleToggleDropdown: PropTypes.func.isRequired,
+  };
+
+  render() {
+    const { handleToggleMobileSidebar, handleToggleDropdown, isAuthorized } = this.props;
+
+    return (
+      <Wrapper>
+        <HeaderLeft>
+          <MobileSidebarButton onClick={handleToggleMobileSidebar}>
+            <StyledMenuIcon />
+          </MobileSidebarButton>
+          <LogoWithLink to="/">MIRO</LogoWithLink>
+        </HeaderLeft>
+        <HeaderRight>
+          <UserProfile onClick={handleToggleDropdown}>
+            {isAuthorized ? 'Учетная запись' : 'Авторизация'}
+            <StyledUserIcon />
+          </UserProfile>
+        </HeaderRight>
+      </Wrapper>
+    );
+  }
 }
 
-Header.propTypes = {
-  handleToggleMobileSidebar: PropTypes.func.isRequired,
-  handleToggleDropdown: PropTypes.func.isRequired,
-  isAuthorized: PropTypes.bool.isRequired,
-};
+export default Header;
 
 const Wrapper = styled.div`
   height: 53px;
@@ -54,15 +69,6 @@ const StyledUserIcon = styled(UserIcon)`
   width: 30px;
   height: 30px;
   margin-left: 10px;
-`;
-
-const Logo = styled.span`
-  margin-left: 20px;
-  color: #fff;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  letter-spacing: 0.08em;
 `;
 
 const MobileSidebarButton = styled.div`
@@ -107,4 +113,17 @@ const HeaderLeft = styled.div`
 const HeaderRight = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const LogoWithLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  color: #fff;
+  text-decoration: none;
+  padding-left: 20px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 0.08em;
 `;

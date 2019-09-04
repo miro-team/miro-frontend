@@ -121,7 +121,11 @@ class DatetimeFilters extends Component {
         {eventType === 'cycle' && (
           <>
             <FieldWrapper>
-              <SelectBox label="Периодичность" value={periodicity} onChange={this.handlePeriodicityChange}>
+              <SelectBox
+                label="Периодичность"
+                value={periodicity}
+                onChange={this.handlePeriodicityChange}
+              >
                 {this.renderOptions(filters.periodicities, true)}
               </SelectBox>
             </FieldWrapper>

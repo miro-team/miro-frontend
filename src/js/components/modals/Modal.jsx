@@ -42,9 +42,7 @@ class Modal extends Component {
 
     return (
       <Wrapper>
-        <ModalBody>
-          {this.renderModal(modalType)}
-        </ModalBody>
+        <ModalBody>{this.renderModal(modalType)}</ModalBody>
       </Wrapper>
     );
   }

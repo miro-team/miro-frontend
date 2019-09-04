@@ -24,9 +24,9 @@ const mapDispatchToProps = dispatch => ({
 )
 class RoomModal extends Component {
   static propTypes = {
-    modalOptions: PropTypes.string.isRequired,
+    modalOptions: PropTypes.object.isRequired,
 
-    hideModal: PropTypes.object.isRequired,
+    hideModal: PropTypes.func.isRequired,
   };
 
   render() {

@@ -76,7 +76,7 @@ const InputWrapper = styled.div`
 
 const StyledArrowIcon = styled(ArrowIcon)`
   position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
 `;

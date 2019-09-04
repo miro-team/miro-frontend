@@ -6,9 +6,9 @@ import { Map } from 'immutable';
 const initialState = Map({
   activeFiltersTab: 0,
   isMobileSidebarOpened: false,
-  isDropdownOpened: true,
+  isDropdownOpened: false,
 
-  isModalOpened: false,
+  isModalOpened: true,
   modalType: 'room',
   modalOptions: { title: 'Просмотр аудитории' },
 });

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { media } from 'js/constants/media';
 
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
+@withRouter
 @connect(
   mapStateToProps,
   mapDispatchToProps,
@@ -34,6 +36,7 @@ const mapDispatchToProps = dispatch => ({
 class Sidebar extends Component {
   static propTypes = {
     activeFiltersTab: PropTypes.number.isRequired,
+    location: PropTypes.object.isRequired,
 
     setFiltersTab: PropTypes.func.isRequired,
     resetFilters: PropTypes.func.isRequired,
@@ -45,7 +48,11 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { activeFiltersTab, resetFilters } = this.props;
+    const { activeFiltersTab, resetFilters, location } = this.props;
+
+    if (location.pathname !== '/') {
+      return null;
+    }
 
     return (
       <Wrapper>
