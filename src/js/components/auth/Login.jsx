@@ -4,23 +4,30 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 
-// import { media } from 'js/constants/media';
 import getValidationSchema from 'js/utils/getValidationSchema';
 import createFormikField from 'js/components/common/hoc/createFormikField';
 
 import * as AuthActions from 'js/actions/AuthActions';
+import * as NotificationActions from 'js/actions/NotificationActions';
 
 import Button from 'js/components/common/Button';
 import TextBox from 'js/components/common/TextBox';
+import Notification from 'js/components/common/Notification';
 
 
 const FormikField = createFormikField(TextBox);
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ Notifications, App }) => ({
+  notification: Notifications.get('login'),
+  process: App.get('process'),
+});
 
 const mapDispatchToProps = dispatch => ({
   loginRequest(payload) {
     dispatch(AuthActions.loginRequest(payload));
+  },
+  clearNotification(payload) {
+    dispatch(NotificationActions.clearNotification(payload));
   },
 });
 
@@ -30,23 +37,39 @@ const mapDispatchToProps = dispatch => ({
 )
 class Login extends Component {
   static propTypes = {
+    notification: PropTypes.object.isRequired,
+    process: PropTypes.string.isRequired,
+
     loginRequest: PropTypes.func.isRequired,
+    clearNotification: PropTypes.func.isRequired,
   };
 
-  handleLogin = ({ username, password }, { setSubmitting }) => {
-    const { loginRequest } = this.props;
+  componentWillUnmount() {
+    this.handleClearNotification();
+  }
 
+  handleClearNotification = () => {
+    const { notification, clearNotification } = this.props;
+
+    if (Object.keys(notification).length !== 0) {
+      clearNotification('login');
+    }
+  };
+
+  handleLogin = (values) => {
+    const { loginRequest, clearNotification } = this.props;
+    const { username, password } = values;
+
+    clearNotification('login');
     loginRequest({
       username,
       password,
     });
-
-    setTimeout(() => {
-      setSubmitting(false);
-    }, 1000);
   };
 
   render() {
+    const { notification, process } = this.props;
+
     const initialValues = {
       username: '',
       password: '',
@@ -60,18 +83,33 @@ class Login extends Component {
           onSubmit={this.handleLogin}
           validateOnChange={false}
           enableReinitialize
-          render={({ isSubmitting }) => (
-            <Form>
+          render={({ touched, errors }) => (
+            <Form onChange={this.handleClearNotification}>
               <InputSet>
                 <InputWrapper>
-                  <StyledFormikField label="Логин" type="text" name="username" />
+                  <StyledFormikField
+                    label="Логин"
+                    type="text"
+                    name="username"
+                    errors={errors}
+                    touched={touched}
+                  />
                 </InputWrapper>
                 <InputWrapper>
-                  <StyledFormikField label="Пароль" type="password" name="password" />
+                  <StyledFormikField
+                    label="Пароль"
+                    type="password"
+                    name="password"
+                    errors={errors}
+                    touched={touched}
+                  />
                 </InputWrapper>
               </InputSet>
+              <NotificationWrapper>
+                <Notification data={notification} />
+              </NotificationWrapper>
               <ButtonWrapper>
-                <StyledButton type="submit" disabled={isSubmitting} inverted>
+                <StyledButton type="submit" disabled={process === 'login'} inverted>
                   Войти
                 </StyledButton>
               </ButtonWrapper>
@@ -91,11 +129,12 @@ const Wrapper = styled.div`
 
 const InputWrapper = styled.div`
   margin-bottom: 15px;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 `;
 
-const InputSet = styled.div`
-  margin-bottom: 30px;
-`;
+const InputSet = styled.div``;
 
 const ButtonWrapper = styled.div`
   height: 40px;
@@ -113,4 +152,9 @@ const StyledFormikField = styled(FormikField)`
 const StyledButton = styled(Button)`
   font-size: 16px;
   height: 40px;
+`;
+
+const NotificationWrapper = styled.div`
+  width: 100%;
+  padding: 15px 0;
 `;

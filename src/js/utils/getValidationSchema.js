@@ -20,8 +20,8 @@ Yup.addMethod(Yup.mixed, 'eightOrMore', function eightOrMore(message) {
 function getValidationSchema(schemaName) {
   const schemas = {
     login: {
-      username: Yup.string().required('This field must be filled!'),
-      password: Yup.string().required('This field must be filled!'),
+      username: Yup.string().required('Это поле должно быть заполнено!'),
+      password: Yup.string().required('Это поле должно быть заполнено!'),
     },
   };
 

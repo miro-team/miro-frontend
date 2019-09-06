@@ -7,6 +7,7 @@ import AuthService from 'js/services/AuthService';
 
 import * as AuthActions from 'js/actions/AuthActions';
 import * as UserActions from 'js/actions/UserActions';
+import * as NotificationActions from 'js/actions/NotificationActions';
 
 
 export class AuthSaga {
@@ -22,8 +23,6 @@ export class AuthSaga {
       });
       AuthService.setJWT(response.data.token);
 
-      yield delay(400);
-
       yield all([
         put(AuthActions.setAuthStatus()),
         put(AuthActions.loginSuccess()),
@@ -31,6 +30,15 @@ export class AuthSaga {
       ]);
     } catch (e) {
       yield put(AuthActions.loginFail());
+
+      yield delay(300);
+      yield put(
+        NotificationActions.setNotification({
+          module: 'login',
+          type: 'error',
+          message: 'Не удалось войти с указанными учетными данными',
+        }),
+      );
     }
   }
 

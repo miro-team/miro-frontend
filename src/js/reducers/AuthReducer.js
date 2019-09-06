@@ -4,13 +4,13 @@ import { Map } from 'immutable';
 
 
 const initialState = Map({
-  isAuthorized: true,
+  isAuthorized: false,
 });
 
 const AuthReducer = createReducer(
   {
     [actions.setAuthStatus]: (state = initialState) => state.set('isAuthorized', true),
-    [actions.unsetAuthStatus]: (state = initialState) => state.set('isAuthorized', true),
+    [actions.unsetAuthStatus]: (state = initialState) => state.set('isAuthorized', false),
   },
   initialState,
 );

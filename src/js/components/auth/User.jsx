@@ -118,10 +118,10 @@ const StyledButton = styled.button`
   align-items: center;
   transition: color 0.2s ease;
   &:hover {
-    color: red;
+    color: #cc0000;
     cursor: pointer;
     svg {
-      fill: red;
+      fill: #cc0000;
     }
   }
 `;

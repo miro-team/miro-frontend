@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   display: flex;
   border-radius: 30px;
   border: 1px solid #d8d8d8;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 
   ${media.xs} {
     margin-bottom: 15px;

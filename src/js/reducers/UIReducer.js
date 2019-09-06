@@ -8,7 +8,7 @@ const initialState = Map({
   isMobileSidebarOpened: false,
   isDropdownOpened: false,
 
-  isModalOpened: true,
+  isModalOpened: false,
   modalType: 'room',
   modalOptions: { title: 'Просмотр аудитории' },
 });

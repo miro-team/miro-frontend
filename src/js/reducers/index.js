@@ -7,6 +7,7 @@ import DataReducer from './DataReducer';
 import AuthReducer from './AuthReducer';
 import UserReducer from './UserReducer';
 import ScheduleReducer from './ScheduleReducer';
+import NotificationReducer from './NotificationReducer';
 
 
 const reducers = combineReducers({
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   Auth: AuthReducer,
   User: UserReducer,
   Schedule: ScheduleReducer,
+  Notifications: NotificationReducer,
 });
 
 export default reducers;
