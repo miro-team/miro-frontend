@@ -8,56 +8,62 @@ import AuthService from 'js/services/AuthService';
 import * as AuthActions from 'js/actions/AuthActions';
 import * as UserActions from 'js/actions/UserActions';
 import * as NotificationActions from 'js/actions/NotificationActions';
+import * as UIActions from 'js/actions/UIActions';
 
 
-export class AuthSaga {
-  static* login(action) {
-    try {
-      const response = yield call(axios, {
-        method: 'POST',
-        url: API.login(),
-        data: {
-          username: action.payload.username,
-          password: action.payload.password,
-        },
-      });
-      AuthService.setJWT(response.data.token);
+function* login(action) {
+  try {
+    const response = yield call(axios, {
+      method: 'POST',
+      url: API.login(),
+      data: {
+        username: action.payload.username,
+        password: action.payload.password,
+      },
+    });
+    AuthService.setJWT(response.data.token);
 
-      yield all([
-        put(AuthActions.setAuthStatus()),
-        put(AuthActions.loginSuccess()),
-        put(UserActions.getUserRequest()),
-      ]);
-    } catch (e) {
-      yield put(AuthActions.loginFail());
+    yield all([
+      put(AuthActions.setAuthStatus()),
+      put(AuthActions.loginSuccess()),
+      put(UserActions.getUserRequest()),
+      put(UIActions.hideDropdown()),
+      put(UIActions.showDropdown()),
+    ]);
+  } catch (e) {
+    yield put(AuthActions.loginFail());
 
-      yield delay(300);
-      yield put(
-        NotificationActions.setNotification({
-          module: 'login',
-          type: 'error',
-          message: 'Не удалось войти с указанными учетными данными',
-        }),
-      );
-    }
-  }
-
-  static* logout() {
-    try {
-      yield call(axios, {
-        method: 'POST',
-        url: API.logout(),
-      });
-      AuthService.unsetJWT();
-
-      yield all([put(AuthActions.unsetAuthStatus()), put(AuthActions.logoutSuccess())]);
-    } catch (e) {
-      yield put(AuthActions.logoutFail());
-    }
+    yield delay(300);
+    yield put(
+      NotificationActions.setNotification({
+        module: 'login',
+        type: 'error',
+        message: 'Не удалось войти с указанными учетными данными',
+      }),
+    );
   }
 }
 
-export function* saga() {
-  yield takeEvery(AuthActions.loginRequest, AuthSaga.login);
-  yield takeEvery(AuthActions.logoutRequest, AuthSaga.logout);
+function* logout() {
+  try {
+    yield call(axios, {
+      method: 'POST',
+      url: API.logout(),
+    });
+    AuthService.unsetJWT();
+
+    yield all([
+      put(AuthActions.unsetAuthStatus()),
+      put(AuthActions.logoutSuccess()),
+      put(UIActions.hideDropdown()),
+      put(UIActions.showDropdown()),
+    ]);
+  } catch (e) {
+    yield put(AuthActions.logoutFail());
+  }
+}
+
+export default function* () {
+  yield takeEvery(AuthActions.loginRequest, login);
+  yield takeEvery(AuthActions.logoutRequest, logout);
 }

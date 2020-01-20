@@ -11,11 +11,11 @@ import * as AuthActions from 'js/actions/AuthActions';
 import * as NotificationActions from 'js/actions/NotificationActions';
 
 import Button from 'js/components/common/Button';
-import TextBox from 'js/components/common/TextBox';
+import TextInput from 'js/components/common/TextInput';
 import Notification from 'js/components/common/Notification';
 
 
-const FormikField = createFormikField(TextBox);
+const FormikField = createFormikField(TextInput);
 
 const mapStateToProps = ({ Notifications, App }) => ({
   notification: Notifications.get('login'),

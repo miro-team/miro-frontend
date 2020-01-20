@@ -4,23 +4,28 @@ import PropTypes from 'prop-types';
 
 import { media } from 'js/constants/media';
 
+import { ReactComponent as ArrowIcon } from 'img/svg/arrow.svg';
 
-export default function TextBox({ label, children, className, ...props }) {
+
+export default function Select({ label, children, className, ...props }) {
   return (
     <Wrapper className={className}>
       <Label>{label}</Label>
-      <StyledInput {...props}>{children}</StyledInput>
+      <InputWrapper>
+        <StyledArrowIcon />
+        <StyledSelect {...props}>{children}</StyledSelect>
+      </InputWrapper>
     </Wrapper>
   );
 }
 
-TextBox.propTypes = {
+Select.propTypes = {
   label: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,
 };
 
-TextBox.defaultProps = {
+Select.defaultProps = {
   label: '',
   children: null,
   className: '',
@@ -31,22 +36,9 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledInput = styled.input`
+const StyledSelect = styled.select`
+  flex: 1;
   appearance: none;
-  border: 1px solid #d8d8d8;
-  border-radius: 2px;
-  padding: 10px;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  min-height: 33px;
-
-  ${media.xs} {
-    font-size: 14px;
-    padding: 6px;
-  }
 `;
 
 const Label = styled.div`
@@ -60,4 +52,16 @@ const Label = styled.div`
   ${media.xs} {
     font-size: 14px;
   }
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
+  display: flex;
+`;
+
+const StyledArrowIcon = styled(ArrowIcon)`
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
 `;

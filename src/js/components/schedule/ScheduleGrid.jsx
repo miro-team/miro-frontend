@@ -10,10 +10,10 @@ import Grid from 'js/components/common/Grid';
 import PageTitle from 'js/components/common/PageTitle';
 
 
-const mapStateToProps = ({ Schedule, Data }) => ({
+const mapStateToProps = ({ Schedule }) => ({
   pageNum: Schedule.get('gridActivePage'),
   pageSize: Schedule.get('gridPageSize'),
-  scheduleData: Data.get('scheduleData'),
+  scheduleData: Schedule.get('data'),
   isPreloaderActive: Schedule.get('isGridPreloaderActive'),
 });
 
@@ -44,10 +44,9 @@ class ScheduleGrid extends Component {
   };
 
   getGridData = (scheduleData) => {
-    if (scheduleData && Array.isArray(scheduleData.filteredEventList)) {
-      return scheduleData.filteredEventList;
+    if (scheduleData && Array.isArray(scheduleData.events)) {
+      return scheduleData.events;
     }
-
     return [];
   };
 
@@ -56,11 +55,15 @@ class ScheduleGrid extends Component {
 
     const columns = [
       {
-        dataField: 'roomId',
+        dataField: 'room',
         caption: '№ Аудитории',
       },
       {
-        dataField: 'pairId',
+        dataField: 'roomType',
+        caption: 'Тип аудитории',
+      },
+      {
+        dataField: 'pair',
         caption: 'Пара',
       },
       {
@@ -70,10 +73,6 @@ class ScheduleGrid extends Component {
       {
         dataField: 'weekDay',
         caption: 'День недели',
-      },
-      {
-        dataField: 'periodicity',
-        caption: 'Тип недели',
       },
     ];
 

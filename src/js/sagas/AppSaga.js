@@ -3,27 +3,25 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 
 import API from 'Api';
 
-import * as AppActions from 'js/actions/AppActions';
-import * as FilterActions from 'js/actions/FilterActions';
+import * as ConfigActions from 'js/actions/ConfigActions';
+// import * as FilterActions from 'js/actions/FilterActions';
 
 
-export class AppSaga {
-  static* getConfig() {
-    try {
-      const response = yield call(axios, {
-        method: 'GET',
-        url: API.config(),
-      });
-      // Setting default value for required filter (periodicity)
-      yield put(FilterActions.setPeriodicityFilter(response.data.filters.periodicities[0].id));
+function* getConfig() {
+  try {
+    const response = yield call(axios, {
+      method: 'GET',
+      url: API.config(),
+    });
+    // Setting default value for required filter (periodicity)
+    // yield put(FilterActions.setPeriodicityFilter(response.data.filters.periodicities[0].id));
 
-      yield put(AppActions.getConfigSuccess(response.data));
-    } catch (e) {
-      yield put(AppActions.getConfigFail());
-    }
+    yield put(ConfigActions.getConfigSuccess(response.data));
+  } catch (e) {
+    yield put(ConfigActions.getConfigFail());
   }
 }
 
-export function* saga() {
-  yield takeLatest(AppActions.getConfigRequest, AppSaga.getConfig);
+export default function* () {
+  yield takeLatest(ConfigActions.getConfigRequest, getConfig);
 }

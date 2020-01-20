@@ -5,16 +5,20 @@ import { Map } from 'immutable';
 
 const initialState = Map({
   gridActivePage: 1,
-  gridPageSize: 6,
+  gridPageSize: 8,
   isGridPreloaderActive: false,
+  data: {},
 });
 
 const ScheduleReducer = createReducer(
   {
-    [actions.setGridPage]: (state = initialState, payload) => state.set('gridActivePage', payload),
-    [actions.resetGridPage]: (state = initialState) => state.set('gridActivePage', 1),
-    [actions.activateGridPreloader]: (state = initialState) => state.set('isGridPreloaderActive', true),
-    [actions.deactivateGridPreloader]: (state = initialState) => state.set('isGridPreloaderActive', false),
+    [actions.setGridPage]: (state, payload) => state.set('gridActivePage', payload),
+    [actions.resetGridPage]: state => state.set('gridActivePage', 1),
+    [actions.showGridPreloader]: state => state.set('isGridPreloaderActive', true),
+    [actions.hideGridPreloader]: state => state.set('isGridPreloaderActive', false),
+
+    [actions.getScheduleSuccess]: (state, payload) => state.set('data', payload),
+    [actions.getScheduleFail]: state => state.set(initialState),
   },
   initialState,
 );

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as AppActions from 'js/actions/AppActions';
-import * as DataActions from 'js/actions/DataActions';
+import * as ConfigActions from 'js/actions/ConfigActions';
+import * as ScheduleActions from 'js/actions/ScheduleActions';
 import * as UserActions from 'js/actions/UserActions';
 
 
@@ -11,10 +11,10 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
   getSchedule() {
-    dispatch(DataActions.getScheduleRequest());
+    dispatch(ScheduleActions.getScheduleRequest());
   },
   getConfig() {
-    dispatch(AppActions.getConfigRequest());
+    dispatch(ConfigActions.getConfigRequest());
   },
   getUser() {
     dispatch(UserActions.getUserRequest());

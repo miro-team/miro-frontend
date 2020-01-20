@@ -9,7 +9,7 @@ import { media } from 'js/constants/media';
 import * as UIActions from 'js/actions/UIActions';
 
 import PrivateRoute from 'js/components/common/PrivateRoute';
-import Header from 'js/components/layout/stateless/Header';
+import Header from 'js/components/layout/Header';
 import Sidebar from 'js/components/layout/Sidebar';
 import Dropdown from 'js/components/layout/Dropdown';
 import Modal from 'js/components/modals/Modal';
@@ -30,8 +30,8 @@ const mapDispatchToProps = dispatch => ({
   hideMobileSidebar() {
     dispatch(UIActions.hideMobileSidebar());
   },
-  openDropdown() {
-    dispatch(UIActions.openDropdown());
+  showDropdown() {
+    dispatch(UIActions.showDropdown());
   },
   hideDropdown() {
     dispatch(UIActions.hideDropdown());
@@ -50,7 +50,7 @@ class Layout extends Component {
 
     openMobileSidebar: PropTypes.func.isRequired,
     hideMobileSidebar: PropTypes.func.isRequired,
-    openDropdown: PropTypes.func.isRequired,
+    showDropdown: PropTypes.func.isRequired,
     hideDropdown: PropTypes.func.isRequired,
   };
 
@@ -64,11 +64,11 @@ class Layout extends Component {
   };
 
   handleToggleDropdown = () => {
-    const { isDropdownOpened, hideDropdown, openDropdown } = this.props;
+    const { isDropdownOpened, hideDropdown, showDropdown } = this.props;
     if (isDropdownOpened) {
       hideDropdown();
     } else {
-      openDropdown();
+      showDropdown();
     }
   };
 

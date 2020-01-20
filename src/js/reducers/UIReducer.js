@@ -15,19 +15,19 @@ const initialState = Map({
 
 const UIReducer = createReducer(
   {
-    [actions.setFiltersTab]: (state = initialState, payload) => state.set('activeFiltersTab', payload),
+    [actions.setFiltersTab]: (state, payload) => state.set('activeFiltersTab', payload),
 
-    [actions.openMobileSidebar]: (state = initialState) => state.set('isMobileSidebarOpened', true),
-    [actions.hideMobileSidebar]: (state = initialState) => state.set('isMobileSidebarOpened', false),
+    [actions.openMobileSidebar]: state => state.set('isMobileSidebarOpened', true),
+    [actions.hideMobileSidebar]: state => state.set('isMobileSidebarOpened', false),
 
-    [actions.openDropdown]: (state = initialState) => state.set('isDropdownOpened', true),
-    [actions.hideDropdown]: (state = initialState) => state.set('isDropdownOpened', false),
+    [actions.showDropdown]: state => state.set('isDropdownOpened', true),
+    [actions.hideDropdown]: state => state.set('isDropdownOpened', false),
 
-    [actions.showModal]: (state = initialState, payload = {}) => state
+    [actions.showModal]: (state, payload = {}) => state
       .set('isModalOpened', true)
       .set('modalType', payload.type)
       .set('modalOptions', payload.options),
-    [actions.hideModal]: (state = initialState) => state
+    [actions.hideModal]: state => state
       .set('isModalOpened', false)
       .set('modalType', null)
       .set('modalOptions', null),

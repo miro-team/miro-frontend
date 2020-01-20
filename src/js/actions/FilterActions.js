@@ -1,6 +1,7 @@
 import { createAction } from 'redux-act';
 
 
+export const setSchemeFilter = createAction('SET_SCHEME_FILTER');
 export const setBuildingFilter = createAction('SET_BUILDING_FILTER');
 export const setFloorFilter = createAction('SET_FLOOR_FILTER');
 export const setRoomTypeFilter = createAction('SET_ROOMTYPE_FILTER');

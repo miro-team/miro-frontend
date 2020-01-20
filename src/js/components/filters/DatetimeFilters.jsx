@@ -3,18 +3,21 @@ import styled from 'styled-components';
 import Calendar from 'react-calendar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid/v4';
 
 import { media } from 'js/constants/media';
+import getMonth from 'js/utils/getMonth';
 
 import * as FilterActions from 'js/actions/FilterActions';
 
-import SelectBox from 'js/components/common/SelectBox';
-import getMonth from 'js/utils/getMonth';
+import SelectInput from 'js/components/common/SelectInput';
+import FilterOptions from 'js/components/filters/stateless/FilterOptions';
 
 
-const mapStateToProps = ({ App, Filters }) => ({
-  filters: App.get('filters'),
+const mapStateToProps = ({ Config, Filters }) => ({
+  periodicityOptions: Config.get('periodicities'),
+  weekDayOptions: Config.get('weekDays'),
+  pairOptions: Config.get('pairs'),
+
   eventType: Filters.get('eventType'),
   date: Filters.get('date'),
   periodicity: Filters.get('periodicity'),
@@ -46,7 +49,10 @@ const mapDispatchToProps = dispatch => ({
 )
 class DatetimeFilters extends Component {
   static propTypes = {
-    filters: PropTypes.object.isRequired,
+    periodicityOptions: PropTypes.array.isRequired,
+    weekDayOptions: PropTypes.array.isRequired,
+    pairOptions: PropTypes.array.isRequired,
+
     eventType: PropTypes.string.isRequired,
     date: PropTypes.instanceOf(Date).isRequired,
     periodicity: PropTypes.number.isRequired,
@@ -85,28 +91,25 @@ class DatetimeFilters extends Component {
     setPairFilter(+e.target.value);
   };
 
-  renderOptions = (_options, isRequired) => {
-    if (Array.isArray(_options)) {
-      const options = isRequired ? [..._options] : [{ id: -1, name: '---' }, ..._options];
-      return options.map(({ id, name }) => (
-        <option key={uuidv4()} value={id}>
-          {name}
-        </option>
-      ));
-    }
-    return null;
-  };
-
   render() {
-    const { filters, eventType, date, periodicity, weekDay, pair } = this.props;
+    const {
+      periodicityOptions,
+      weekDayOptions,
+      pairOptions,
+      eventType,
+      date,
+      periodicity,
+      weekDay,
+      pair,
+    } = this.props;
 
     return (
       <Wrapper>
         <FieldWrapper>
-          <SelectBox label="Тип события" value={eventType} onChange={this.handleEventTypeChange}>
+          <SelectInput label="Тип события" value={eventType} onChange={this.handleEventTypeChange}>
             <option value="single">Конкретная дата</option>
             <option value="cycle">Цикличное</option>
-          </SelectBox>
+          </SelectInput>
         </FieldWrapper>
         {eventType === 'single' && (
           <FieldWrapper>
@@ -121,25 +124,25 @@ class DatetimeFilters extends Component {
         {eventType === 'cycle' && (
           <>
             <FieldWrapper>
-              <SelectBox
+              <SelectInput
                 label="Периодичность"
                 value={periodicity}
                 onChange={this.handlePeriodicityChange}
               >
-                {this.renderOptions(filters.periodicities, true)}
-              </SelectBox>
+                <FilterOptions options={periodicityOptions} renderEmpty />
+              </SelectInput>
             </FieldWrapper>
             <FieldWrapper>
-              <SelectBox label="День недели" value={weekDay} onChange={this.handleWeekDayChange}>
-                {this.renderOptions(filters.weekDays)}
-              </SelectBox>
+              <SelectInput label="День недели" value={weekDay} onChange={this.handleWeekDayChange}>
+                <FilterOptions options={weekDayOptions} renderEmpty />
+              </SelectInput>
             </FieldWrapper>
           </>
         )}
         <FieldWrapper>
-          <SelectBox label="Пара" value={pair} onChange={this.handlePairChange}>
-            {this.renderOptions(filters.pairs)}
-          </SelectBox>
+          <SelectInput label="Пара" value={pair} onChange={this.handlePairChange}>
+            <FilterOptions options={pairOptions} renderEmpty />
+          </SelectInput>
         </FieldWrapper>
       </Wrapper>
     );

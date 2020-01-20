@@ -6,8 +6,8 @@ import { withRouter, Link } from 'react-router-dom';
 
 import { media } from 'js/constants/media';
 
-import MenuIcon from 'img/svg/menu.svg';
-import UserIcon from 'img/svg/user.svg';
+import { ReactComponent as MenuIcon } from 'img/svg/menu.svg';
+import { ReactComponent as UserIcon } from 'img/svg/user.svg';
 
 
 const mapStateToProps = ({ Auth }) => ({
@@ -48,7 +48,7 @@ class Header extends Component {
 
 export default Header;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   height: 53px;
   min-height: 53px;
   background: #c65757;

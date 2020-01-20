@@ -10,7 +10,9 @@ import LogoutIcon from 'img/svg/logout.svg';
 import * as AuthActions from 'js/actions/AuthActions';
 
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ User }) => ({
+  username: User.get('username'),
+});
 
 const mapDispatchToProps = dispatch => ({
   logoutRequest() {
@@ -25,6 +27,8 @@ const mapDispatchToProps = dispatch => ({
 )
 class User extends Component {
   static propTypes = {
+    username: PropTypes.string.isRequired,
+
     logoutRequest: PropTypes.func.isRequired,
   };
 
@@ -35,11 +39,13 @@ class User extends Component {
   };
 
   render() {
+    const { username } = this.props;
+
     return (
       <Wrapper>
         <UserInfo>
           <FadedTitle>Вы вошли в систему как:</FadedTitle>
-          <UserName>Фамилия И.О.</UserName>
+          <UserName>{username}</UserName>
         </UserInfo>
         <List>
           <ListItem>
@@ -68,15 +74,18 @@ const Wrapper = styled.div`
 const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px;
+  padding: 25px 25px 15px 25px;
 `;
 
 const FadedTitle = styled.div`
   color: #949494;
   margin-bottom: 10px;
+  font-size: 14px;
 `;
 
-const UserName = styled.div``;
+const UserName = styled.div`
+font-size: 18px;
+`;
 
 const List = styled.ul`
   padding: 0;

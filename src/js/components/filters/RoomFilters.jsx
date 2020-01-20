@@ -2,26 +2,32 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid/v4';
 
 import { media } from 'js/constants/media';
 
 import * as FilterActions from 'js/actions/FilterActions';
 
-import SelectBox from 'js/components/common/SelectBox';
-import TextBox from 'js/components/common/TextBox';
+import SelectInput from 'js/components/common/SelectInput';
+import TextInput from 'js/components/common/TextInput';
+import AutosuggestInput from 'js/components/common/AutosuggestInput';
+import FilterOptions from 'js/components/filters/stateless/FilterOptions';
 
 
-const mapStateToProps = ({ App, Filters }) => ({
-  filters: App.get('filters'),
-  building: Filters.get('building'),
-  floor: Filters.get('floor'),
+const mapStateToProps = ({ Config, Filters }) => ({
+  schemeOptions: Config.get('schemes'),
+  roomTypeOptions: Config.get('roomTypes'),
+  roomNumberOptions: Config.get('rooms'),
+
+  scheme: Filters.get('scheme'),
   roomType: Filters.get('roomType'),
   roomCapacity: Filters.get('roomCapacity'),
   roomNumber: Filters.get('roomNumber'),
 });
 
 const mapDispatchToProps = dispatch => ({
+  setSchemeFilter(payload) {
+    dispatch(FilterActions.setSchemeFilter(payload));
+  },
   setBuildingFilter(payload) {
     dispatch(FilterActions.setBuildingFilter(payload));
   },
@@ -45,13 +51,16 @@ const mapDispatchToProps = dispatch => ({
 )
 class RoomFilters extends Component {
   static propTypes = {
-    filters: PropTypes.object.isRequired,
-    building: PropTypes.number.isRequired,
-    floor: PropTypes.number.isRequired,
+    schemeOptions: PropTypes.array.isRequired,
+    roomTypeOptions: PropTypes.array.isRequired,
+    roomNumberOptions: PropTypes.array.isRequired,
+
+    scheme: PropTypes.number.isRequired,
     roomType: PropTypes.number.isRequired,
     roomCapacity: PropTypes.string.isRequired,
-    roomNumber: PropTypes.string.isRequired,
+    roomNumber: PropTypes.number.isRequired,
 
+    setSchemeFilter: PropTypes.func.isRequired,
     setBuildingFilter: PropTypes.func.isRequired,
     setFloorFilter: PropTypes.func.isRequired,
     setRoomTypeFilter: PropTypes.func.isRequired,
@@ -59,19 +68,21 @@ class RoomFilters extends Component {
     setRoomNumberFilter: PropTypes.func.isRequired,
   };
 
-  handleBuildingChange = (e) => {
-    const { setBuildingFilter } = this.props;
-    setBuildingFilter(+e.target.value);
-  };
-
-  handleFloorChange = (e) => {
-    const { setFloorFilter } = this.props;
-    setFloorFilter(+e.target.value);
+  handleSchemeChange = (e) => {
+    const { setBuildingFilter, setFloorFilter, setSchemeFilter, schemeOptions } = this.props;
+    const schemeId = +e.target.value;
+    const {
+      building,
+      floor,
+    } = schemeOptions.find(scheme => scheme.id === schemeId) || { building: -1, floor: -1 };
+    setSchemeFilter(schemeId);
+    setBuildingFilter(building);
+    setFloorFilter(floor);
   };
 
   handleRoomTypeChange = (e) => {
     const { setRoomTypeFilter } = this.props;
-    setRoomTypeFilter(+e.target.value);
+    setRoomTypeFilter(e.target.value);
   };
 
   handleRoomCapacityChange = (e) => {
@@ -79,55 +90,51 @@ class RoomFilters extends Component {
     setRoomCapacityFilter(e.target.value);
   };
 
-  handleRoomNumberChange = (e) => {
+  handleRoomNumberChange = (e, { suggestion }) => {
     const { setRoomNumberFilter } = this.props;
-    setRoomNumberFilter(e.target.value);
+    setRoomNumberFilter(suggestion.id);
   };
 
-  renderOptions = (_options, isRequired) => {
-    if (Array.isArray(_options)) {
-      const options = isRequired ? [..._options] : [{ id: -1, name: '---' }, ..._options];
-      return options.map(({ id, name }) => (
-        <option key={uuidv4()} value={id}>
-          {name}
-        </option>
-      ));
-    }
-    return null;
-  };
+  getRoomNumberOptions = () => {
+    const { roomNumberOptions: rooms, scheme: schemeId } = this.props;
+    return schemeId !== -1 ? rooms.filter(room => room.schemeId === schemeId) : rooms;
+  }
 
   render() {
-    const { filters, building, floor, roomType, roomCapacity, roomNumber } = this.props;
+    const {
+      schemeOptions,
+      roomTypeOptions,
+      scheme,
+      roomType,
+      roomCapacity,
+      roomNumber,
+    } = this.props;
 
     return (
       <Wrapper>
         <FieldWrapper>
-          <SelectBox label="Корпус" value={building} onChange={this.handleBuildingChange}>
-            {this.renderOptions(filters.buildings)}
-          </SelectBox>
+          <SelectInput label="Расположение" value={scheme} onChange={this.handleSchemeChange}>
+            <FilterOptions options={schemeOptions} renderEmpty />
+          </SelectInput>
         </FieldWrapper>
         <FieldWrapper>
-          <SelectBox label="Этаж" value={floor} onChange={this.handleFloorChange}>
-            {this.renderOptions(filters.floors)}
-          </SelectBox>
+          <SelectInput label="Тип аудитории" value={roomType} onChange={this.handleRoomTypeChange}>
+            <FilterOptions options={roomTypeOptions} renderEmpty />
+          </SelectInput>
         </FieldWrapper>
         <FieldWrapper>
-          <SelectBox label="Тип аудитории" value={roomType} onChange={this.handleRoomTypeChange}>
-            {this.renderOptions(filters.roomTypes)}
-          </SelectBox>
-        </FieldWrapper>
-        <FieldWrapper>
-          <TextBox
+          <TextInput
             label="Вместимость от"
             value={roomCapacity}
             onChange={this.handleRoomCapacityChange}
           />
         </FieldWrapper>
         <FieldWrapper>
-          <TextBox
+          <AutosuggestInput
             label="Номер аудитории"
-            value={roomNumber}
-            onChange={this.handleRoomNumberChange}
+            roomId={roomNumber}
+            options={this.getRoomNumberOptions()}
+            onSuggestionSelected={this.handleRoomNumberChange}
           />
         </FieldWrapper>
       </Wrapper>

@@ -9,8 +9,8 @@ const initialState = Map({
 
 const AuthReducer = createReducer(
   {
-    [actions.setAuthStatus]: (state = initialState) => state.set('isAuthorized', true),
-    [actions.unsetAuthStatus]: (state = initialState) => state.set('isAuthorized', false),
+    [actions.setAuthStatus]: state => state.set('isAuthorized', true),
+    [actions.unsetAuthStatus]: state => state.set('isAuthorized', false),
   },
   initialState,
 );

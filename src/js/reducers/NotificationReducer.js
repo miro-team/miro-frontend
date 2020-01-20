@@ -10,14 +10,14 @@ const initialState = Map({
 
 const NotificationReducer = createReducer(
   {
-    [actions.setNotification]: (state = initialState, payload) => {
+    [actions.setNotification]: (state, payload) => {
       const { module, type, message } = payload;
       if (!state.has(module)) {
         return state;
       }
       return state.set(module, { type, message });
     },
-    [actions.clearNotification]: (state = initialState, payload) => {
+    [actions.clearNotification]: (state, payload) => {
       const module = payload;
       if (!state.has(module)) {
         return state;

@@ -309,7 +309,7 @@ module.exports = function(webpackEnv) {
               options: {
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
-                
+                emitWarning: true,
               },
               loader: require.resolve('eslint-loader'),
             },
@@ -457,21 +457,7 @@ module.exports = function(webpackEnv) {
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
             // This loader doesn't use a "test" so it will catch all modules
-            // that fall through the other loaders.
-            {
-              test: /\.svg$/,
-              use: [
-                {
-                  loader: "babel-loader"
-                },
-                {
-                  loader: "react-svg-loader",
-                  options: {
-                    jsx: true // true outputs JSX tags
-                  }
-                }
-              ]
-            },            
+            // that fall through the other loaders.           
             {
               loader: require.resolve('file-loader'),
               // Exclude `js` files to keep "css" loader working as it injects
