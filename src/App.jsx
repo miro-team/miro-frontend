@@ -1,16 +1,14 @@
 import React from 'react';
 
-import Layout from 'js/components/layout/Layout';
-import Effects from 'js/Effects';
+import { RootPage } from 'pages';
+import Effects from './Effects';
 
 
-function App() {
-  return (
-    <>
-      <Layout />
-      <Effects />
-    </>
-  );
-}
+const App = () => (
+  <>
+    <RootPage />
+    <Effects />
+  </>
+);
 
 export default App;

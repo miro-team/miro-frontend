@@ -1,7 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-// import { media } from 'js/constants';
-
 
 const GlobalStyles = createGlobalStyle`
   input, select {
