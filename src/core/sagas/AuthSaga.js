@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { takeEvery, call, put, all, delay } from 'redux-saga/effects';
+import qs from 'qs';
 
 import API from 'Api';
 
@@ -13,12 +14,17 @@ function* login(action) {
     const response = yield call(axios, {
       method: 'POST',
       url: API.login(),
-      data: {
+      headers: {
+        Authorization: 'Basic Y2xpZW50OnNlY3JldA==',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      data: qs.stringify({
+        grant_type: 'password',
         username: action.payload.username,
         password: action.payload.password,
-      },
+      }),
     });
-    AuthService.setJWT(response.data.token);
+    AuthService.setJWT(response.data.access_token);
 
     yield all([
       put(AuthActions.setAuthStatus()),
@@ -43,10 +49,6 @@ function* login(action) {
 
 function* logout() {
   try {
-    yield call(axios, {
-      method: 'POST',
-      url: API.logout(),
-    });
     AuthService.unsetJWT();
 
     yield all([

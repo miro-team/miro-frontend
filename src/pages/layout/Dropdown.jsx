@@ -1,29 +1,43 @@
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
+import { useOnClickOutside } from 'og-react';
 
+import { UIActions } from 'core/actions';
 import { Auth } from 'features/Auth';
 
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+  hideDropdown() {
+    dispatch(UIActions.hideDropdown());
+  },
+});
 
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-class Dropdown extends Component {
-  render() {
-    return (
-      <Wrapper>
-        <Auth />
-      </Wrapper>
-    );
-  }
-}
+const propTypes = {
+  hideDropdown: PropTypes.func.isRequired,
+};
 
-export default Dropdown;
+const Dropdown = ({ hideDropdown }) => {
+  const handleHide = () => {
+    hideDropdown();
+  };
+
+  const ref = useRef(null);
+  useOnClickOutside(ref, handleHide);
+
+  return (
+    <Wrapper ref={ref}>
+      <Auth />
+    </Wrapper>
+  );
+};
+
+Dropdown.propTypes = propTypes;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
 
 const Appear = keyframes`
     from {

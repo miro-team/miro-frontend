@@ -5,14 +5,16 @@ import { ConfigActions } from 'core/actions';
 
 
 const initialState = Map({
-  eventTypes: [],
-  groups: [],
-  pairs: [],
-  periodicities: [],
-  roomTypes: [],
   rooms: [],
-  schemes: [],
+  disciplines: [],
   weekDays: [],
+  roomTypes: [],
+  teachers: [],
+  groups: [],
+  schemes: [],
+  periodicities: [],
+  eventTypes: [],
+  pairs: [],
 });
 
 const ConfigReducer = createReducer(

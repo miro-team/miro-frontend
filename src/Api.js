@@ -1,6 +1,7 @@
 class Api {
   constructor() {
-    this.prefix = 'http://62.109.25.2:2200/api';
+    this.host = 'http://62.109.25.2:2200';
+    this.prefix = `${this.host}/api`;
   }
 
   filterSingle() {
@@ -15,16 +16,12 @@ class Api {
     return `${this.prefix}/config`;
   }
 
-  login() {
-    return `${this.prefix}/login`;
-  }
-
-  logout() {
-    return `${this.prefix}/logout`;
-  }
-
   user() {
     return `${this.prefix}/user`;
+  }
+
+  login() {
+    return `${this.host}/oauth/token`;
   }
 }
 

@@ -36,7 +36,7 @@ class ScheduleGrid extends Component {
   static propTypes = {
     pageNum: PropTypes.number.isRequired,
     pageSize: PropTypes.number.isRequired,
-    scheduleData: PropTypes.shape({ totalAmount: PropTypes.number }).isRequired,
+    scheduleData: PropTypes.object.isRequired,
     isPreloaderActive: PropTypes.bool.isRequired,
 
     setPage: PropTypes.func.isRequired,
@@ -75,15 +75,13 @@ class ScheduleGrid extends Component {
       },
     ];
 
-    // const pageCount = scheduleData.pageCount; // Uncomment this after backend refactoring is done
-    // Remove this after refactoring
-    const pageCount = scheduleData ? Math.ceil(scheduleData.totalAmount / pageSize) : 1;
+    const { pageCount } = scheduleData;
     const gridData = this.getGridData(scheduleData);
     const message = gridData.length ? '' : 'Ничего не найдено';
 
     return (
       <Wrapper>
-        <PageTitle>Результаты поиска аудиторий</PageTitle>
+        <PageTitle>Поиск аудиторий</PageTitle>
         <Grid
           data={gridData}
           columns={columns}
