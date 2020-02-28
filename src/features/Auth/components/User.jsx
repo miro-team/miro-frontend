@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { ReactComponent as LogoutIcon } from 'shared/assets/logout.svg';
 
+import { ReactComponent as LogoutIcon } from 'shared/assets/logout.svg';
+import { compose } from 'utils';
 import { AuthActions } from 'core/actions';
 
 
 const mapStateToProps = ({ User }) => ({
   username: User.get('username'),
+  fullname: User.get('fullname'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -18,14 +20,10 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-@withRouter
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
 class User extends Component {
   static propTypes = {
     username: PropTypes.string.isRequired,
+    fullname: PropTypes.string.isRequired,
 
     logoutRequest: PropTypes.func.isRequired,
   };
@@ -37,13 +35,13 @@ class User extends Component {
   };
 
   render() {
-    const { username } = this.props;
+    const { username, fullname } = this.props;
 
     return (
       <Wrapper>
         <UserInfo>
-          <FadedTitle>Вы вошли в систему как:</FadedTitle>
           <UserName>{username || 'Загрузка...'}</UserName>
+          <FullName>{fullname || 'Загрузка...'}</FullName>
         </UserInfo>
         <List>
           <ListItem>
@@ -62,7 +60,10 @@ class User extends Component {
   }
 }
 
-export default User;
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps),
+)(User);
 
 const Wrapper = styled.div`
   display: flex;
@@ -72,17 +73,17 @@ const Wrapper = styled.div`
 const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px 25px 15px 25px;
-`;
-
-const FadedTitle = styled.div`
-  color: #949494;
-  margin-bottom: 10px;
-  font-size: 14px;
+  padding: 20px 25px 15px 25px;
 `;
 
 const UserName = styled.div`
-font-size: 18px;
+  font-size: 18px;
+  margin-bottom: 5px;
+`;
+
+const FullName = styled.div`
+  color: #949494;
+  font-size: 13px;
 `;
 
 const List = styled.ul`

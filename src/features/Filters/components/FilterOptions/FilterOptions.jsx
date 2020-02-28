@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 
 
-export default function FilterOptions({ options, renderEmpty }) {
+const propTypes = {
+  options: PropTypes.array,
+  renderEmpty: PropTypes.bool,
+};
+
+export const FilterOptions = ({ options = [], renderEmpty }) => {
   if (!Array.isArray(options)) return null;
 
   const data = renderEmpty ? [{ id: -1, name: '---' }, ...options] : [...options];
@@ -13,14 +18,6 @@ export default function FilterOptions({ options, renderEmpty }) {
       {name}
     </option>
   ));
-}
-
-FilterOptions.propTypes = {
-  options: PropTypes.array,
-  renderEmpty: PropTypes.bool,
 };
 
-FilterOptions.defaultProps = {
-  options: [],
-  renderEmpty: false,
-};
+FilterOptions.propTypes = propTypes;

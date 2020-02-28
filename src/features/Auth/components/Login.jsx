@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 
-import { getValidationSchema } from 'utils/getValidationSchema';
+import { getValidationSchema } from 'utils';
 import { createFormikField } from 'hoc/createFormikField';
 
 import { AuthActions, NotificationActions } from 'core/actions';

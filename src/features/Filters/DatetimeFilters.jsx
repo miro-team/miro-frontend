@@ -4,51 +4,14 @@ import Calendar from 'react-calendar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { compose, getMonth } from 'utils';
 import { media } from 'core/constants/media';
 import { FilterActions } from 'core/actions';
-
-import { getMonth } from 'utils/getMonth';
-
 import SelectInput from 'shared/components/SelectInput';
+import { FilterOptions } from './components/FilterOptions';
 
-import FilterOptions from './components/FilterOptions';
 
-
-const mapStateToProps = ({ Config, Filters }) => ({
-  periodicityOptions: Config.get('periodicities'),
-  weekDayOptions: Config.get('weekDays'),
-  pairOptions: Config.get('pairs'),
-
-  eventType: Filters.get('eventType'),
-  date: Filters.get('date'),
-  periodicity: Filters.get('periodicity'),
-  weekDay: Filters.get('weekDay'),
-  pair: Filters.get('pair'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  setEventTypeFilter(payload) {
-    dispatch(FilterActions.setEventTypeFilter(payload));
-  },
-  setDateFilter(payload) {
-    dispatch(FilterActions.setDateFilter(payload));
-  },
-  setPeriodicityFilter(payload) {
-    dispatch(FilterActions.setPeriodicityFilter(payload));
-  },
-  setWeekDayFilter(payload) {
-    dispatch(FilterActions.setWeekDayFilter(payload));
-  },
-  setPairFilter(payload) {
-    dispatch(FilterActions.setPairFilter(payload));
-  },
-});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-class DatetimeFilters extends Component {
+class CDatetimeFilters extends Component {
   static propTypes = {
     periodicityOptions: PropTypes.array.isRequired,
     weekDayOptions: PropTypes.array.isRequired,
@@ -150,7 +113,39 @@ class DatetimeFilters extends Component {
   }
 }
 
-export default DatetimeFilters;
+const mapStateToProps = ({ Config, Filters }) => ({
+  periodicityOptions: Config.get('periodicities'),
+  weekDayOptions: Config.get('weekDays'),
+  pairOptions: Config.get('pairs'),
+
+  eventType: Filters.get('eventType'),
+  date: Filters.get('date'),
+  periodicity: Filters.get('periodicity'),
+  weekDay: Filters.get('weekDay'),
+  pair: Filters.get('pair'),
+});
+
+const mapDispatchToProps = dispatch => ({
+  setEventTypeFilter(payload) {
+    dispatch(FilterActions.setEventTypeFilter(payload));
+  },
+  setDateFilter(payload) {
+    dispatch(FilterActions.setDateFilter(payload));
+  },
+  setPeriodicityFilter(payload) {
+    dispatch(FilterActions.setPeriodicityFilter(payload));
+  },
+  setWeekDayFilter(payload) {
+    dispatch(FilterActions.setWeekDayFilter(payload));
+  },
+  setPairFilter(payload) {
+    dispatch(FilterActions.setPairFilter(payload));
+  },
+});
+
+export const DatetimeFilters = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(CDatetimeFilters);
 
 const Wrapper = styled.div`
   display: flex;

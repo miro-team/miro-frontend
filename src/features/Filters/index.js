@@ -1,3 +1,3 @@
-export { default as DatetimeFilters } from './DatetimeFilters';
-export { default as RoomFilters } from './RoomFilters';
-export { default as SidebarFilters } from './SidebarFilters';
+export * from './DatetimeFilters';
+export * from './RoomFilters';
+export * from './SidebarFilters';

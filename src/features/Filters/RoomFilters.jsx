@@ -3,53 +3,16 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { compose } from 'utils';
 import { media } from 'core/constants/media';
 import { FilterActions } from 'core/actions';
-
 import SelectInput from 'shared/components/SelectInput';
 import TextInput from 'shared/components/TextInput';
 import AutosuggestInput from 'shared/components/AutosuggestInput';
+import { FilterOptions } from './components/FilterOptions';
 
-import FilterOptions from './components/FilterOptions';
 
-
-const mapStateToProps = ({ Config, Filters }) => ({
-  schemeOptions: Config.get('schemes'),
-  roomTypeOptions: Config.get('roomTypes'),
-  roomNumberOptions: Config.get('rooms'),
-
-  scheme: Filters.get('scheme'),
-  roomType: Filters.get('roomType'),
-  roomCapacity: Filters.get('roomCapacity'),
-  roomNumber: Filters.get('roomNumber'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  setSchemeFilter(payload) {
-    dispatch(FilterActions.setSchemeFilter(payload));
-  },
-  setBuildingFilter(payload) {
-    dispatch(FilterActions.setBuildingFilter(payload));
-  },
-  setFloorFilter(payload) {
-    dispatch(FilterActions.setFloorFilter(payload));
-  },
-  setRoomTypeFilter(payload) {
-    dispatch(FilterActions.setRoomTypeFilter(payload));
-  },
-  setRoomCapacityFilter(payload) {
-    dispatch(FilterActions.setRoomCapacityFilter(payload));
-  },
-  setRoomNumberFilter(payload) {
-    dispatch(FilterActions.setRoomNumberFilter(payload));
-  },
-});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-class RoomFilters extends Component {
+class CRoomFilters extends Component {
   static propTypes = {
     schemeOptions: PropTypes.array.isRequired,
     roomTypeOptions: PropTypes.array.isRequired,
@@ -142,7 +105,41 @@ class RoomFilters extends Component {
   }
 }
 
-export default RoomFilters;
+const mapStateToProps = ({ Config, Filters }) => ({
+  schemeOptions: Config.get('schemes'),
+  roomTypeOptions: Config.get('roomTypes'),
+  roomNumberOptions: Config.get('rooms'),
+
+  scheme: Filters.get('scheme'),
+  roomType: Filters.get('roomType'),
+  roomCapacity: Filters.get('roomCapacity'),
+  roomNumber: Filters.get('roomNumber'),
+});
+
+const mapDispatchToProps = dispatch => ({
+  setSchemeFilter(payload) {
+    dispatch(FilterActions.setSchemeFilter(payload));
+  },
+  setBuildingFilter(payload) {
+    dispatch(FilterActions.setBuildingFilter(payload));
+  },
+  setFloorFilter(payload) {
+    dispatch(FilterActions.setFloorFilter(payload));
+  },
+  setRoomTypeFilter(payload) {
+    dispatch(FilterActions.setRoomTypeFilter(payload));
+  },
+  setRoomCapacityFilter(payload) {
+    dispatch(FilterActions.setRoomCapacityFilter(payload));
+  },
+  setRoomNumberFilter(payload) {
+    dispatch(FilterActions.setRoomNumberFilter(payload));
+  },
+});
+
+export const RoomFilters = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(CRoomFilters);
 
 const Wrapper = styled.div`
   display: flex;

@@ -4,23 +4,16 @@ import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import { useOnClickOutside } from 'og-react';
 
+import { compose } from 'utils';
 import { UIActions } from 'core/actions';
 import { Auth } from 'features/Auth';
 
-
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = dispatch => ({
-  hideDropdown() {
-    dispatch(UIActions.hideDropdown());
-  },
-});
 
 const propTypes = {
   hideDropdown: PropTypes.func.isRequired,
 };
 
-const Dropdown = ({ hideDropdown }) => {
+const CDropdown = ({ hideDropdown }) => {
   const handleHide = () => {
     hideDropdown();
   };
@@ -35,9 +28,19 @@ const Dropdown = ({ hideDropdown }) => {
   );
 };
 
-Dropdown.propTypes = propTypes;
+CDropdown.propTypes = propTypes;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({
+  hideDropdown() {
+    dispatch(UIActions.hideDropdown());
+  },
+});
+
+export const Dropdown = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(CDropdown);
 
 const Appear = keyframes`
     from {

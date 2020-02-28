@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { ScheduleActions, UIActions } from 'core/actions';
 
 import Grid from 'shared/components/Grid';
-import PageTitle from 'shared/components/PageTitle';
+import { PageTitle } from 'ui';
 
 
 const mapStateToProps = ({ Schedule }) => ({
@@ -81,7 +81,6 @@ class ScheduleGrid extends Component {
 
     return (
       <Wrapper>
-        <PageTitle>Поиск аудиторий</PageTitle>
         <Grid
           data={gridData}
           columns={columns}

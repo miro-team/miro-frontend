@@ -2,7 +2,7 @@ import axios from 'axios';
 import { takeLatest, call, select, put } from 'redux-saga/effects';
 
 import API from 'Api';
-import { convertDate } from 'utils/convertDate';
+import { convertDate } from 'utils';
 
 import { ScheduleActions } from 'core/actions';
 

@@ -6,12 +6,12 @@ import { UserActions } from 'core/actions';
 
 const initialState = Map({
   username: '',
-  role: '',
+  fullname: '',
 });
 
 const UserReducer = createReducer(
   {
-    [UserActions.getUserSuccess]: (state, payload) => state.set('username', payload.username).set('role', payload.role),
+    [UserActions.getUserSuccess]: (state, payload) => state.set('username', payload.username).set('fullname', payload.fullname),
     [UserActions.getUserFail]: () => initialState,
   },
   initialState,

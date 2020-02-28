@@ -1,36 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
+import { compose } from 'utils';
+
+
+const propTypes = {
+  component: PropTypes.any.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  isAllowed: PropTypes.bool,
+};
+
+const CPrivateRoute = ({ component: PrivateComponent, isAuthorized, isAllowed = true, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (isAllowed && isAuthorized ? <PrivateComponent {...props} /> : <Redirect to="/" />)}
+  />
+);
+
+CPrivateRoute.propTypes = propTypes;
 
 const mapStateToProps = ({ Auth }) => ({
   isAuthorized: Auth.get('isAuthorized'),
 });
 
-@connect(mapStateToProps)
-class PrivateRoute extends Component {
-  static propTypes = {
-    component: PropTypes.any.isRequired,
-    isAuthorized: PropTypes.bool.isRequired,
-    isAllowed: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    isAllowed: true,
-  };
-
-  render() {
-    const { component: PrivateComponent, isAuthorized, isAllowed = true, ...rest } = this.props;
-
-    return (
-      <Route
-        {...rest}
-        render={props => (isAllowed && isAuthorized ? <PrivateComponent {...props} /> : <Redirect to="/" />)
-        }
-      />
-    );
-  }
-}
-
-export default PrivateRoute;
+export const PrivateRoute = compose(
+  connect(mapStateToProps, null),
+)(CPrivateRoute);

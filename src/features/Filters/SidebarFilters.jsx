@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
+import { compose } from 'utils';
 import { media } from 'core/constants/media';
-
 import { UIActions, FilterActions } from 'core/actions';
-
 import Button from 'shared/components/Button';
-
-import RoomFilters from './RoomFilters';
-import DatetimeFilters from './DatetimeFilters';
-import FilterPager from './components/FilterPager';
+import { RoomFilters } from './RoomFilters';
+import { DatetimeFilters } from './DatetimeFilters';
+import { FilterPager } from './components/FilterPager';
 
 
 const mapStateToProps = ({ UI }) => ({
@@ -28,15 +25,9 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-@withRouter
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-class Sidebar extends Component {
+class CSidebarFilters extends Component {
   static propTypes = {
     activeFiltersTab: PropTypes.number.isRequired,
-    location: PropTypes.object.isRequired,
 
     setFiltersTab: PropTypes.func.isRequired,
     resetFilters: PropTypes.func.isRequired,
@@ -48,11 +39,7 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { activeFiltersTab, resetFilters, location } = this.props;
-
-    if (location.pathname !== '/') {
-      return null;
-    }
+    const { activeFiltersTab, resetFilters } = this.props;
 
     return (
       <Wrapper>
@@ -68,7 +55,9 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar;
+export const SidebarFilters = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(CSidebarFilters);
 
 const Wrapper = styled.div`
   display: flex;

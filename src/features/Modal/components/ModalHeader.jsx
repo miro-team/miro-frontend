@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import CloseIcon from 'shared/assets/close.svg';
+import { ReactComponent as CloseIcon } from 'shared/assets/close.svg';
 
 
 export default function ModalHeader({ handleHideModal, children }) {
