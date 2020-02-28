@@ -7,6 +7,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { media } from 'core/constants/media';
 import { compose } from 'utils';
 import { UIActions } from 'core/actions';
+import { DropdownActions } from 'features/Dropdown';
 import { ReactComponent as MenuIcon } from 'shared/assets/menu.svg';
 import { ReactComponent as UserIcon } from 'shared/assets/user.svg';
 
@@ -68,8 +69,10 @@ const CHeader = ({
 
 CHeader.propTypes = propTypes;
 
-const mapStateToProps = ({ Auth }) => ({
+const mapStateToProps = ({ Auth, UI, Dropdown }) => ({
   isAuthorized: Auth.get('isAuthorized'),
+  isMobileSidebarOpened: UI.get('isMobileSidebarOpened'),
+  isDropdownOpened: Dropdown.get('isOpened'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -80,10 +83,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(UIActions.hideMobileSidebar());
   },
   showDropdown() {
-    dispatch(UIActions.showDropdown());
+    dispatch(DropdownActions.show());
   },
   hideDropdown() {
-    dispatch(UIActions.hideDropdown());
+    dispatch(DropdownActions.hide());
   },
 });
 

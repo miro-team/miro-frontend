@@ -39,6 +39,7 @@ const Wrapper = styled.div`
 const StyledSelect = styled.select`
   flex: 1;
   appearance: none;
+  font-size: initial;
 `;
 
 const Label = styled.div`

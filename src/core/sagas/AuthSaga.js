@@ -3,10 +3,9 @@ import { takeEvery, call, put, all, delay } from 'redux-saga/effects';
 import qs from 'qs';
 
 import API from 'Api';
-
 import { AuthService } from 'core/services';
-
-import { AuthActions, UserActions, NotificationActions, UIActions } from 'core/actions';
+import { DropdownActions } from 'features/Dropdown';
+import { AuthActions, UserActions, NotificationActions } from 'core/actions';
 
 
 function* login(action) {
@@ -30,8 +29,8 @@ function* login(action) {
       put(AuthActions.setAuthStatus()),
       put(AuthActions.loginSuccess()),
       put(UserActions.getUserRequest()),
-      put(UIActions.hideDropdown()),
-      put(UIActions.showDropdown()),
+      put(DropdownActions.hide()),
+      put(DropdownActions.show()),
     ]);
   } catch (e) {
     yield put(AuthActions.loginFail());
@@ -54,15 +53,13 @@ function* logout() {
     yield all([
       put(AuthActions.unsetAuthStatus()),
       put(AuthActions.logoutSuccess()),
-      put(UIActions.hideDropdown()),
-      put(UIActions.showDropdown()),
     ]);
   } catch (e) {
     yield put(AuthActions.logoutFail());
   }
 }
 
-export default function* () {
+export function* AuthSaga() {
   yield takeEvery(AuthActions.loginRequest, login);
   yield takeEvery(AuthActions.logoutRequest, logout);
 }

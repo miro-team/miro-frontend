@@ -1,28 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import { compose } from 'utils';
 import { ReactComponent as CloseIcon } from 'shared/assets/close.svg';
 
 
-export default function ModalHeader({ handleHideModal, children }) {
-  return (
-    <Wrapper>
-      {children}
-      <StyledCloseIcon onClick={handleHideModal} />
-    </Wrapper>
-  );
-}
-
-ModalHeader.propTypes = {
+const propTypes = {
   children: PropTypes.node,
 
-  handleHideModal: PropTypes.func.isRequired,
+  handleHide: PropTypes.func.isRequired,
 };
 
-ModalHeader.defaultProps = {
-  children: '',
-};
+const CModalHeader = ({ handleHide, children }) => (
+  <Wrapper>
+    {children}
+    <StyledCloseIcon onClick={handleHide} />
+  </Wrapper>
+);
+
+CModalHeader.propTypes = propTypes;
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({});
+
+export const ModalHeader = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(CModalHeader);
 
 const Wrapper = styled.div`
   background: #c65757;

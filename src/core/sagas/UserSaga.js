@@ -2,9 +2,6 @@ import axios from 'axios';
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 import API from 'Api';
-
-import { AuthService } from 'core/services';
-
 import { AuthActions, UserActions } from 'core/actions';
 
 
@@ -27,14 +24,10 @@ function* getUser() {
     if (isAuthorized) {
       yield put(AuthActions.unsetAuthStatus());
     }
-    if (AuthService.getJWT()) {
-      // TODO: Remove this
-      // AuthService.unsetJWT();
-    }
   }
 }
 
 
-export default function* () {
+export function* UserSaga() {
   yield takeEvery(UserActions.getUserRequest, getUser);
 }

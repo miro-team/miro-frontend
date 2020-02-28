@@ -1,24 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { compose } from 'utils';
-import { Header, Dropdown } from 'ui';
-import { PrivateRoute } from 'shared/components/PrivateRoute';
+import { Header } from 'features/Header';
+import { Dropdown } from 'features/Dropdown';
 import { Modal } from 'features/Modal';
+import { PrivateRoute } from 'shared/components/PrivateRoute';
+import { Auth } from 'features/Auth';
 
 import { SchedulePage } from './Schedule';
 import { ProfilePage } from './Profile';
 
 
-const propTypes = {
-  isDropdownOpened: PropTypes.bool.isRequired,
-  isModalOpened: PropTypes.bool.isRequired,
-};
-
-const CRootPage = ({ isDropdownOpened, isModalOpened }) => (
+const CRootPage = () => (
   <Wrapper>
     <Header />
     <Body>
@@ -27,13 +23,13 @@ const CRootPage = ({ isDropdownOpened, isModalOpened }) => (
         <PrivateRoute component={ProfilePage} path="/profile" />
         <Redirect to="/schedule" />
       </Switch>
-      {isDropdownOpened && <Dropdown />}
+      <Dropdown>
+        <Auth />
+      </Dropdown>
     </Body>
-    {isModalOpened && <Modal />}
+    <Modal />
   </Wrapper>
 );
-
-CRootPage.propTypes = propTypes;
 
 const mapStateToProps = ({ UI }) => ({
   isDropdownOpened: UI.get('isDropdownOpened'),

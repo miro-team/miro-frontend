@@ -6,10 +6,4 @@ export default {
 
   openMobileSidebar: createAction('OPEN_MOBILE_SIDEBAR'),
   hideMobileSidebar: createAction('HIDE_MOBILE_SIDEBAR'),
-
-  showDropdown: createAction('SHOW_DROPDOWN'),
-  hideDropdown: createAction('HIDE_DROPDOWN'),
-
-  showModal: createAction('SHOW_MODAL'),
-  hideModal: createAction('HIDE_MODAL'),
 };

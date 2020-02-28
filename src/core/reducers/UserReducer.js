@@ -9,12 +9,10 @@ const initialState = Map({
   fullname: '',
 });
 
-const UserReducer = createReducer(
+export const UserReducer = createReducer(
   {
     [UserActions.getUserSuccess]: (state, payload) => state.set('username', payload.username).set('fullname', payload.fullname),
     [UserActions.getUserFail]: () => initialState,
   },
   initialState,
 );
-
-export default UserReducer;

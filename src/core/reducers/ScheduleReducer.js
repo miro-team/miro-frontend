@@ -11,7 +11,7 @@ const initialState = Map({
   data: {},
 });
 
-const ScheduleReducer = createReducer(
+export const ScheduleReducer = createReducer(
   {
     [ScheduleActions.setGridPage]: (state, payload) => state.set('gridActivePage', payload),
     [ScheduleActions.resetGridPage]: state => state.set('gridActivePage', 1),
@@ -23,5 +23,3 @@ const ScheduleReducer = createReducer(
   },
   initialState,
 );
-
-export default ScheduleReducer;

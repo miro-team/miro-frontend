@@ -17,11 +17,9 @@ const initialState = Map({
   pairs: [],
 });
 
-const ConfigReducer = createReducer(
+export const ConfigReducer = createReducer(
   {
     [ConfigActions.getConfigSuccess]: (state, payload) => state.mergeDeep(payload),
   },
   initialState,
 );
-
-export default ConfigReducer;

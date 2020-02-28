@@ -1,54 +1,72 @@
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { useOnClickOutside } from 'og-react';
 
-import { UIActions } from 'core/actions';
+import { compose } from 'utils';
+import { RoomModal } from './modals';
+import { ModalHeader as Header } from './components';
+import { ModalActions } from './actions';
 
-import RoomModal from './modals/RoomModal';
 
+const propTypes = {
+  isOpened: PropTypes.bool.isRequired,
+  type: PropTypes.string,
+  title: PropTypes.string,
+  options: PropTypes.string,
 
-const mapStateToProps = ({ UI }) => ({
-  modalType: UI.get('modalType'),
-  modalOptions: UI.get('modalOptions'),
-});
+  hide: PropTypes.func.isRequired,
+};
 
-const mapDispatchToProps = dispatch => ({
-  hideModal() {
-    dispatch(UIActions.hideModal());
-  },
-});
+const CModal = ({ isOpened, type, title, options, hide }) => {
+  if (!isOpened) {
+    return null;
+  }
 
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-class Modal extends Component {
-  static propTypes = {
-    modalType: PropTypes.string.isRequired,
+  const handleHide = () => {
+    hide();
   };
 
-  renderModal = (type) => {
+  const renderModal = () => {
     switch (type) {
       case 'room':
-        return <RoomModal />;
+        return <RoomModal options={options} />;
       default:
         return null;
     }
   };
 
-  render() {
-    const { modalType } = this.props;
+  const ref = useRef(null);
+  useOnClickOutside(ref, handleHide);
 
-    return (
-      <Wrapper>
-        <ModalBody>{this.renderModal(modalType)}</ModalBody>
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper>
+      <Body ref={ref}>
+        <Header handleHide={handleHide}>{title}</Header>
+        <Content>{renderModal()}</Content>
+      </Body>
+    </Wrapper>
+  );
+};
 
-export default Modal;
+CModal.propTypes = propTypes;
+
+const mapStateToProps = ({ Modal }) => ({
+  isOpened: Modal.get('isOpened'),
+  type: Modal.get('type'),
+  title: Modal.get('title'),
+});
+
+const mapDispatchToProps = dispatch => ({
+  hide() {
+    dispatch(ModalActions.hide());
+  },
+});
+
+export const Modal = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(CModal);
 
 const Wrapper = styled.div`
   position: absolute;
@@ -60,10 +78,14 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const ModalBody = styled.div`
+const Body = styled.div`
   background: #fff;
   border-radius: 10px;
   width: 550px;
   height: 400px;
   overflow: hidden;
+`;
+
+const Content = styled.div`
+  padding: 20px;
 `;

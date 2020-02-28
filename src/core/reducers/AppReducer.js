@@ -8,7 +8,7 @@ const initialState = Map({
   process: '',
 });
 
-const AppReducer = createReducer(
+export const AppReducer = createReducer(
   {
     [AuthActions.loginRequest]: state => state.set('process', 'login'),
     [AuthActions.loginSuccess]: state => state.set('process', ''),
@@ -16,5 +16,3 @@ const AppReducer = createReducer(
   },
   initialState,
 );
-
-export default AppReducer;

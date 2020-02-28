@@ -5,17 +5,23 @@ import styled, { keyframes } from 'styled-components';
 import { useOnClickOutside } from 'og-react';
 
 import { compose } from 'utils';
-import { UIActions } from 'core/actions';
-import { Auth } from 'features/Auth';
+import { DropdownActions } from './actions';
 
 
 const propTypes = {
-  hideDropdown: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  isOpened: PropTypes.bool.isRequired,
+
+  hide: PropTypes.func.isRequired,
 };
 
-const CDropdown = ({ hideDropdown }) => {
+const CDropdown = ({ isOpened, hide, children }) => {
+  if (!isOpened) {
+    return null;
+  }
+
   const handleHide = () => {
-    hideDropdown();
+    hide();
   };
 
   const ref = useRef(null);
@@ -23,18 +29,20 @@ const CDropdown = ({ hideDropdown }) => {
 
   return (
     <Wrapper ref={ref}>
-      <Auth />
+      {children}
     </Wrapper>
   );
 };
 
 CDropdown.propTypes = propTypes;
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ Dropdown }) => ({
+  isOpened: Dropdown.get('isOpened'),
+});
 
 const mapDispatchToProps = dispatch => ({
-  hideDropdown() {
-    dispatch(UIActions.hideDropdown());
+  hide() {
+    dispatch(DropdownActions.hide());
   },
 });
 
@@ -43,14 +51,14 @@ export const Dropdown = compose(
 )(CDropdown);
 
 const Appear = keyframes`
-    from {
-        opacity: 0;
-        transform: translateY(45px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(45px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
 const Wrapper = styled.div`

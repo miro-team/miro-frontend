@@ -18,7 +18,7 @@ const initialState = Map({
   pair: -1,
 });
 
-const FilterReducer = createReducer(
+export const FilterReducer = createReducer(
   {
     [FilterActions.setSchemeFilter]: (state, payload) => state.set('scheme', +payload),
     [FilterActions.setBuildingFilter]: (state, payload) => state.set('building', +payload),
@@ -37,5 +37,3 @@ const FilterReducer = createReducer(
   },
   initialState,
 );
-
-export default FilterReducer;

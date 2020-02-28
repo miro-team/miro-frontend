@@ -3,7 +3,6 @@ import { takeLatest, call, select, put } from 'redux-saga/effects';
 
 import API from 'Api';
 import { convertDate } from 'utils';
-
 import { ScheduleActions } from 'core/actions';
 
 
@@ -63,7 +62,7 @@ function* makeRequest(action) {
 }
 
 
-export default function* () {
+export function* FilterSaga() {
   yield takeLatest(
     action => action.type.slice(-7) === '_FILTER'
       || action.type === 'SET_SCHEDULEGRID_PAGE'

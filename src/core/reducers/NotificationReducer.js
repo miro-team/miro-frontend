@@ -8,7 +8,7 @@ const initialState = Map({
   login: {},
 });
 
-const NotificationReducer = createReducer(
+export const NotificationReducer = createReducer(
   {
     [NotificationActions.setNotification]: (state, payload) => {
       const { module, type, message } = payload;
@@ -28,5 +28,3 @@ const NotificationReducer = createReducer(
   },
   initialState,
 );
-
-export default NotificationReducer;

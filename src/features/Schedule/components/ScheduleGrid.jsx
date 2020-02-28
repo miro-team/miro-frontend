@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { ScheduleActions, UIActions } from 'core/actions';
 
 import Grid from 'shared/components/Grid';
-import { PageTitle } from 'ui';
 
 
 const mapStateToProps = ({ Schedule }) => ({

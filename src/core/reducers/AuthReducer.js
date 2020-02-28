@@ -8,12 +8,10 @@ const initialState = Map({
   isAuthorized: false,
 });
 
-const AuthReducer = createReducer(
+export const AuthReducer = createReducer(
   {
     [AuthActions.setAuthStatus]: state => state.set('isAuthorized', true),
     [AuthActions.unsetAuthStatus]: state => state.set('isAuthorized', false),
   },
   initialState,
 );
-
-export default AuthReducer;

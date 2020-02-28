@@ -1,3 +1,3 @@
 export * from './actions';
 export * from './reducers';
-export * from './Modal';
+export * from './Dropdown';

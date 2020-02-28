@@ -2,7 +2,6 @@ import axios from 'axios';
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 import API from 'Api';
-
 import { ConfigActions } from 'core/actions';
 
 
@@ -21,6 +20,6 @@ function* getConfig() {
   }
 }
 
-export default function* () {
+export function* AppSaga() {
   yield takeLatest(ConfigActions.getConfigRequest, getConfig);
 }

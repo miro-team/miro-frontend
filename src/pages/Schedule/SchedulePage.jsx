@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { compose } from 'utils';
 import { Schedule } from 'features/Schedule';
 import { SidebarFilters } from 'features/Filters';
-import { Content, Sidebar, PageTitle } from 'ui';
+import { Sidebar } from 'features/Sidebar';
+import { Content, PageTitle } from 'ui';
 
 
 const CSchedulePage = () => (
