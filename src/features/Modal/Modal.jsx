@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 import styled from 'styled-components';
-import { useOnClickOutside } from 'og-react';
 
-import { compose } from 'utils';
+import { compose, useOnClickOutside } from 'utils';
 import { RoomModal } from './modals';
 import { ModalHeader as Header } from './components';
-import { ModalActions } from './actions';
 
 
 const propTypes = {
@@ -20,10 +18,6 @@ const propTypes = {
 };
 
 const CModal = ({ isOpened, type, title, options, hide }) => {
-  if (!isOpened) {
-    return null;
-  }
-
   const handleHide = () => {
     hide();
   };
@@ -38,7 +32,11 @@ const CModal = ({ isOpened, type, title, options, hide }) => {
   };
 
   const ref = useRef(null);
-  useOnClickOutside(ref, handleHide);
+  useOnClickOutside(ref, handleHide, isOpened);
+
+  if (!isOpened) {
+    return null;
+  }
 
   return (
     <Wrapper>
@@ -53,19 +51,15 @@ const CModal = ({ isOpened, type, title, options, hide }) => {
 CModal.propTypes = propTypes;
 
 const mapStateToProps = ({ Modal }) => ({
-  isOpened: Modal.get('isOpened'),
-  type: Modal.get('type'),
-  title: Modal.get('title'),
-});
+  isOpened: Modal.isOpened,
+  type: Modal.type,
+  title: Modal.title,
 
-const mapDispatchToProps = dispatch => ({
-  hide() {
-    dispatch(ModalActions.hide());
-  },
+  hide: Modal.hide,
 });
 
 export const Modal = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CModal);
 
 const Wrapper = styled.div`

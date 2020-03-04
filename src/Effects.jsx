@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
 import { ConfigActions, ScheduleActions, UserActions } from 'core/actions';

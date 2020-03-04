@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 
 import { compose } from 'utils';
 import { ReactComponent as CloseIcon } from 'shared/assets/close.svg';
@@ -24,10 +24,8 @@ CModalHeader.propTypes = propTypes;
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => ({});
-
 export const ModalHeader = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CModalHeader);
 
 const Wrapper = styled.div`

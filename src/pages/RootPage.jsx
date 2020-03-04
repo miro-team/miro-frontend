@@ -1,45 +1,63 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { inject } from 'mobx-react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { compose } from 'utils';
+import { compose, startPolling, stopPolling } from 'utils';
 import { Header } from 'features/Header';
 import { Dropdown } from 'features/Dropdown';
 import { Modal } from 'features/Modal';
+import { Preloader } from 'features/Preloader';
 import { PrivateRoute } from 'shared/components/PrivateRoute';
-import { Auth } from 'features/Auth';
+import { Auth as Authorization } from 'features/Auth';
 
 import { SchedulePage } from './Schedule';
 import { ProfilePage } from './Profile';
 
 
-const CRootPage = () => (
-  <Wrapper>
-    <Header />
-    <Body>
-      <Switch>
-        <Route component={SchedulePage} exact path="/schedule" />
-        <PrivateRoute component={ProfilePage} path="/profile" />
-        <Redirect to="/schedule" />
-      </Switch>
-      <Dropdown>
-        <Auth />
-      </Dropdown>
-    </Body>
-    <Modal />
-  </Wrapper>
-);
+const propTypes = {
+  getConfig: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
+};
 
-const mapStateToProps = ({ UI }) => ({
-  isDropdownOpened: UI.get('isDropdownOpened'),
-  isModalOpened: UI.get('isModalOpened'),
+const CRootPage = ({ getConfig, getUser }) => {
+  useEffect(() => {
+    getConfig();
+    startPolling('user', getUser, 15000);
+    return () => {
+      stopPolling('user');
+    }
+  }, []);
+
+  return (
+    <Wrapper>
+      <Preloader />
+      <Header />
+      <Body>
+        <Switch>
+          <Route component={SchedulePage} exact path="/schedule" />
+          <PrivateRoute component={ProfilePage} path="/profile" />
+          <Redirect to="/schedule" />
+        </Switch>
+        <Dropdown>
+          <Authorization />
+        </Dropdown>
+      </Body>
+      <Modal />
+    </Wrapper>
+  );
+};
+
+CRootPage.propTypes = propTypes;
+
+const mapStateToProps = ({ Config, Auth }) => ({
+  getConfig: Config.getConfig,
+  getUser: Auth.getUser,
 });
 
-const mapDispatchToProps = () => ({});
-
 export const RootPage = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CRootPage);
 
 const Wrapper = styled.div`

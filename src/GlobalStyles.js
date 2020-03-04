@@ -2,17 +2,14 @@ import { createGlobalStyle } from 'styled-components';
 
 
 const GlobalStyles = createGlobalStyle`
-  input, select {
-    background: #fff;
-    padding: 10px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    height: 42px;
-    width: 100%;
-    border: 1px solid #d8d8d8;
-    border-radius: 2px;
+  * {
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+  }
+  html,
+  body {
+    overflow: hidden;
   }
 `;
 

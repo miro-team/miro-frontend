@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 
 import { compose } from 'utils';
 import { Reservations } from 'features/Reservations';
@@ -17,8 +17,6 @@ const CReservationsPage = () => (
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
-
 export const ReservationsPage = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CReservationsPage);

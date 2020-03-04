@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 
 import { compose } from 'utils';
 
@@ -11,7 +11,7 @@ const propTypes = {
 
 const CRoomModal = ({ options }) => (
   <>
-    asd
+    RoomModal
   </>
 );
 
@@ -23,10 +23,6 @@ const mapStateToProps = ({ UI }) => ({
   isModalOpened: UI.get('isModalOpened'),
 });
 
-const mapDispatchToProps = () => ({
-
-});
-
 export const RoomModal = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CRoomModal);

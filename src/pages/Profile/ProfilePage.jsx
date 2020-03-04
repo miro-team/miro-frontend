@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 import { Switch } from 'react-router-dom';
 
 import { compose } from 'utils';
@@ -20,8 +20,6 @@ const CProfilePage = () => (
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
-
 export const ProfilePage = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CProfilePage);

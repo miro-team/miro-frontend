@@ -1,4 +1,4 @@
-class Api {
+class CAPI {
   constructor() {
     this.host = 'http://62.109.25.2:2200';
     this.prefix = `${this.host}/api`;
@@ -25,4 +25,4 @@ class Api {
   }
 }
 
-export default new Api();
+export const API = new CAPI();

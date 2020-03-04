@@ -1,29 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 
 import { compose } from 'utils';
-import { Schedule } from 'features/Schedule';
-import { SidebarFilters } from 'features/Filters';
+import { Schedule, ScheduleFilters } from 'features/Schedule';
 import { Sidebar } from 'features/Sidebar';
-import { Content, PageTitle } from 'ui';
+import { Content, ContentBody, PageTitle } from 'ui';
 
 
 const CSchedulePage = () => (
   <>
     <Sidebar>
-      <SidebarFilters />
+      <ScheduleFilters />
     </Sidebar>
     <Content>
       <PageTitle>Поиск аудиторий</PageTitle>
-      <Schedule />
+      <ContentBody>
+        <Schedule />
+      </ContentBody>
     </Content>
   </>
 );
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
-
 export const SchedulePage = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CSchedulePage);

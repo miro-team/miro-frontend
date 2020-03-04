@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 
 import { compose } from 'utils';
 import { ProfileSettings } from 'features/ProfileSettings';
@@ -17,8 +17,6 @@ const CProfileSettingsPage = () => (
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
-
 export const ProfileSettingsPage = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CProfileSettingsPage);

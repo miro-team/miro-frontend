@@ -1,31 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import User from './components/User';
-import Login from './components/Login';
+import { compose } from 'utils';
+import { User } from './components/User';
+import { Login } from './components/Login';
 
+
+const propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+};
+
+const CAuth = ({ isAuthorized }) => (isAuthorized ? <User /> : <Login />);
+
+CAuth.propTypes = propTypes;
 
 const mapStateToProps = ({ Auth }) => ({
-  isAuthorized: Auth.get('isAuthorized'),
+  isAuthorized: Auth.isAuthorized,
 });
 
-const mapDispatchToProps = () => ({});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-class Auth extends Component {
-  static propTypes = {
-    isAuthorized: PropTypes.bool.isRequired,
-  };
-
-  render() {
-    const { isAuthorized } = this.props;
-
-    return <>{isAuthorized ? <User /> : <Login />}</>;
-  }
-}
-
-export default Auth;
+export const Auth = compose(
+  inject(mapStateToProps),
+)(CAuth);

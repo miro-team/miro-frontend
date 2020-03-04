@@ -1,37 +1,29 @@
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 
-import ScheduleGrid from './components/ScheduleGrid';
+import { compose } from 'utils';
 
+
+const propTypes = {
+
+};
+
+const CSchedule = () => (
+  <Wrapper>
+      Schedule
+  </Wrapper>
+);
+
+CSchedule.propTypes = propTypes;
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)
-class Schedule extends Component {
-  render() {
-    return (
-      <Wrapper>
-        <ScheduleGrid />
-      </Wrapper>
-    );
-  }
-}
-
-export default Schedule;
+export const Schedule = compose(
+  inject(mapStateToProps),
+)(CSchedule);
 
 const Wrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  .main-container {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-  }
+  
 `;

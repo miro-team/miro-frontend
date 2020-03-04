@@ -1,11 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 import styled, { keyframes } from 'styled-components';
-import { useOnClickOutside } from 'og-react';
 
-import { compose } from 'utils';
-import { DropdownActions } from './actions';
+import { compose, useOnClickOutside } from 'utils';
 
 
 const propTypes = {
@@ -16,16 +14,16 @@ const propTypes = {
 };
 
 const CDropdown = ({ isOpened, hide, children }) => {
-  if (!isOpened) {
-    return null;
-  }
-
   const handleHide = () => {
     hide();
   };
 
   const ref = useRef(null);
-  useOnClickOutside(ref, handleHide);
+  useOnClickOutside(ref, handleHide, isOpened)
+
+  if (!isOpened) {
+    return null;
+  }
 
   return (
     <Wrapper ref={ref}>
@@ -37,17 +35,13 @@ const CDropdown = ({ isOpened, hide, children }) => {
 CDropdown.propTypes = propTypes;
 
 const mapStateToProps = ({ Dropdown }) => ({
-  isOpened: Dropdown.get('isOpened'),
-});
+  isOpened: Dropdown.isOpened,
 
-const mapDispatchToProps = dispatch => ({
-  hide() {
-    dispatch(DropdownActions.hide());
-  },
+  hide: Dropdown.hide,
 });
 
 export const Dropdown = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CDropdown);
 
 const Appear = keyframes`
@@ -67,7 +61,6 @@ const Wrapper = styled.div`
   background: #fff;
   width: 250px;
   right: 0;
-  font-size: 14px;
   position: absolute;
   box-shadow: 0 10px 21px 0 rgba(173, 182, 217, 0.3);
   animation: ${Appear} 0.2s linear;

@@ -1,46 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { inject } from 'mobx-react';
 import { withRouter, Link } from 'react-router-dom';
 
 import { media } from 'core/constants/media';
 import { compose } from 'utils';
-import { UIActions } from 'core/actions';
-import { DropdownActions } from 'features/Dropdown';
-import { ReactComponent as MenuIcon } from 'shared/assets/menu.svg';
 import { ReactComponent as UserIcon } from 'shared/assets/user.svg';
+import { Icon } from 'ui';
 
 
 const propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
-  isMobileSidebarOpened: PropTypes.bool.isRequired,
   isDropdownOpened: PropTypes.bool.isRequired,
 
-  openMobileSidebar: PropTypes.func.isRequired,
-  hideMobileSidebar: PropTypes.func.isRequired,
   showDropdown: PropTypes.func.isRequired,
   hideDropdown: PropTypes.func.isRequired,
-
 };
 
 const CHeader = ({
-  isMobileSidebarOpened,
   isDropdownOpened,
   isAuthorized,
-  openMobileSidebar,
-  hideMobileSidebar,
   showDropdown,
   hideDropdown,
 }) => {
-  const handleToggleSidebar = () => {
-    if (isMobileSidebarOpened) {
-      hideMobileSidebar();
-    } else {
-      openMobileSidebar();
-    }
-  };
-
   const handleToggleDropdown = () => {
     if (isDropdownOpened) {
       hideDropdown();
@@ -52,15 +35,12 @@ const CHeader = ({
   return (
     <Wrapper>
       <HeaderLeft>
-        <MobileSidebarButton onClick={handleToggleSidebar}>
-          <StyledMenuIcon />
-        </MobileSidebarButton>
         <LogoWithLink to="/">MIRO</LogoWithLink>
       </HeaderLeft>
       <HeaderRight>
         <UserProfile onClick={handleToggleDropdown}>
-          {isAuthorized ? 'Учетная запись' : 'Авторизация'}
-          <StyledUserIcon />
+          <span>{isAuthorized ? 'Учетная запись' : 'Авторизация'}</span>
+          <Icon name="user circle" size="large" invertMargin />
         </UserProfile>
       </HeaderRight>
     </Wrapper>
@@ -70,29 +50,16 @@ const CHeader = ({
 CHeader.propTypes = propTypes;
 
 const mapStateToProps = ({ Auth, UI, Dropdown }) => ({
-  isAuthorized: Auth.get('isAuthorized'),
-  isMobileSidebarOpened: UI.get('isMobileSidebarOpened'),
-  isDropdownOpened: Dropdown.get('isOpened'),
-});
+  isAuthorized: Auth.isAuthorized,
+  isDropdownOpened: Dropdown.isOpened,
 
-const mapDispatchToProps = dispatch => ({
-  openMobileSidebar() {
-    dispatch(UIActions.openMobileSidebar());
-  },
-  hideMobileSidebar() {
-    dispatch(UIActions.hideMobileSidebar());
-  },
-  showDropdown() {
-    dispatch(DropdownActions.show());
-  },
-  hideDropdown() {
-    dispatch(DropdownActions.hide());
-  },
+  showDropdown: Dropdown.show,
+  hideDropdown: Dropdown.hide,
 });
 
 export const Header = compose(
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps),
+  inject(mapStateToProps),
 )(CHeader);
 
 export const Wrapper = styled.div`
@@ -107,15 +74,8 @@ export const Wrapper = styled.div`
   }
 `;
 
-const StyledMenuIcon = styled(MenuIcon)`
-  width: 22px;
-  height: 22px;
-`;
-
-const StyledUserIcon = styled(UserIcon)`
-  width: 30px;
-  height: 30px;
-  margin-left: 10px;
+const StyledUserIcon = styled(Icon)`
+  margin: 0 0 0 10px !important;
 `;
 
 const MobileSidebarButton = styled.div`

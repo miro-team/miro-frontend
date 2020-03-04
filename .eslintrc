@@ -1,8 +1,12 @@
 {
-  "extends": ["airbnb"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "env": {
     "browser": true,
-    "jest": true
+    "jest": true,
+    "es6": true
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -15,23 +19,36 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["src"]
+        "paths": [
+          "src"
+        ]
       }
+    },
+    "react": {
+      "version": "detect"
     }
   },
+  "plugins": [
+    "import"
+  ],
   "rules": {
-    "object-curly-newline": ["error", { "consistent": true }],
+    "object-curly-newline": [
+      "error",
+      {
+        "consistent": true
+      }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
     "import/newline-after-import": [
       "error",
       {
         "count": 2
       }
     ],
-    "react/forbid-prop-types": "off",
-    "import/prefer-default-export": "off",
-    "max-len": "off",
-    "react/require-default-props": "off",
-    "no-unused-vars": "off",
-    "no-console": "off"
+    "eol-last": "error",
+    "no-unused-vars": "off"
   }
 }

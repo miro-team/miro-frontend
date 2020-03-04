@@ -1,1 +1,2 @@
-export { default as Schedule } from './Schedule';
+export * from './Schedule';
+export * from './ScheduleFilters';

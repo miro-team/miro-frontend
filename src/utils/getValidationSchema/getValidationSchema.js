@@ -25,7 +25,7 @@ function getValidationSchema(schemaName) {
     },
   };
 
-  if (!schemas[schemaName]) throw new Error(`${schemaName} validation schema doesn't exist!`);
+  if (!schemas[schemaName]) throw new Error(`${schemaName} схема для валидации не найдена.`);
   return Yup.object().shape(schemas[schemaName]);
 }
 
