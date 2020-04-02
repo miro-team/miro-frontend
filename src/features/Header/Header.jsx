@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { withRouter, Link } from 'react-router-dom';
 
-import { media } from 'core/constants/media';
+import { media } from 'core/constants';
 import { compose } from 'utils';
 import { ReactComponent as UserIcon } from 'shared/assets/user.svg';
 import { Icon } from 'ui';
@@ -40,7 +40,7 @@ const CHeader = ({
       <HeaderRight>
         <UserProfile onClick={handleToggleDropdown}>
           <span>{isAuthorized ? 'Учетная запись' : 'Авторизация'}</span>
-          <Icon name="user circle" size="large" invertMargin />
+          <Icon name="user circle" size="large" marginPosition="right" />
         </UserProfile>
       </HeaderRight>
     </Wrapper>

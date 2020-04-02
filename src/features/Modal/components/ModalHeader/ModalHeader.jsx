@@ -39,6 +39,7 @@ const Wrapper = styled.div`
   align-items: center;
   font-size: 22px;
   cursor: default;
+  border-radius: 10px 10px 0 0;
 `;
 
 const StyledCloseIcon = styled(CloseIcon)`

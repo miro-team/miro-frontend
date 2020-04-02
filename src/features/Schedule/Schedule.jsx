@@ -4,15 +4,14 @@ import styled from 'styled-components';
 import { inject } from 'mobx-react';
 
 import { compose } from 'utils';
+import { ScheduleTable } from './components/ScheduleTable';
 
 
-const propTypes = {
-
-};
+const propTypes = {};
 
 const CSchedule = () => (
   <Wrapper>
-      Schedule
+    <ScheduleTable />
   </Wrapper>
 );
 
@@ -25,5 +24,7 @@ export const Schedule = compose(
 )(CSchedule);
 
 const Wrapper = styled.div`
-  
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `;

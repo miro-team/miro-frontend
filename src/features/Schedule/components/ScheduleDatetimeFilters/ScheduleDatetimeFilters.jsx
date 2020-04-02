@@ -1,161 +1,81 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Calendar from 'react-calendar';
+import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import { compose, getMonth } from 'utils';
-import { media } from 'core/constants/media';
-import { FilterActions } from 'core/actions';
-import SelectInput from 'shared/components/SelectInput';
-import { FilterOptions } from './components/FilterOptions';
+import { compose, mapToOptions } from 'utils';
+import { InputRow, InputWrapper, InputLabel, Select, DatePicker, RecurrenceEditor } from 'ui';
 
 
-class CScheduleDatetimeFilters extends Component {
-  static propTypes = {
-    periodicityOptions: PropTypes.array.isRequired,
-    weekDayOptions: PropTypes.array.isRequired,
-    pairOptions: PropTypes.array.isRequired,
+const propTypes = {
+  pairs: PropTypes.array,
+  date: PropTypes.instanceOf(Date),
+  pair: PropTypes.array,
+  recurrence: PropTypes.string,
 
-    eventType: PropTypes.string.isRequired,
-    date: PropTypes.instanceOf(Date).isRequired,
-    periodicity: PropTypes.number.isRequired,
-    weekDay: PropTypes.number.isRequired,
-    pair: PropTypes.number.isRequired,
+  setDate: PropTypes.func.isRequired,
+  setPair: PropTypes.func.isRequired,
+  setRecurrence: PropTypes.func.isRequired,
+};
 
-    setEventTypeFilter: PropTypes.func.isRequired,
-    setDateFilter: PropTypes.func.isRequired,
-    setPeriodicityFilter: PropTypes.func.isRequired,
-    setWeekDayFilter: PropTypes.func.isRequired,
-    setPairFilter: PropTypes.func.isRequired,
+const CScheduleDatetimeFilters = ({
+  pairs,
+  date,
+  pair,
+  recurrence,
+  setDate,
+  setPair,
+  setRecurrence,
+}) => {
+  const handleDateChange = (value) => {
+    setDate(value);
   };
 
-  handleEventTypeChange = (e) => {
-    const { setEventTypeFilter } = this.props;
-    setEventTypeFilter(e.target.value);
+  const handlePairChange = (e, { value }) => {
+    setPair(value);
   };
 
-  handleDateChange = (date) => {
-    const { setDateFilter } = this.props;
-    setDateFilter(date);
+  const handleRecurrenceChange = (e, { value }) => {
+    setRecurrence(value);
   };
 
-  handlePeriodicityChange = (e) => {
-    const { setPeriodicityFilter } = this.props;
-    setPeriodicityFilter(+e.target.value);
-  };
+  return (
+    <>
+      <InputRow>
+        <InputWrapper>
+          <InputLabel>Дата</InputLabel>
+          <DatePicker value={date} placeholder="Выберите дату" onChange={handleDateChange} />
+        </InputWrapper>
+      </InputRow>
+      <InputRow>
+        <InputWrapper>
+          <InputLabel>Пара</InputLabel>
+          <Select options={mapToOptions(pairs)} value={pair} placeholder="Пара" onChange={handlePairChange} multiple clearable />
+        </InputWrapper>
+      </InputRow>
+      <InputRow>
+        <InputWrapper>
+          <InputLabel>Повторение</InputLabel>
+          <RecurrenceEditor value={recurrence} onChange={handleRecurrenceChange} startDate={date} />
+        </InputWrapper>
+      </InputRow>
+    </>
+  );
+};
 
-  handleWeekDayChange = (e) => {
-    const { setWeekDayFilter } = this.props;
-    setWeekDayFilter(+e.target.value);
-  };
+CScheduleDatetimeFilters.propTypes = propTypes;
 
-  handlePairChange = (e) => {
-    const { setPairFilter } = this.props;
-    setPairFilter(+e.target.value);
-  };
+const mapStateToProps = ({ Config, ScheduleFilters }) => ({
+  pairs: Config.pairs,
+  date: ScheduleFilters.date,
+  pair: ScheduleFilters.pair,
+  recurrence: ScheduleFilters.recurrence,
 
-  render() {
-    const {
-      periodicityOptions,
-      weekDayOptions,
-      pairOptions,
-      eventType,
-      date,
-      periodicity,
-      weekDay,
-      pair,
-    } = this.props;
-
-    return (
-      <Wrapper>
-        <FieldWrapper>
-          <SelectInput label="Тип события" value={eventType} onChange={this.handleEventTypeChange}>
-            <option value="single">Конкретная дата</option>
-            <option value="cycle">Цикличное</option>
-          </SelectInput>
-        </FieldWrapper>
-        {eventType === 'single' && (
-          <FieldWrapper>
-            <Calendar
-              locale="ru"
-              formatMonthYear={(locale, calendarDate) => getMonth(calendarDate)}
-              value={date}
-              onChange={this.handleDateChange}
-            />
-          </FieldWrapper>
-        )}
-        {eventType === 'cycle' && (
-          <>
-            <FieldWrapper>
-              <SelectInput
-                label="Периодичность"
-                value={periodicity}
-                onChange={this.handlePeriodicityChange}
-              >
-                <FilterOptions options={periodicityOptions} renderEmpty />
-              </SelectInput>
-            </FieldWrapper>
-            <FieldWrapper>
-              <SelectInput label="День недели" value={weekDay} onChange={this.handleWeekDayChange}>
-                <FilterOptions options={weekDayOptions} renderEmpty />
-              </SelectInput>
-            </FieldWrapper>
-          </>
-        )}
-        <FieldWrapper>
-          <SelectInput label="Пара" value={pair} onChange={this.handlePairChange}>
-            <FilterOptions options={pairOptions} renderEmpty />
-          </SelectInput>
-        </FieldWrapper>
-      </Wrapper>
-    );
-  }
-}
-
-const mapStateToProps = ({ Config, Filters }) => ({
-  periodicityOptions: Config.get('periodicities'),
-  weekDayOptions: Config.get('weekDays'),
-  pairOptions: Config.get('pairs'),
-
-  eventType: Filters.get('eventType'),
-  date: Filters.get('date'),
-  periodicity: Filters.get('periodicity'),
-  weekDay: Filters.get('weekDay'),
-  pair: Filters.get('pair'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  setEventTypeFilter(payload) {
-    dispatch(FilterActions.setEventTypeFilter(payload));
-  },
-  setDateFilter(payload) {
-    dispatch(FilterActions.setDateFilter(payload));
-  },
-  setPeriodicityFilter(payload) {
-    dispatch(FilterActions.setPeriodicityFilter(payload));
-  },
-  setWeekDayFilter(payload) {
-    dispatch(FilterActions.setWeekDayFilter(payload));
-  },
-  setPairFilter(payload) {
-    dispatch(FilterActions.setPairFilter(payload));
-  },
+  setDate: ScheduleFilters.setDate,
+  setPair: ScheduleFilters.setPair,
+  setRecurrence: ScheduleFilters.setRecurrence,
 });
 
 export const ScheduleDatetimeFilters = compose(
   inject(mapStateToProps),
 )(CScheduleDatetimeFilters);
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  font-size: 12px;
-`;
-
-const FieldWrapper = styled.div`
-  margin-bottom: 25px;
-  ${media.xs} {
-    margin-bottom: 15px;
-  }
-`;

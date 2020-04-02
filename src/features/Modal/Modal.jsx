@@ -4,7 +4,6 @@ import { inject } from 'mobx-react';
 import styled from 'styled-components';
 
 import { compose, useOnClickOutside } from 'utils';
-import { RoomModal } from './modals';
 import { ModalHeader as Header } from './components';
 
 
@@ -12,23 +11,14 @@ const propTypes = {
   isOpened: PropTypes.bool.isRequired,
   type: PropTypes.string,
   title: PropTypes.string,
-  options: PropTypes.string,
+  componentProps: PropTypes.object,
 
   hide: PropTypes.func.isRequired,
 };
 
-const CModal = ({ isOpened, type, title, options, hide }) => {
+const CModal = ({ isOpened, title, component:Component, componentProps, hide }) => {
   const handleHide = () => {
     hide();
-  };
-
-  const renderModal = () => {
-    switch (type) {
-      case 'room':
-        return <RoomModal options={options} />;
-      default:
-        return null;
-    }
   };
 
   const ref = useRef(null);
@@ -42,7 +32,9 @@ const CModal = ({ isOpened, type, title, options, hide }) => {
     <Wrapper>
       <Body ref={ref}>
         <Header handleHide={handleHide}>{title}</Header>
-        <Content>{renderModal()}</Content>
+        <Content>
+          {Component && <Component {...componentProps} />}
+        </Content>
       </Body>
     </Wrapper>
   );
@@ -52,8 +44,9 @@ CModal.propTypes = propTypes;
 
 const mapStateToProps = ({ Modal }) => ({
   isOpened: Modal.isOpened,
-  type: Modal.type,
   title: Modal.title,
+  component: Modal.component,
+  componentProps: Modal.componentProps,
 
   hide: Modal.hide,
 });
@@ -76,10 +69,9 @@ const Body = styled.div`
   background: #fff;
   border-radius: 10px;
   width: 550px;
-  height: 400px;
-  overflow: hidden;
+  min-height: 100px;
 `;
 
 const Content = styled.div`
-  padding: 20px;
+  padding: 30px 30px 40px;
 `;

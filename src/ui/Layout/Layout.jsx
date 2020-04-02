@@ -6,7 +6,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 40px 40px 25px 40px;
+  padding: 40px;
   background: #f4f4f4;
   overflow: hidden;
   ${media.xs} {
@@ -15,8 +15,9 @@ export const Content = styled.div`
 `;
 
 export const ContentBody = styled.div`
+  display: flex;
   background: #fff;
-  box-shadow: 0px 8px 21px rgba(0,0,0,0.0464106);
+  box-shadow: 0px 8px 21px rgba(0,0,0,0.046);
   padding: 20px;
 `;
 
@@ -25,7 +26,7 @@ export const PageTitle = styled.div`
   font-weight: bold;
   font-size: 20px;
   line-height: 23px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   ${media.xs} {
     text-align: center;
@@ -35,7 +36,32 @@ export const PageTitle = styled.div`
 `;
 
 export const InputGroup = styled.div`
-  >* {
-    margin-bottom: 7px !important;
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1;
+`;
+
+export const InputRow = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  :not(:last-child) {
+    margin-bottom: ${({ margin }) => margin === 'small' ? '14px' : '25px'};
   }
+`;
+
+export const InputWrapper = styled.div`
+  flex: ${({ flex }) => flex || 1};
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  :not(:last-child) {
+    margin-right: 10px;
+  }
+`;
+
+export const InputLabel = styled.div`
+  margin-bottom: 10px;
+  opacity: .5;
+  font-size: 13px;
+  text-transform: uppercase;
 `;

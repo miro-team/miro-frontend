@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { compose, startPolling, stopPolling } from 'utils';
+import { AuthService } from 'core/services';
 import { Header } from 'features/Header';
 import { Dropdown } from 'features/Dropdown';
 import { Modal } from 'features/Modal';
@@ -19,16 +20,31 @@ import { ProfilePage } from './Profile';
 const propTypes = {
   getConfig: PropTypes.func.isRequired,
   getUser: PropTypes.func.isRequired,
+
 };
 
-const CRootPage = ({ getConfig, getUser }) => {
+const CRootPage = ({ getConfig, getUser, isModalOpened, isDropdownOpened, hideDropdown }) => {
+  const token = AuthService.getToken();
+
   useEffect(() => {
     getConfig();
-    startPolling('user', getUser, 15000);
-    return () => {
-      stopPolling('user');
-    }
+    getUser();
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      startPolling('user', getUser, 30000, false);
+      return () => {
+        stopPolling('user');
+      };
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (isModalOpened && isDropdownOpened) {
+      hideDropdown();
+    }
+  }, [isModalOpened, isDropdownOpened]);
 
   return (
     <Wrapper>
@@ -51,9 +67,12 @@ const CRootPage = ({ getConfig, getUser }) => {
 
 CRootPage.propTypes = propTypes;
 
-const mapStateToProps = ({ Config, Auth }) => ({
+const mapStateToProps = ({ Config, Auth, Modal, Dropdown }) => ({
   getConfig: Config.getConfig,
   getUser: Auth.getUser,
+  isModalOpened: Modal.isOpened,
+  isDropdownOpened: Dropdown.isOpened,
+  hideDropdown: Dropdown.hide,
 });
 
 export const RootPage = compose(

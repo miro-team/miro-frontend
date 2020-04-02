@@ -21,7 +21,7 @@ export const Loader = ({ size, color, rotating, delays, ...props }) => {
       </LoaderBody>
     </Wrapper>
   );
-}
+};
 
 Loader.propTypes = propTypes;
 

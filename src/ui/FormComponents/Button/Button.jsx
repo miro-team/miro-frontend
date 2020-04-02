@@ -8,19 +8,26 @@ import 'semantic-ui-css/components/reset.min.css';
 
 const propTypes = {
   children: PropTypes.node,
-}
 
-export const Button = ({ children, ...props }) => {
+  onClick: PropTypes.func,
+};
+
+export const Button = ({ onClick, children, ...props }) => {
   return (
-    <StyledSemanticButton {...props}>
+    <StyledSemanticButton
+      fluid
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </StyledSemanticButton>
-  )
-}
+  );
+};
 
 Button.propTypes = propTypes;
 
 const StyledSemanticButton = styled(SemanticButton)`
+  margin: 0 !important;
   &.primary.button { 
     background-color: #c65757 !important;
     &:hover {

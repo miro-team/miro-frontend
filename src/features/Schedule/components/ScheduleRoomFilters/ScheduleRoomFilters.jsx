@@ -1,155 +1,118 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import { compose } from 'utils';
-import { media } from 'core/constants/media';
-import { FilterActions } from 'core/actions';
-import SelectInput from 'shared/components/SelectInput';
-import TextInput from 'shared/components/TextInput';
-import AutosuggestInput from 'shared/components/AutosuggestInput';
-import { FilterOptions } from './components/FilterOptions';
+import { compose, mapToOptions, handleNumericChange } from 'utils';
+import { media } from 'core/constants';
+import { InputRow, InputWrapper, InputLabel, Input, Select } from 'ui';
 
 
-class CScheduleRoomFilters extends Component {
-  static propTypes = {
-    schemeOptions: PropTypes.array.isRequired,
-    roomTypeOptions: PropTypes.array.isRequired,
-    roomNumberOptions: PropTypes.array.isRequired,
+const propTypes = {
+  schemes: PropTypes.array,
+  roomTypes: PropTypes.array,
+  rooms: PropTypes.array,
+  scheme: PropTypes.number,
+  roomType: PropTypes.number,
+  roomCapacity: PropTypes.string,
+  roomNumber: PropTypes.number,
 
-    scheme: PropTypes.number.isRequired,
-    roomType: PropTypes.number.isRequired,
-    roomCapacity: PropTypes.string.isRequired,
-    roomNumber: PropTypes.number.isRequired,
+  setScheme: PropTypes.func.isRequired,
+  setBuilding: PropTypes.func.isRequired,
+  setFloor: PropTypes.func.isRequired,
+  setRoomType: PropTypes.func.isRequired,
+  setRoomCapacity: PropTypes.func.isRequired,
+  setRoomNumber: PropTypes.func.isRequired,
+};
 
-    setSchemeFilter: PropTypes.func.isRequired,
-    setBuildingFilter: PropTypes.func.isRequired,
-    setFloorFilter: PropTypes.func.isRequired,
-    setRoomTypeFilter: PropTypes.func.isRequired,
-    setRoomCapacityFilter: PropTypes.func.isRequired,
-    setRoomNumberFilter: PropTypes.func.isRequired,
-  };
+const CScheduleRoomFilters = ({
+  schemes,
+  roomTypes,
+  rooms,
+  scheme,
+  roomType,
+  roomCapacity,
+  roomNumber,
+  setScheme,
+  setBuilding,
+  setFloor,
+  setRoomType,
+  setRoomCapacity,
+  setRoomNumber,
+}) => {
 
-  handleSchemeChange = (e) => {
-    const { setBuildingFilter, setFloorFilter, setSchemeFilter, schemeOptions } = this.props;
-    const schemeId = +e.target.value;
+  const handleSchemeChange = (e, { value }) => {
+    console.log('scheme: ', value);
     const {
       building,
       floor,
-    } = schemeOptions.find(scheme => scheme.id === schemeId) || { building: -1, floor: -1 };
-    setSchemeFilter(schemeId);
-    setBuildingFilter(building);
-    setFloorFilter(floor);
+    } = schemes.find(scheme => scheme.id === value) || { building: null, floor: null };
+    setScheme(value);
+    setBuilding(building);
+    setFloor(floor);
   };
 
-  handleRoomTypeChange = (e) => {
-    const { setRoomTypeFilter } = this.props;
-    setRoomTypeFilter(e.target.value);
+  const handleRoomTypeChange = (e, { value }) => {
+    setRoomType(value);
   };
 
-  handleRoomCapacityChange = (e) => {
-    const { setRoomCapacityFilter } = this.props;
-    setRoomCapacityFilter(e.target.value);
+  const handleRoomCapacityChange = (e, { value }) => {
+    handleNumericChange(value, setRoomCapacity);
   };
 
-  handleRoomNumberChange = (e, { suggestion }) => {
-    const { setRoomNumberFilter } = this.props;
-    setRoomNumberFilter(suggestion.id);
+  const handleRoomNumberChange = (e, { value }) => {
+    setRoomNumber(value);
   };
 
-  getRoomNumberOptions = () => {
-    const { roomNumberOptions: rooms, scheme: schemeId } = this.props;
-    return schemeId !== -1 ? rooms.filter(room => room.schemeId === schemeId) : rooms;
-  }
+  return (
+    <>
+      <InputRow>
+        <InputWrapper>
+          <InputLabel>Расположение</InputLabel>
+          <Select value={scheme} options={mapToOptions(schemes)} placeholder="Расположение" onChange={handleSchemeChange} clearable />
+        </InputWrapper>
+      </InputRow>
+      <InputRow>
+        <InputWrapper>
+          <InputLabel>Тип аудитории</InputLabel>
+          <Select value={roomType} options={mapToOptions(roomTypes)} placeholder="Тип аудитории" onChange={handleRoomTypeChange} clearable />
+        </InputWrapper>
+      </InputRow>
+      <InputRow>
+        <InputWrapper>
+          <InputLabel>Вместимость от</InputLabel>
+          <Input value={roomCapacity} placeholder="Вместимость от" onChange={handleRoomCapacityChange} />
+        </InputWrapper>
+      </InputRow>
+      <InputRow>
+        <InputWrapper>
+          <InputLabel>Номер аудитории</InputLabel>
+          <Select options={mapToOptions(rooms)} value={roomNumber} placeholder="Номер аудитории" onChange={handleRoomNumberChange} search clearable />
+        </InputWrapper>
+      </InputRow>
+    </>
+  );
+};
 
-  render() {
-    const {
-      schemeOptions,
-      roomTypeOptions,
-      scheme,
-      roomType,
-      roomCapacity,
-      roomNumber,
-    } = this.props;
+CScheduleRoomFilters.propTypes = propTypes;
 
-    return (
-      <Wrapper>
-        <FieldWrapper>
-          <SelectInput label="Расположение" value={scheme} onChange={this.handleSchemeChange}>
-            <FilterOptions options={schemeOptions} renderEmpty />
-          </SelectInput>
-        </FieldWrapper>
-        <FieldWrapper>
-          <SelectInput label="Тип аудитории" value={roomType} onChange={this.handleRoomTypeChange}>
-            <FilterOptions options={roomTypeOptions} renderEmpty />
-          </SelectInput>
-        </FieldWrapper>
-        <FieldWrapper>
-          <TextInput
-            label="Вместимость от"
-            value={roomCapacity}
-            onChange={this.handleRoomCapacityChange}
-          />
-        </FieldWrapper>
-        <FieldWrapper>
-          <AutosuggestInput
-            label="Номер аудитории"
-            roomId={roomNumber}
-            options={this.getRoomNumberOptions()}
-            onSuggestionSelected={this.handleRoomNumberChange}
-          />
-        </FieldWrapper>
-      </Wrapper>
-    );
-  }
-}
+const mapStateToProps = ({ Config, ScheduleFilters }) => ({
+  schemes: Config.schemes,
+  roomTypes: Config.roomTypes,
+  rooms: Config.rooms,
+  scheme: ScheduleFilters.scheme,
+  roomType: ScheduleFilters.roomType,
+  roomCapacity: ScheduleFilters.roomCapacity,
+  roomNumber: ScheduleFilters.roomNumber,
 
-const mapStateToProps = ({ Config, Filters }) => ({
-  schemeOptions: Config.get('schemes'),
-  roomTypeOptions: Config.get('roomTypes'),
-  roomNumberOptions: Config.get('rooms'),
-
-  scheme: Filters.get('scheme'),
-  roomType: Filters.get('roomType'),
-  roomCapacity: Filters.get('roomCapacity'),
-  roomNumber: Filters.get('roomNumber'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  setSchemeFilter(payload) {
-    dispatch(FilterActions.setSchemeFilter(payload));
-  },
-  setBuildingFilter(payload) {
-    dispatch(FilterActions.setBuildingFilter(payload));
-  },
-  setFloorFilter(payload) {
-    dispatch(FilterActions.setFloorFilter(payload));
-  },
-  setRoomTypeFilter(payload) {
-    dispatch(FilterActions.setRoomTypeFilter(payload));
-  },
-  setRoomCapacityFilter(payload) {
-    dispatch(FilterActions.setRoomCapacityFilter(payload));
-  },
-  setRoomNumberFilter(payload) {
-    dispatch(FilterActions.setRoomNumberFilter(payload));
-  },
+  setScheme: ScheduleFilters.setScheme,
+  setBuilding: ScheduleFilters.setBuilding,
+  setFloor: ScheduleFilters.setFloor,
+  setRoomType: ScheduleFilters.setRoomType,
+  setRoomCapacity: ScheduleFilters.setRoomCapacity,
+  setRoomNumber: ScheduleFilters.setRoomNumber,
 });
 
 export const ScheduleRoomFilters = compose(
   inject(mapStateToProps),
 )(CScheduleRoomFilters);
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-`;
-
-const FieldWrapper = styled.div`
-  margin-bottom: 25px;
-  ${media.xs} {
-    margin-bottom: 15px;
-  }
-`;

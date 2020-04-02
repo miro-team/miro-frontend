@@ -18,4 +18,4 @@ export const useOnClickOutside = (ref, handler, isEnabled) => {
     },
     [ref, handler, isEnabled]
   );
-}
+};

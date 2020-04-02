@@ -19,7 +19,7 @@ const CDropdown = ({ isOpened, hide, children }) => {
   };
 
   const ref = useRef(null);
-  useOnClickOutside(ref, handleHide, isOpened)
+  useOnClickOutside(ref, handleHide, isOpened);
 
   if (!isOpened) {
     return null;
@@ -63,7 +63,7 @@ const Wrapper = styled.div`
   right: 0;
   position: absolute;
   box-shadow: 0 10px 21px 0 rgba(173, 182, 217, 0.3);
-  animation: ${Appear} 0.2s linear;
+  animation: ${Appear} .2s linear;
   z-index: 9999;
   border-radius: 0 0 7px 7px;
 `;

@@ -1,64 +1,86 @@
 // Refactor
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { inject } from 'mobx-react';
 
-import { media } from 'core/constants/media';
-import { ReactComponent as FilterIcon } from 'shared/assets/filter.svg';
-import { ReactComponent as CalendarIcon } from 'shared/assets/calendar.svg';
+import { compose } from 'utils';
+import { media } from 'core/constants';
+import { Icon } from 'ui';
 
 
 const propTypes = {
-  activeTab: PropTypes.number.isRequired,
-  handleTabChange: PropTypes.func.isRequired,
+  activeFilterTab: PropTypes.number.isRequired,
+
+  showRoomFilters: PropTypes.func.isRequired,
+  showDatetimeFilters: PropTypes.func.isRequired,
 };
 
-export const ScheduleFilterPager = ({ activeTab, handleTabChange }) => (
+export const CScheduleFilterPager = ({ activeFilterTab, showRoomFilters, showDatetimeFilters }) => (
   <Wrapper>
-    <StyledButton active={activeTab === 0} onClick={handleTabChange} id={0}>
-      <FilterIcon />
+    <StyledButton active={activeFilterTab === 0} onClick={showRoomFilters} id={0}>
+      <StyledIcon name="bars" />
       <span>Аудитория</span>
     </StyledButton>
-    <StyledButton active={activeTab === 1} onClick={handleTabChange} id={1}>
-      <CalendarIcon />
+    <StyledButton active={activeFilterTab === 1} onClick={showDatetimeFilters} id={1}>
+      <StyledIcon name="calendar alternate outline" />
       <span>Дата</span>
     </StyledButton>
   </Wrapper>
 );
 
-ScheduleFilterPager.propTypes = propTypes;
+CScheduleFilterPager.propTypes = propTypes;
+
+const mapStateToProps = ({ ScheduleFilters }) => ({
+  activeFilterTab: ScheduleFilters.activeFilterTab,
+
+  showRoomFilters: ScheduleFilters.showRoomFilters,
+  showDatetimeFilters: ScheduleFilters.showDatetimeFilters,
+});
+
+export const ScheduleFilterPager = compose(
+  inject(mapStateToProps),
+)(CScheduleFilterPager);
 
 const Wrapper = styled.div`
   display: flex;
   border-radius: 30px;
   border: 1px solid #d8d8d8;
-  margin-bottom: 30px;
-  ${media.xs} {
-    margin-bottom: 15px;
-  }
 `;
 
 const StyledButton = styled.button`
   appearance: none;
-  cursor: ${({ active }) => !active && 'pointer'};
-  flex: ${({ active }) => (active ? 5 : 4)};
+  cursor: pointer;
+  flex: 4;
   border-radius: 30px;
   border: 0;
-  background: ${({ active }) => (active ? '#C65757' : '#fff')};
-  opacity: ${({ active }) => (active ? 1 : 0.6)};
+  background: #fff;
+  opacity: .6;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
-  font-weight: ${({ active }) => active && 500};
   font-size: 16px;
-  color: ${({ active }) => active && '#fff'};
+
   ${media.xs} {
     font-size: 14px;
     padding: 7px;
   }
-  svg {
-    margin-right: 8px;
-    fill: ${({ active }) => (active ? '#fff' : '#000')};
-  }
+
+  ${({ active }) => active && css`
+    cursor: default;
+    pointer-events: none;
+    flex: 5;
+    background: #c65757;
+    opacity: 1;
+    font-weight: 500;
+    color: #fff;
+    svg {
+      fill: #fff;
+    }
+  `}
+`;
+
+const StyledIcon = styled(Icon)`
+  margin: 0 7px 3px 0 !important;
 `;

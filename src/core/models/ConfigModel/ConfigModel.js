@@ -9,8 +9,6 @@ class CConfigModel {
 
     @observable disciplines = null;
 
-    @observable weekDays = null;
-
     @observable roomTypes = null;
 
     @observable teachers = null;
@@ -19,11 +17,13 @@ class CConfigModel {
 
     @observable schemes = null;
 
-    @observable periodicities = null;
-
     @observable eventTypes = null;
 
     @observable pairs = null;
+
+    @observable semesterStart = new Date('2020/02/23');
+
+    @observable semesterEnd = new Date('2020/06/30');
 
     @action getConfig = async () => {
       try {
@@ -34,24 +34,20 @@ class CConfigModel {
         const {
           rooms,
           disciplines,
-          weekDays,
           roomTypes,
           teachers,
           groups,
           schemes,
-          periodicities,
           eventTypes,
           pairs,
         } = response.data;
 
         this.rooms = rooms;
         this.disciplines = disciplines;
-        this.weekDays = weekDays;
         this.roomTypes = roomTypes;
         this.teachers = teachers;
         this.groups = groups;
         this.schemes = schemes;
-        this.periodicities = periodicities;
         this.eventTypes = eventTypes;
         this.pairs = pairs;
       } catch (e) {

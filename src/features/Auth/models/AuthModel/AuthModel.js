@@ -93,7 +93,7 @@ class CAuthModel {
       }
     } finally {
       if (PreloaderModel.isDisplayed) {
-        await sleep(1500);
+        await sleep(2500);
         PreloaderModel.hide();
       }
     }

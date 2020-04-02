@@ -1,6 +1,6 @@
 export const pollingIntervals = {};
 
-export const startPolling = (id, handler, ms) => {
+export const startPolling = (id, handler, ms, initialCall = true) => {
   if (id in pollingIntervals) {
     console.error('Polling with this id is already registered');
     return;
@@ -13,7 +13,9 @@ export const startPolling = (id, handler, ms) => {
     console.error('Invalid interval');
     return;
   }
-  handler();
+  if (initialCall) {
+    handler();
+  }
   pollingIntervals[id] = setInterval(handler, ms);
 };
 

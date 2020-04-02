@@ -6,7 +6,7 @@ import { Formik, Form } from 'formik';
 import { FormikInput } from 'handy-formik';
 
 import { compose, getValidationSchema } from 'utils';
-import { Input, Button, InputGroup } from 'ui';
+import { Input, Button, InputGroup, InputRow, InputWrapper } from 'ui';
 
 
 class CLogin extends Component {
@@ -44,25 +44,56 @@ class CLogin extends Component {
         >
           <Form>
             <StyledInputGroup>
-              <FormikInput
-                name="username"
-                render={props => (
-                  <Input size="small" placeholder="Логин" fluid {...props} />
-                )}
-              />
-              <FormikInput
-                name="password"
-                render={props => (
-                  <Input type="password" size="small" fluid placeholder="Пароль" {...props} />
-                )}
-              />
+              <InputRow margin="small">
+                <InputWrapper>
+                  <FormikInput
+                    name="username"
+                    render={props => (
+                      <Input
+                        size="small"
+                        placeholder="Логин"
+                        icon="user"
+                        iconPosition="left"
+                        formikProps={props}
+                      />
+                    )}
+                  />
+                </InputWrapper>
+              </InputRow>
+              <InputRow>
+                <InputWrapper>
+                  <FormikInput
+                    name="password"
+                    render={props => (
+                      <Input
+                        type="password"
+                        size="small"
+                        placeholder="Пароль"
+                        icon="lock"
+                        iconPosition="left"
+                        formikProps={props}
+                      />
+                    )}
+                  />
+                </InputWrapper>
+              </InputRow>
             </StyledInputGroup>
             {/* <NotificationWrapper>
               <Notification module="login" />
             </NotificationWrapper> */}
-            <Button type="submit" disabled={loginInProgress} loading={loginInProgress} primary fluid size="small">
-              Войти
-            </Button>
+            <InputRow>
+              <InputWrapper>
+                <Button
+                  type="submit"
+                  disabled={loginInProgress}
+                  loading={loginInProgress}
+                  primary
+                  size="small"
+                >
+                  Войти
+              </Button>
+              </InputWrapper>
+            </InputRow>
           </Form>
         </Formik>
       </Wrapper>
@@ -82,17 +113,6 @@ export const Login = compose(
 
 const Wrapper = styled.div`
   padding: 25px 25px 30px;
-`;
-
-const InputWrapper = styled.div`
-  margin-bottom: 15px;
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  height: 40px;
 `;
 
 const StyledInputGroup = styled(InputGroup)`

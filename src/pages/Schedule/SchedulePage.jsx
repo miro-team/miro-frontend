@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { inject } from 'mobx-react';
 
 import { compose } from 'utils';
@@ -14,9 +15,9 @@ const CSchedulePage = () => (
     </Sidebar>
     <Content>
       <PageTitle>Поиск аудиторий</PageTitle>
-      <ContentBody>
+      <StyledContentBody>
         <Schedule />
-      </ContentBody>
+      </StyledContentBody>
     </Content>
   </>
 );
@@ -26,3 +27,7 @@ const mapStateToProps = () => ({});
 export const SchedulePage = compose(
   inject(mapStateToProps),
 )(CSchedulePage);
+
+const StyledContentBody = styled(ContentBody)`
+  flex: 1;
+`;

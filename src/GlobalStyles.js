@@ -5,11 +5,12 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
     outline: none;
-    font-family: 'Roboto', sans-serif;
   }
   html,
   body {
     overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
   }
 `;
 

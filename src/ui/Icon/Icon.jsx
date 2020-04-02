@@ -6,21 +6,21 @@ import 'semantic-ui-css/components/icon.min.css';
 
 
 const propTypes = {
-  invertMargin: PropTypes.bool,
+  marginPosition: PropTypes.string,
 };
 
-export const Icon = ({ invertMargin, ...rest }) => {
+export const Icon = ({ marginPosition, ...rest }) => {
   return (
-      <StyledSemanticIcon invertMargin={invertMargin} {...rest} />
-  )
-}
+      <StyledSemanticIcon marginPosition={marginPosition} {...rest} />
+  );
+};
 
 Icon.propTypes = propTypes;
 
-const StyledSemanticIcon = styled(({ invertMargin, ...rest }) => (
+const StyledSemanticIcon = styled(({ marginPosition, ...rest }) => (
     <SemanticIcon {...rest} />
   ))`
-  ${({ invertMargin }) => invertMargin && css`
+  ${({ marginPosition }) => marginPosition === 'right' && css`
     margin: 0 0 0 8px !important;
   `}
 `;
