@@ -1,6 +1,7 @@
-class Api {
+class CAPI {
   constructor() {
-    this.prefix = 'http://62.109.25.2:2200/api';
+    this.host = 'http://62.109.25.2:2200';
+    this.prefix = `${this.host}/api`;
   }
 
   filterSingle() {
@@ -11,22 +12,17 @@ class Api {
     return `${this.prefix}/filter/cycle`;
   }
 
-  config = () => 'http://127.0.0.1:8005/api/config';
-  // config() {
-  //   return `${this.prefix}/config`;
-  // }
-
-  login() {
-    return `${this.prefix}/login`;
-  }
-
-  logout() {
-    return `${this.prefix}/logout`;
+  config() {
+    return `${this.prefix}/config`;
   }
 
   user() {
     return `${this.prefix}/user`;
   }
+
+  login() {
+    return `${this.host}/oauth/token`;
+  }
 }
 
-export default new Api();
+export const API = new CAPI();
