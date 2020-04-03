@@ -78,6 +78,16 @@ class CScheduleFilterModel {
     this.recurrence = value ? value : 'NO_REPEAT';
   }
 
+  @observable customRecurrencies = [];
+
+  @action addCustomRecurrence = ({ value, text }) => {
+    const recurrenceExists = this.customRecurrencies.find(({ value: existingValue }) => existingValue === value);
+
+    if (!recurrenceExists) {
+      this.customRecurrencies.push({ value, text });
+    }
+  }
+
   @observable pageNum = null;
 
   @action setPageNum = (value) => {

@@ -69,13 +69,19 @@ export class RRule {
   }
 
   toText(noStartDate) {
+    if (!this.isValid) {
+      return '';
+    }
+
+    const { interval, count } = this.instance.options;
+
     const russianStrings = {
-      every: 'кажд.',
+      every: `кажд${interval == 1 ? 'ую' : 'ые'}`,
       until: 'до',
       day: 'день',
-      days: 'дн.',
-      week: 'нед.',
-      weeks: 'нед.',
+      days: `дн${interval > 1 && interval < 5 ? 'я' : 'ей'}`,
+      week: 'неделю',
+      weeks: `недел${interval > 1 && interval < 5 ? 'и' : 'ь'}`,
       on: 'в',
       in: 'в',
       'on the': '',
@@ -85,8 +91,8 @@ export class RRule {
       at: 'в',
       last: 'последний',
       '(~ approximate)': '(~ примерно)',
-      times: 'раз',
-      time: 'время',
+      times: `раз${count > 1 && count < 5 ? 'а' : ''}`,
+      time: 'раз',
       minutes: 'минуты',
       hours: 'часы',
       weekdays: 'дни недели',

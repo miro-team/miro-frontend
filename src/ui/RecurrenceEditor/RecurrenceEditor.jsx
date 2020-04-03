@@ -13,21 +13,39 @@ const propTypes = {
 
 };
 
-const CRecurrenceEditor = ({ startDate = new Date(0), value, onChange, isModalOpened, showModal, hideModal, ...rest }) => {
+const CRecurrenceEditor = ({
+  startDate = new Date(0),
+  value,
+  customRecurrencies,
+  semesterEnd,
+  onChange,
+  isModalOpened,
+  addCustomRecurrence,
+  showModal,
+  hideModal,
+  ...rest
+}) => {
+
   const weeklyRule = new RRule({
     freq: RRule.WEEKLY,
     interval: 1,
+    endingType: RRule.SEMESTER,
+    semesterEnd,
   });
   const every2WeeksRule = new RRule({
     freq: RRule.WEEKLY,
     interval: 2,
+    endingType: RRule.SEMESTER,
+    semesterEnd,
   });
   const monthlyRule = new RRule({
     freq: RRule.WEEKLY,
     interval: 4,
+    endingType: RRule.SEMESTER,
+    semesterEnd,
   });
 
-  const [options] = useState([
+  const options = [
     {
       value: 'NO_REPEAT',
       text: 'не повторять',
@@ -44,17 +62,14 @@ const CRecurrenceEditor = ({ startDate = new Date(0), value, onChange, isModalOp
       value: monthlyRule.toString(),
       text: monthlyRule.toText(),
     },
+    ...customRecurrencies,
     {
       value: 'OTHER',
       text: 'другое...',
     },
-  ]);
+  ];
 
-  const addCustomRecurrence = (value, text) => {
-    options.splice(options.length - 1, 0, {
-      value,
-      text,
-    });
+  const setValue = (value) => {
     onChange(null, { value });
   };
 
@@ -64,7 +79,8 @@ const CRecurrenceEditor = ({ startDate = new Date(0), value, onChange, isModalOp
 
   useEffect(() => {
     if (value === 'OTHER') {
-      showModal('Повтор события', CustomRecurrenceEditor, { startDate, addCustomRecurrence });
+      showModal('Повтор события', CustomRecurrenceEditor,
+        { startDate, addCustomRecurrence, setValue, semesterEnd, hideModal });
     }
   }, [value]);
 
@@ -85,8 +101,12 @@ const CRecurrenceEditor = ({ startDate = new Date(0), value, onChange, isModalOp
 
 CRecurrenceEditor.propTypes = propTypes;
 
-const mapStateToProps = ({ Modal }) => ({
+const mapStateToProps = ({ ScheduleFilters, Modal, Config }) => ({
+  customRecurrencies: ScheduleFilters.customRecurrencies,
+  semesterEnd: Config.semesterEnd,
   isModalOpened: Modal.isOpened,
+
+  addCustomRecurrence: ScheduleFilters.addCustomRecurrence,
   showModal: Modal.show,
   hideModal: Modal.hide,
 });

@@ -11,7 +11,7 @@ const propTypes = {
 
 };
 
-const CCustomRecurrenceEditor = ({ startDate, addCustomRecurrence, semesterEnd, hideModal, ...rest }) => {
+export const CustomRecurrenceEditor = ({ startDate, addCustomRecurrence, setValue, semesterEnd, hideModal }) => {
   const [recurrenceInterval, setRecurrenceInterval] = useState(1);
   const [weekDays, setWeekDays] = useState(startDate ? [startDate.getDay()] : []); // 0-6
   const [endingType, setEndingType] = useState(RRule.SEMESTER);
@@ -60,7 +60,11 @@ const CCustomRecurrenceEditor = ({ startDate, addCustomRecurrence, semesterEnd, 
 
   const handleSave = () => {
     if (CustomRRule.isValid) {
-      addCustomRecurrence(CustomRRule.toString(true), CustomRRule.toText(true));
+      const value = CustomRRule.toString(true);
+      const text = CustomRRule.toText(true);
+
+      addCustomRecurrence({ value, text });
+      setValue(value);
       hideModal();
     }
   };
@@ -82,9 +86,14 @@ const CCustomRecurrenceEditor = ({ startDate, addCustomRecurrence, semesterEnd, 
                 labelPosition='right'
                 onFocus={handleFocusSelect}
               >
-                <Label basic>кажд.</Label>
+                <IntervalLabel basic>
+                  {`кажд${recurrenceInterval == 1 ? 'ую' : 'ые'}`}
+                </IntervalLabel>
                 <input />
-                <Label basic>нед.</Label>
+                <IntervalLabel basic>
+                  {`недел${recurrenceInterval == 1 ? 'ю' :
+                    recurrenceInterval > 1 && recurrenceInterval < 5 ? 'и' : 'ь'}`}
+                </IntervalLabel>
               </Input>
             </InputWrapper>
           </InputRow>
@@ -154,11 +163,13 @@ const CCustomRecurrenceEditor = ({ startDate, addCustomRecurrence, semesterEnd, 
                     <Input
                       value={repeatCount}
                       onChange={handleRepeatCountChange}
-                      label={{ basic: true, content: 'повторов' }}
                       labelPosition='right'
                       onFocus={handleFocusSelect}
                       disabled={endingType !== RRule.COUNT}
-                    />
+                    >
+                      <input />
+                      <RepeatLabel basic>{`повтор${repeatCount == 1 ? 'а' : 'ов'}`}</RepeatLabel>
+                    </Input>
                   </InputWrapper>
                 </InputRow>
               </InputGroup>
@@ -192,20 +203,18 @@ const CCustomRecurrenceEditor = ({ startDate, addCustomRecurrence, semesterEnd, 
   );
 };
 
-CCustomRecurrenceEditor.propTypes = propTypes;
-
-const mapStateToProps = ({ Modal, Config }) => ({
-  showModal: Modal.show,
-  hideModal: Modal.hide,
-  semesterEnd: Config.semesterEnd,
-});
-
-export const CustomRecurrenceEditor = compose(
-  inject(mapStateToProps),
-)(CCustomRecurrenceEditor);
+CustomRecurrenceEditor.propTypes = propTypes;
 
 const PreviewWrapper = styled.div`
   margin-left: 25px;
   display: flex;
   flex-flow: column nowrap;
+`;
+
+const IntervalLabel = styled(Label)`
+  width: 90px;
+`;
+
+const RepeatLabel = styled(Label)`
+  width: 100px;
 `;
