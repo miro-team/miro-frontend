@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
-import { ScheduleTable } from './components/ScheduleTable';
+import { compose } from 'lib/utils';
+import { ScheduleTable } from './components';
 
 
 const propTypes = {};

@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import qs from 'qs';
 
 import { API } from 'API';
-import { sleep } from 'utils';
+import { sleep } from 'lib/utils';
 import { AuthService, HTTP } from 'core/services';
 
 

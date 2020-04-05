@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
-import { ReactComponent as CloseIcon } from 'shared/assets/close.svg';
+import { compose } from 'lib/utils';
+import { Icon } from 'ui/common';
 
 
 const propTypes = {
@@ -16,7 +16,7 @@ const propTypes = {
 const CModalHeader = ({ handleHide, children }) => (
   <Wrapper>
     {children}
-    <StyledCloseIcon onClick={handleHide} />
+    <StyledIcon onClick={handleHide} name="close" />
   </Wrapper>
 );
 
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   border-radius: 10px 10px 0 0;
 `;
 
-const StyledCloseIcon = styled(CloseIcon)`
+const StyledIcon = styled(Icon)`
   position: absolute;
   top: 50%;
   right: 15px;

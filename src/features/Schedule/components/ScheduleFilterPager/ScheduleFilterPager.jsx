@@ -4,9 +4,9 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
+import { compose } from 'lib/utils';
 import { media } from 'core/constants';
-import { Icon } from 'ui';
+import { Icon } from 'ui/common';
 
 
 const propTypes = {

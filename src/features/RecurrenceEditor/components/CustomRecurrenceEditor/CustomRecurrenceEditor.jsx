@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { inject } from 'mobx-react';
 
-import { compose, handleNumericChange, RRule } from 'utils';
-import { InputGroup, InputWrapper, InputRow, InputLabel, Select, Input, Label, DatePicker, Button, Radio } from 'ui';
+import { handleNumericChange, RRule } from 'lib/utils';
+import { Label } from 'ui/common';
+import { Select, Input, DatePicker, Button, Radio } from 'ui/inputs';
+import { InputGroup, InputWrapper, InputRow, InputLabel } from 'ui/layout';
 
 
 const propTypes = {

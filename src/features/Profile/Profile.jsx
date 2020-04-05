@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
+import { compose } from 'lib/utils';
 
 
 const CProfile = () => <div>Profile</div>;

@@ -2,9 +2,8 @@ import React from 'react';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import { compose } from 'utils';
-import { User } from './components/User';
-import { Login } from './components/Login';
+import { compose } from 'lib/utils';
+import { User, Login } from './components';
 
 
 const propTypes = {

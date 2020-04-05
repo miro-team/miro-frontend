@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
-import { Table, Pagination } from 'ui';
+import { compose } from 'lib/utils';
+import { Table, Pagination } from 'ui/common';
 
 
 const propTypes = {

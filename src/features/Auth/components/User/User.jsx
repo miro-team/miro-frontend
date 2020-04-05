@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 
-import { compose } from 'utils';
-import { Icon } from 'ui';
+import { compose } from 'lib/utils';
+import { Icon } from 'ui/common';
 
 
 class CUser extends Component {

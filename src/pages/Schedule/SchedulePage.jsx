@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
+import { compose } from 'lib/utils';
 import { Schedule, ScheduleFilters } from 'features/Schedule';
 import { Sidebar } from 'features/Sidebar';
-import { Content, ContentBody, PageTitle } from 'ui';
+import { Content, ContentBody, PageTitle } from 'ui/layout';
 
 
 const CSchedulePage = () => (

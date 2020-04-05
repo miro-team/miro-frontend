@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
+import { compose } from 'lib/utils';
 import { media } from 'core/constants';
-import { InputGroup } from 'ui';
+import { InputGroup } from 'ui/layout';
 
-import { ScheduleFilterPager } from './components/ScheduleFilterPager';
-import { ScheduleRoomFilters } from './components/ScheduleRoomFilters';
-import { ScheduleDatetimeFilters } from './components/ScheduleDatetimeFilters';
+import {
+  ScheduleFilterPager,
+  ScheduleRoomFilters,
+  ScheduleDatetimeFilters
+} from './components';
 
 
 const propTypes = {

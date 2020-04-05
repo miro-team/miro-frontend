@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Input } from 'ui';
+import { Input } from 'ui/inputs';
 import ru from 'date-fns/locale/ru';
 
 

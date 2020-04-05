@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import styled from 'styled-components';
 
-import { compose, useOnClickOutside } from 'utils';
+import { compose, useOnClickOutside } from 'lib/utils';
 import { ModalHeader as Header } from './components';
 
 

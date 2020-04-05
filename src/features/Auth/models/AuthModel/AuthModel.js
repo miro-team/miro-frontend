@@ -7,7 +7,7 @@ import { DropdownModel } from 'features/Dropdown/models';
 import { PreloaderModel } from 'features/Preloader/models';
 
 import { API } from 'API';
-import { sleep } from 'utils';
+import { sleep } from 'lib/utils';
 import { AuthService, HTTP } from 'core/services';
 
 

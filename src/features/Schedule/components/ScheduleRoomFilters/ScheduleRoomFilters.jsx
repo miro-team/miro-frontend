@@ -1,11 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import { compose, mapToOptions, handleNumericChange } from 'utils';
-import { media } from 'core/constants';
-import { InputRow, InputWrapper, InputLabel, Input, Select } from 'ui';
+import { compose, mapToOptions, handleNumericChange } from 'lib/utils';
+import { Input, Select } from 'ui/inputs';
+import { InputRow, InputWrapper, InputLabel } from 'ui/layout';
 
 
 const propTypes = {

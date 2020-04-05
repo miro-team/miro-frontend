@@ -4,13 +4,13 @@ import { inject } from 'mobx-react';
 import styled from 'styled-components';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { compose, startPolling, stopPolling } from 'utils';
+import { compose, startPolling, stopPolling } from 'lib/utils';
 import { AuthService } from 'core/services';
 import { Header } from 'features/Header';
 import { Dropdown } from 'features/Dropdown';
 import { Modal } from 'features/Modal';
 import { Preloader } from 'features/Preloader';
-import { PrivateRoute } from 'shared/components/PrivateRoute';
+import { PrivateRoute } from 'lib/components';
 import { Auth as Authorization } from 'features/Auth';
 
 import { SchedulePage } from './Schedule';

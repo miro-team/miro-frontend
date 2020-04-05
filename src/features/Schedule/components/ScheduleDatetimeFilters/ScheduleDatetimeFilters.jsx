@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import { compose, mapToOptions } from 'utils';
-import { InputRow, InputWrapper, InputLabel, Select, DatePicker, RecurrenceEditor } from 'ui';
+import { compose, mapToOptions } from 'lib/utils';
+import { RecurrenceEditor } from 'features/RecurrenceEditor';
+import { Select, DatePicker } from 'ui/inputs';
+import { InputRow, InputWrapper, InputLabel } from 'ui/layout';
 
 
 const propTypes = {

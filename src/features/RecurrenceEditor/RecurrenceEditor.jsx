@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { inject } from 'mobx-react';
 
-import { compose, RRule } from 'utils';
-import { Select } from 'ui';
+import { compose, RRule } from 'lib/utils';
+import { Select } from 'ui/inputs';
 
-import { CustomRecurrenceEditor } from './components/CustomRecurrenceEditor';
+import { CustomRecurrenceEditor } from './components';
 
 
 const propTypes = {
@@ -14,7 +14,7 @@ const propTypes = {
 };
 
 const CRecurrenceEditor = ({
-  startDate = new Date(0),
+  startDate,
   value,
   customRecurrencies,
   semesterEnd,

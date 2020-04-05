@@ -5,9 +5,8 @@ import { inject } from 'mobx-react';
 import { withRouter, Link } from 'react-router-dom';
 
 import { media } from 'core/constants';
-import { compose } from 'utils';
-import { ReactComponent as UserIcon } from 'shared/assets/user.svg';
-import { Icon } from 'ui';
+import { compose } from 'lib/utils';
+import { Icon } from 'ui/common';
 
 
 const propTypes = {

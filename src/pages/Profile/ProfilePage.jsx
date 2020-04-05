@@ -2,9 +2,9 @@ import React from 'react';
 import { inject } from 'mobx-react';
 import { Switch } from 'react-router-dom';
 
-import { compose } from 'utils';
-import { Content } from 'ui';
-import { PrivateRoute } from 'shared/components/PrivateRoute';
+import { compose } from 'lib/utils';
+import { Content } from 'ui/layout';
+import { PrivateRoute } from 'lib/components';
 import { ReservationsPage } from './Reservations';
 import { ProfileSettingsPage } from './ProfileSettings';
 

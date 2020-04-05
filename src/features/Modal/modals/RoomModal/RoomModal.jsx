@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 
-import { compose } from 'utils';
+import { compose } from 'lib/utils';
 
 
 const propTypes = {

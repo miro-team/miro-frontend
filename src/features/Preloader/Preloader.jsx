@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import styled, { keyframes } from 'styled-components';
 
-import { compose } from 'utils';
-import { Loader } from 'ui';
+import { compose } from 'lib/utils';
+import { Loader } from 'ui/common';
 
 
 const propTypes = {

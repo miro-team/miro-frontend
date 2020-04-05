@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import SemanticPagination from '@bit/semantic-org.semantic-ui-react.pagination';
 import 'semantic-ui-css/components/menu.min.css';
 
-import { Icon } from 'ui';
+import { Icon } from 'ui/common';
 
 
 const propTypes = {};

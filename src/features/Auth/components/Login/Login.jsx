@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import { FormikInput } from 'handy-formik';
 
-import { compose, getValidationSchema } from 'utils';
-import { Input, Button, InputGroup, InputRow, InputWrapper } from 'ui';
+import { compose, getValidationSchema } from 'lib/utils';
+import { Input, Button } from 'ui/inputs';
+import { InputGroup, InputRow, InputWrapper } from 'ui/layout';
 
 
 class CLogin extends Component {

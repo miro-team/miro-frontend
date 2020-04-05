@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { inject } from 'mobx-react';
 import { Route, Redirect } from 'react-router-dom';
 
-import { compose } from 'utils';
+import { compose } from 'lib/utils';
 
 
 const propTypes = {
